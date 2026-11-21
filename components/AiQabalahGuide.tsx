@@ -2,62 +2,46 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, Send, Bot, User, RefreshCw } from 'lucide-react';
+import { Language, UI_STRINGS } from '@/lib/i18n';
 
 interface AiQabalahGuideProps {
+  language: Language;
   initialPrompt?: string | null;
   initialEntityName?: string | null;
   initialEntityType?: 'sephira' | 'path' | null;
   embedded?: boolean;
 }
 
-const QUICK_PROMPTS = [
-  {
-    label: 'Middle Pillar Exercise',
-    query:
-      'Explain the Middle Pillar exercise ritual and how it balances energy across Kether, Tiphareth, Yesod, and Malkuth.',
-  },
-  {
-    label: 'Binah vs Geburah',
-    query: "Compare Dion Fortune's view of Binah vs Geburah on the Pillar of Severity.",
-  },
-  {
-    label: 'Path 13 & The Abyss',
-    query:
-      'How does Path 13 (The High Priestess / Gimel) cross the Abyss from Kether to Tiphareth?',
-  },
-];
-
 export default function AiQabalahGuide({
+  language,
   initialPrompt,
   initialEntityName,
   initialEntityType,
   embedded = false,
 }: AiQabalahGuideProps) {
+  const t = UI_STRINGS[language].aiGuide;
   const defaultSeed =
-    initialPrompt ||
-    (initialEntityName
-      ? `Generate a deep-dive pathworking meditation for ${initialEntityName}`
-      : '');
+    initialPrompt || (initialEntityName ? t.meditationPrompt(initialEntityName) : '');
   const [draft, setDraft] = useState<{ seed: string; text: string }>({
     seed: defaultSeed,
     text: defaultSeed,
   });
   const prompt = draft.seed === defaultSeed ? draft.text : defaultSeed;
   const setPrompt = (text: string) => setDraft({ seed: defaultSeed, text });
-  const [messages, setMessages] = useState<
+  const [userHistory, setUserHistory] = useState<
     Array<{ role: 'user' | 'assistant'; text: string }>
-  >([
-    {
-      role: 'assistant',
-      text: 'Greetings, seeker of the Mysteries. I am your Hermetic Qabalah Guide, versed in the traditions of the Golden Dawn, Dion Fortune, Israel Regardie, and 777. How may I assist your pathworking today?',
-    },
-  ]);
+  >([]);
   const [loading, setLoading] = useState(false);
   const scrollEndRef = useRef<HTMLDivElement | null>(null);
 
+  const messages: Array<{ role: 'user' | 'assistant'; text: string }> = [
+    { role: 'assistant', text: t.welcomeMessage },
+    ...userHistory,
+  ];
+
   useEffect(() => {
     scrollEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, [messages.length, loading]);
+  }, [userHistory.length, loading]);
 
   const handleSubmit = async (e?: React.FormEvent, customQuery?: string) => {
     if (e) e.preventDefault();
@@ -65,7 +49,7 @@ export default function AiQabalahGuide({
     if (!query.trim() || loading) return;
 
     const userMsg = query;
-    setMessages((prev) => [...prev, { role: 'user', text: userMsg }]);
+    setUserHistory((prev) => [...prev, { role: 'user', text: userMsg }]);
     if (!customQuery) setPrompt('');
     setLoading(true);
 
@@ -75,6 +59,7 @@ export default function AiQabalahGuide({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           prompt: userMsg,
+          language,
           type:
             initialEntityType === 'sephira' || initialEntityType === 'path'
               ? 'meditation'
@@ -89,17 +74,14 @@ export default function AiQabalahGuide({
         throw new Error(data.error);
       }
 
-      setMessages((prev) => [...prev, { role: 'assistant', text: data.text }]);
+      setUserHistory((prev) => [...prev, { role: 'assistant', text: data.text }]);
     } catch (err: unknown) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : 'Please check your connection and try again.';
-      setMessages((prev) => [
+      const message = err instanceof Error ? err.message : t.connectionError;
+      setUserHistory((prev) => [
         ...prev,
         {
           role: 'assistant',
-          text: `Error contacting Hermetic Oracle: ${message}`,
+          text: `${t.errorPrefix} ${message}`,
         },
       ]);
     } finally {
@@ -126,17 +108,15 @@ export default function AiQabalahGuide({
         </div>
         <div className="min-w-0">
           <h2 className="text-base sm:text-lg font-serif font-bold text-[#161e2e] truncate">
-            Hermetic Qabalah Guide &amp; Oracle
+            {t.title}
           </h2>
-          <p className="text-xs text-[#4b576e] truncate">
-            Pathworking meditations, 777 attributions, and Hermetic synthesis
-          </p>
+          <p className="text-xs text-[#4b576e] truncate">{t.subtitle}</p>
         </div>
       </div>
 
       {/* Suggested Quick Prompts */}
       <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 pb-1 text-xs shrink-0">
-        {QUICK_PROMPTS.map((item) => (
+        {t.quickPrompts.map((item) => (
           <button
             key={item.label}
             type="button"
@@ -178,7 +158,7 @@ export default function AiQabalahGuide({
         {loading && (
           <div className="flex items-center gap-2 text-xs text-[#7c5814] p-3.5 bg-[#cfd6e2] rounded-xl border border-[#b3bdd0]">
             <RefreshCw className="w-4 h-4 animate-spin shrink-0" />
-            <span>Consulting Hermetic Archives...</span>
+            <span>{t.loading}</span>
           </div>
         )}
         <div ref={scrollEndRef} />
@@ -190,17 +170,17 @@ export default function AiQabalahGuide({
           type="text"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Ask about Sephiroth, Tarot, or pathworking..."
+          placeholder={t.placeholder}
           className="flex-1 min-w-0 min-h-[46px] px-3.5 sm:px-4 py-2.5 rounded-xl bg-[#cfd6e2] border border-[#aeb9cc] text-base sm:text-sm text-[#161e2e] placeholder-[#526078] focus:outline-none focus:border-[#8c631a]"
         />
         <button
           type="submit"
           disabled={loading || !prompt.trim()}
-          aria-label="Send message"
+          aria-label={t.sendAria}
           className="min-h-[46px] min-w-[46px] px-3.5 sm:px-5 rounded-xl bg-[#9a7022]/16 border border-[#8c631a] text-[#5e400b] hover:bg-[#8c631a] hover:text-[#f5f1e6] font-semibold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 disabled:opacity-45 shrink-0 whitespace-nowrap"
         >
           <Send className="w-4 h-4" />
-          <span className="hidden sm:inline">Send</span>
+          <span className="hidden sm:inline">{t.send}</span>
         </button>
       </form>
     </div>

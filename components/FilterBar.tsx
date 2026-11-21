@@ -2,8 +2,10 @@
 
 import React, { useState } from 'react';
 import { Layers, Zap, Filter, SlidersHorizontal, ChevronDown, RotateCcw } from 'lucide-react';
+import { Language, UI_STRINGS } from '@/lib/i18n';
 
 interface FilterBarProps {
+  language: Language;
   selectedScale: 'atziluth' | 'briah' | 'yetzirah' | 'assiah';
   onSelectScale: (scale: 'atziluth' | 'briah' | 'yetzirah' | 'assiah') => void;
   activeMode: 'default' | 'lightning' | 'serpent';
@@ -12,38 +14,8 @@ interface FilterBarProps {
   onSelectFilter: (filter: string | null) => void;
 }
 
-const SCALES = [
-  { id: 'atziluth', label: 'Atziluth' },
-  { id: 'briah', label: 'Briah' },
-  { id: 'yetzirah', label: 'Yetzirah' },
-  { id: 'assiah', label: 'Assiah' },
-] as const;
-
-const MODES = [
-  { id: 'default', label: 'Standard' },
-  { id: 'lightning', label: 'Lightning' },
-  { id: 'serpent', label: 'Serpent' },
-] as const;
-
-const FILTER_OPTIONS = [
-  { label: 'All Attributions', value: '' },
-  { label: 'Fire Element', value: 'fire' },
-  { label: 'Water Element', value: 'water' },
-  { label: 'Air Element', value: 'air' },
-  { label: 'Earth Element', value: 'earth' },
-  { label: 'Solar / Sun', value: 'sun' },
-  { label: 'Lunar / Moon', value: 'moon' },
-  { label: 'Mercury', value: 'mercury' },
-  { label: 'Venus', value: 'venus' },
-  { label: 'Mars', value: 'mars' },
-  { label: 'Jupiter', value: 'jupiter' },
-  { label: 'Saturn', value: 'saturn' },
-  { label: 'Pillar of Mercy', value: 'mercy' },
-  { label: 'Pillar of Severity', value: 'severity' },
-  { label: 'Pillar of Mildness', value: 'mildness' },
-];
-
 export default function FilterBar({
+  language,
   selectedScale,
   onSelectScale,
   activeMode,
@@ -52,10 +24,13 @@ export default function FilterBar({
   onSelectFilter,
 }: FilterBarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const t = UI_STRINGS[language].controls;
 
   const activeFilterLabel =
-    FILTER_OPTIONS.find((opt) => opt.value === (activeFilter || ''))?.label ||
-    'All Attributions';
+    t.filterOptions.find((opt) => opt.value === (activeFilter || ''))?.label ||
+    t.filterOptions[0].label;
+  const activeModeLabel =
+    t.modes.find((mode) => mode.id === activeMode)?.label || t.modes[0].label;
   const hasActiveOverrides = activeMode !== 'default' || Boolean(activeFilter);
 
   const handleReset = () => {
@@ -79,9 +54,7 @@ export default function FilterBar({
             <div className="text-xs text-[#4b576e] truncate">
               <span className="capitalize text-[#5e400b] font-semibold">{selectedScale}</span>
               <span aria-hidden="true"> · </span>
-              <span className="capitalize">
-                {activeMode === 'default' ? 'Standard' : activeMode}
-              </span>
+              <span>{activeModeLabel}</span>
               {activeFilter && (
                 <>
                   <span aria-hidden="true"> · </span>
@@ -101,7 +74,7 @@ export default function FilterBar({
           <button
             type="button"
             onClick={handleReset}
-            aria-label="Reset filters"
+            aria-label={t.resetControls}
             className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-xl bg-[#cfd6e2] border border-[#aeb9cc] text-[#3b475e] active:text-[#7c5814]"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -120,14 +93,14 @@ export default function FilterBar({
           <div className="flex flex-col md:flex-row md:items-center gap-1.5 shrink-0">
             <span className="text-[11px] font-mono tracking-wider text-[#7c5814] flex items-center gap-1 font-semibold md:hidden xl:flex shrink-0">
               <Layers className="w-3.5 h-3.5 text-[#7c5814]" />
-              Scale
+              {t.scale}
             </span>
             <div
               role="group"
-              aria-label="Color scale"
+              aria-label={t.scale}
               className="grid grid-cols-4 md:inline-flex items-center gap-0.5 p-0.5 bg-[#c5cede] rounded-xl border border-[#aeb9cc]"
             >
-              {SCALES.map((scale) => (
+              {t.scales.map((scale) => (
                 <button
                   key={scale.id}
                   type="button"
@@ -148,14 +121,14 @@ export default function FilterBar({
           <div className="flex flex-col md:flex-row md:items-center gap-1.5 shrink-0">
             <span className="text-[11px] font-mono tracking-wider text-[#7c5814] flex items-center gap-1 font-semibold md:hidden xl:flex shrink-0">
               <Zap className="w-3.5 h-3.5 text-[#7c5814]" />
-              Overlay
+              {t.overlay}
             </span>
             <div
               role="group"
-              aria-label="Tree overlay mode"
+              aria-label={t.diagramOverlay}
               className="grid grid-cols-3 md:inline-flex items-center gap-0.5 p-0.5 bg-[#c5cede] rounded-xl border border-[#aeb9cc]"
             >
-              {MODES.map((mode) => (
+              {t.modes.map((mode) => (
                 <button
                   key={mode.id}
                   type="button"
@@ -179,7 +152,7 @@ export default function FilterBar({
               className="text-[11px] font-mono tracking-wider text-[#7c5814] flex items-center gap-1 font-semibold md:sr-only"
             >
               <Filter className="w-3.5 h-3.5 text-[#7c5814]" />
-              Attribution
+              {t.attribution}
             </label>
             <div className="flex items-center gap-1.5 w-full">
               <Filter className="hidden lg:block w-3.5 h-3.5 text-[#7c5814] shrink-0" />
@@ -189,7 +162,7 @@ export default function FilterBar({
                 onChange={(e) => onSelectFilter(e.target.value || null)}
                 className="w-full min-h-[42px] md:min-h-[36px] py-1.5 px-2.5 rounded-xl bg-[#cfd6e2] border border-[#aeb9cc] text-base md:text-xs text-[#161e2e] focus:outline-none focus:border-[#8c631a] cursor-pointer"
               >
-                {FILTER_OPTIONS.map((opt) => (
+                {t.filterOptions.map((opt) => (
                   <option
                     key={opt.value || 'all'}
                     value={opt.value}
@@ -203,8 +176,8 @@ export default function FilterBar({
                 <button
                   type="button"
                   onClick={handleReset}
-                  title="Reset controls"
-                  aria-label="Reset controls"
+                  title={t.resetControls}
+                  aria-label={t.resetControls}
                   className="hidden md:flex min-h-[36px] min-w-[36px] items-center justify-center rounded-xl bg-[#cfd6e2] border border-[#aeb9cc] text-[#3b475e] hover:text-[#7c5814] hover:border-[#8c631a]/60 transition-colors shrink-0"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />

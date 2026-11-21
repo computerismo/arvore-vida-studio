@@ -1,7 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Sephira, Path } from '@/lib/qabalah-data';
+import { Language, UI_STRINGS } from '@/lib/i18n';
+import { getLocalizedSephirothData, getLocalizedPathsData } from '@/lib/qabalah-pt';
 import TreeOfLifeCanvas, { HoveredItem } from '@/components/TreeOfLifeCanvas';
 import EntityDetailDrawer from '@/components/EntityDetailDrawer';
 import PillarsExplorer from '@/components/PillarsExplorer';
@@ -26,6 +28,7 @@ type MobileView = 'tree' | '777' | 'pillars' | 'ai';
 type ConsoleTab = '777' | 'pillars' | 'ai';
 
 export default function Home() {
+  const [language, setLanguage] = useState<Language>('pt');
   const [selectedScale, setSelectedScale] = useState<
     'atziluth' | 'briah' | 'yetzirah' | 'assiah'
   >('briah');
@@ -35,8 +38,8 @@ export default function Home() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [showPillars, setShowPillars] = useState(true);
 
-  const [selectedSephira, setSelectedSephira] = useState<Sephira | null>(null);
-  const [selectedPath, setSelectedPath] = useState<Path | null>(null);
+  const [selectedSephiraId, setSelectedSephiraId] = useState<string | null>(null);
+  const [selectedPathId, setSelectedPathId] = useState<string | null>(null);
   const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null);
 
   // Mobile view state & controls sheet
@@ -54,6 +57,27 @@ export default function Home() {
     name: string;
     type: 'sephira' | 'path';
   } | null>(null);
+
+  useEffect(() => {
+    document.documentElement.lang = language === 'pt' ? 'pt-BR' : 'en';
+  }, [language]);
+
+  const t = UI_STRINGS[language];
+
+  const localizedSephiroth = useMemo(
+    () => getLocalizedSephirothData(language),
+    [language]
+  );
+  const localizedPaths = useMemo(() => getLocalizedPathsData(language), [language]);
+
+  const selectedSephira = useMemo(
+    () => localizedSephiroth.find((s) => s.id === selectedSephiraId) ?? null,
+    [localizedSephiroth, selectedSephiraId]
+  );
+  const selectedPath = useMemo(
+    () => localizedPaths.find((p) => p.id === selectedPathId) ?? null,
+    [localizedPaths, selectedPathId]
+  );
 
   const scrollToConsole = (elementId = 'study-console') => {
     setTimeout(() => {
@@ -75,13 +99,13 @@ export default function Home() {
   };
 
   const handleSelectSephira = (s: Sephira) => {
-    setSelectedPath(null);
-    setSelectedSephira(s);
+    setSelectedPathId(null);
+    setSelectedSephiraId(s.id);
   };
 
   const handleSelectPath = (p: Path) => {
-    setSelectedSephira(null);
-    setSelectedPath(p);
+    setSelectedSephiraId(null);
+    setSelectedPathId(p.id);
   };
 
   const handleSwitchMobileView = (view: MobileView) => {
@@ -113,15 +137,18 @@ export default function Home() {
     label: string;
     icon: React.ComponentType<{ className?: string }>;
   }> = [
-    { id: 'tree', label: 'Tree', icon: Compass },
-    { id: '777', label: '777 Index', icon: Table },
-    { id: 'pillars', label: 'Pillars', icon: Columns },
-    { id: 'ai', label: 'Oracle', icon: Bot },
+    { id: 'tree', label: t.mobileNav.tree, icon: Compass },
+    { id: '777', label: t.mobileNav.index777, icon: Table },
+    { id: 'pillars', label: t.mobileNav.pillars, icon: Columns },
+    { id: 'ai', label: t.mobileNav.oracle, icon: Bot },
   ];
 
   const aiInitialPrompt = aiPromptTarget
-    ? `Generate a detailed step-by-step guided Pathworking Meditation for ${aiPromptTarget.name}.`
+    ? t.aiGuide.meditationPrompt(aiPromptTarget.name)
     : undefined;
+
+  const selectedScaleLabel =
+    t.controls.scales.find((s) => s.id === selectedScale)?.label ?? selectedScale;
 
   const hasCustomMobileControls =
     selectedScale !== 'briah' ||
@@ -141,33 +168,65 @@ export default function Home() {
 
       <div className="w-full max-w-6xl mx-auto px-2.5 sm:px-5 lg:px-8 pt-2.5 sm:pt-4 pb-1.5 md:pb-4 flex-1 min-h-0 flex flex-col gap-2 md:gap-4">
         {/* Adaptive Header */}
-        <header className="flex items-center justify-between gap-3 border-b border-[#8a631c]/25 pb-2 sm:pb-3.5 shrink-0 px-1 md:px-0">
+        <header className="flex items-center justify-between gap-2 sm:gap-3 border-b border-[#8a631c]/25 pb-2 sm:pb-3.5 shrink-0 px-1 md:px-0">
           <div className="min-w-0">
             <h1 className="text-lg sm:text-2xl lg:text-[26px] font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#161e2e] via-[#7c5814] to-[#161e2e] tracking-wide whitespace-nowrap truncate">
-              <span>Otz Chiim</span>
-              <span className="hidden sm:inline"> · The Tree of Life</span>
+              <span>{t.header.titlePrefix}</span>
+              <span className="hidden sm:inline">{t.header.titleSuffix}</span>
             </h1>
             <p className="hidden md:block text-xs text-[#4b576e] mt-0.5">
-              Hermetic Qabalah Reference · Golden Dawn Tradition
+              {t.header.subtitle}
             </p>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Language Toggle (PT-BR default | EN) */}
+            <div
+              role="group"
+              aria-label={t.header.languageToggleAria}
+              className="flex items-center bg-[#dce2ec] border border-[#b3bdd0] rounded-xl p-0.5 min-h-[40px]"
+            >
+              <button
+                type="button"
+                onClick={() => setLanguage('pt')}
+                aria-pressed={language === 'pt'}
+                className={`min-h-[34px] px-2.5 rounded-lg text-[11px] font-mono font-bold tracking-wider transition-colors ${
+                  language === 'pt'
+                    ? 'bg-[#9a7022]/20 text-[#5e400b] border border-[#8c631a]/60'
+                    : 'text-[#4b576e] hover:text-[#161e2e] border border-transparent'
+                }`}
+              >
+                PT
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage('en')}
+                aria-pressed={language === 'en'}
+                className={`min-h-[34px] px-2.5 rounded-lg text-[11px] font-mono font-bold tracking-wider transition-colors ${
+                  language === 'en'
+                    ? 'bg-[#9a7022]/20 text-[#5e400b] border border-[#8c631a]/60'
+                    : 'text-[#4b576e] hover:text-[#161e2e] border border-transparent'
+                }`}
+              >
+                EN
+              </button>
+            </div>
+
             {/* Mobile Controls Sheet Trigger */}
             {mobileView === 'tree' && (
               <button
                 type="button"
                 onClick={() => setMobileControlsOpen(true)}
-                className={`md:hidden min-h-[40px] px-3 rounded-xl border text-xs font-medium transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+                className={`md:hidden min-h-[40px] px-2.5 sm:px-3 rounded-xl border text-xs font-medium transition-colors flex items-center gap-1.5 whitespace-nowrap ${
                   hasCustomMobileControls
                     ? 'bg-[#9a7022]/16 border-[#8c631a]/75 text-[#5e400b]'
                     : 'bg-[#dce2ec] border-[#b3bdd0] text-[#161e2e]'
                 }`}
               >
                 <SlidersHorizontal className="w-3.5 h-3.5 text-[#7c5814]" />
-                <span>Controls</span>
-                <span className="text-[11px] text-[#4b576e] capitalize">
-                  · {selectedScale}
+                <span>{t.header.controls}</span>
+                <span className="hidden min-[390px]:inline text-[11px] text-[#4b576e]">
+                  · {selectedScaleLabel}
                 </span>
               </button>
             )}
@@ -176,11 +235,11 @@ export default function Home() {
             <button
               type="button"
               onClick={() => setShowHowToStudy(true)}
-              aria-label="Study Guide"
+              aria-label={t.header.guideAria}
               className="min-h-[40px] min-w-[40px] sm:min-w-0 sm:px-3.5 py-2 rounded-xl bg-[#dce2ec] border border-[#b3bdd0] hover:border-[#8c631a] text-xs text-[#2c364a] hover:text-[#5e400b] transition-colors flex items-center justify-center gap-2 font-medium whitespace-nowrap shrink-0"
             >
               <Info className="w-4 h-4 text-[#7c5814]" />
-              <span className="hidden sm:inline">Guide</span>
+              <span className="hidden sm:inline">{t.header.guide}</span>
             </button>
 
             {/* Tablet & Desktop Reference Console Toggle */}
@@ -190,7 +249,7 @@ export default function Home() {
               className="hidden md:flex min-h-[40px] px-4 py-2 rounded-xl bg-[#9a7022]/15 border border-[#8c631a]/55 hover:border-[#7c5814] text-xs text-[#5e400b] hover:bg-[#9a7022]/22 transition-colors items-center gap-2 font-semibold whitespace-nowrap shrink-0"
             >
               <Table className="w-4 h-4" />
-              <span>Reference Console</span>
+              <span>{t.header.referenceConsole}</span>
               {isConsoleOpen ? (
                 <ChevronUp className="w-4 h-4" />
               ) : (
@@ -203,6 +262,7 @@ export default function Home() {
         {/* Tablet & Desktop Controls Ribbon */}
         <div className="hidden md:block shrink-0">
           <FilterBar
+            language={language}
             selectedScale={selectedScale}
             onSelectScale={setSelectedScale}
             activeMode={activeMode}
@@ -221,11 +281,12 @@ export default function Home() {
           } flex-1 md:flex-none min-h-0 w-full justify-center items-center md:h-[calc(100dvh-14.25rem)] md:min-h-[500px] md:max-h-[790px]`}
         >
           <TreeOfLifeCanvas
+            language={language}
             selectedScale={selectedScale}
             activeFilter={activeFilter}
             activeMode={activeMode}
-            selectedSephiraId={selectedSephira?.id || null}
-            selectedPathId={selectedPath?.id || null}
+            selectedSephiraId={selectedSephiraId}
+            selectedPathId={selectedPathId}
             onSelectSephira={handleSelectSephira}
             onSelectPath={handleSelectPath}
             onHoverItem={setHoveredItem}
@@ -239,18 +300,23 @@ export default function Home() {
         <div className="md:hidden">
           {mobileView === '777' && (
             <CorrespondenceTable
+              language={language}
               onSelectSephira={handleSelectSephira}
               onSelectPath={handleSelectPath}
             />
           )}
 
           {mobileView === 'pillars' && (
-            <PillarsExplorer onSelectSephira={handleSelectSephira} />
+            <PillarsExplorer
+              language={language}
+              onSelectSephira={handleSelectSephira}
+            />
           )}
 
           {mobileView === 'ai' && (
             <div id="ai-guide-section">
               <AiQabalahGuide
+                language={language}
                 initialPrompt={aiInitialPrompt}
                 initialEntityName={aiPromptTarget?.name}
                 initialEntityType={aiPromptTarget?.type}
@@ -268,10 +334,10 @@ export default function Home() {
             <div>
               <h2 className="text-base font-serif font-bold text-[#161e2e] flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-[#7c5814]" />
-                Hermetic Reference Console
+                {t.console.title}
               </h2>
               <p className="text-xs text-[#4b576e] mt-0.5">
-                777 Index, 3 Pillars Analysis, and Pathworking Oracle
+                {t.console.subtitle}
               </p>
             </div>
 
@@ -286,7 +352,7 @@ export default function Home() {
                 }`}
               >
                 <Table className="w-3.5 h-3.5" />
-                777 Index
+                {t.console.tab777}
               </button>
 
               <button
@@ -299,7 +365,7 @@ export default function Home() {
                 }`}
               >
                 <Columns className="w-3.5 h-3.5" />
-                3 Pillars
+                {t.console.tabPillars}
               </button>
 
               <button
@@ -312,7 +378,7 @@ export default function Home() {
                 }`}
               >
                 <Bot className="w-3.5 h-3.5" />
-                Oracle
+                {t.console.tabOracle}
               </button>
 
               <button
@@ -321,8 +387,8 @@ export default function Home() {
                 className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-xl bg-[#cfd6e2] border border-[#aeb9cc] text-[#2c364a] hover:text-[#161e2e] transition-colors"
                 aria-label={
                   isConsoleOpen
-                    ? 'Collapse Reference Console'
-                    : 'Expand Reference Console'
+                    ? t.console.collapseAria
+                    : t.console.expandAria
                 }
               >
                 {isConsoleOpen ? (
@@ -338,18 +404,23 @@ export default function Home() {
             <div className="transition-all">
               {activeConsoleTab === '777' && (
                 <CorrespondenceTable
+                  language={language}
                   onSelectSephira={handleSelectSephira}
                   onSelectPath={handleSelectPath}
                 />
               )}
 
               {activeConsoleTab === 'pillars' && (
-                <PillarsExplorer onSelectSephira={handleSelectSephira} />
+                <PillarsExplorer
+                  language={language}
+                  onSelectSephira={handleSelectSephira}
+                />
               )}
 
               {activeConsoleTab === 'ai' && (
                 <div id="ai-guide-section">
                   <AiQabalahGuide
+                    language={language}
                     initialPrompt={aiInitialPrompt}
                     initialEntityName={aiPromptTarget?.name}
                     initialEntityType={aiPromptTarget?.type}
@@ -363,7 +434,7 @@ export default function Home() {
 
       {/* MOBILE FIXED BOTTOM TAB NAVIGATION (< md) */}
       <nav
-        aria-label="Primary navigation"
+        aria-label={t.mobileNav.ariaLabel}
         className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#dce2ec]/95 backdrop-blur-md border-t border-[#b3bdd0] pb-safe"
       >
         <div className="grid grid-cols-4 items-center h-16 max-w-lg mx-auto px-1">
@@ -394,6 +465,7 @@ export default function Home() {
 
       {/* Mobile Diagram Controls Bottom Sheet */}
       <MobileControlsSheet
+        language={language}
         open={mobileControlsOpen}
         onClose={() => setMobileControlsOpen(false)}
         selectedScale={selectedScale}
@@ -411,7 +483,7 @@ export default function Home() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="How to Study the Tree of Life"
+          aria-label={t.studyModal.ariaLabel}
           className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#161e2e]/45 backdrop-blur-sm"
           onClick={() => setShowHowToStudy(false)}
         >
@@ -426,12 +498,12 @@ export default function Home() {
             <div className="flex items-center justify-between border-b border-[#b3bdd0] pb-3">
               <h3 className="text-base sm:text-lg font-serif font-bold text-[#6d4b0f] flex items-center gap-2">
                 <Info className="w-5 h-5 text-[#7c5814] shrink-0" />
-                How to Study the Tree of Life
+                {t.studyModal.title}
               </h3>
               <button
                 type="button"
                 onClick={() => setShowHowToStudy(false)}
-                aria-label="Close guide"
+                aria-label={t.studyModal.closeAria}
                 className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-[#cfd6e2] text-[#2c364a] hover:text-[#161e2e] border border-[#aeb9cc]"
               >
                 <X className="w-4 h-4" />
@@ -439,29 +511,12 @@ export default function Home() {
             </div>
 
             <ul className="text-sm sm:text-xs text-[#2c364a] space-y-3 leading-relaxed list-disc list-inside">
-              <li>
-                <strong className="text-[#161e2e]">Spheres (1–10 + Da&apos;ath):</strong> Click or
-                tap any sphere on the diagram to slide open its divine names, archangels,
-                astrological attributions, and classic commentary.
-              </li>
-              <li>
-                <strong className="text-[#161e2e]">Connecting Pathways (11–32):</strong> Click any
-                Hebrew letter or path line to inspect its Tarot Major Arcana key and esoteric title.
-              </li>
-              <li>
-                <strong className="text-[#161e2e]">Golden Dawn Color Scales:</strong> Switch
-                between Atziluth (King), Briah (Queen), Yetzirah (Prince), and Assiah (Princess)
-                scales in the top toolbar or mobile Controls sheet.
-              </li>
-              <li>
-                <strong className="text-[#161e2e]">Diagram Overlays:</strong> Toggle the Lightning
-                Flash cosmic descent or Serpent of Wisdom ascent paths.
-              </li>
-              <li>
-                <strong className="text-[#161e2e]">Reference Console:</strong> Expand the
-                Reference Console below the Tree on tablet/desktop—or use the mobile bottom tabs—to
-                browse the 777 Index, 3 Pillars, and Pathworking Oracle.
-              </li>
+              {t.studyModal.items.map((item) => (
+                <li key={item.lead}>
+                  <strong className="text-[#161e2e]">{item.lead}</strong>{' '}
+                  {item.body}
+                </li>
+              ))}
             </ul>
 
             <button
@@ -469,7 +524,7 @@ export default function Home() {
               onClick={() => setShowHowToStudy(false)}
               className="w-full min-h-[48px] py-3 rounded-xl bg-gradient-to-r from-[#8f681d] to-[#745112] text-[#f5f1e6] font-bold text-xs uppercase tracking-wider transition-all hover:brightness-110 shadow-md"
             >
-              Close Guide
+              {t.studyModal.closeButton}
             </button>
           </div>
         </div>
@@ -477,11 +532,12 @@ export default function Home() {
 
       {/* On-Demand Detail Sheet (Bottom Sheet on Mobile, Right Slide-Over Drawer on Tablet & Desktop) */}
       <EntityDetailDrawer
+        language={language}
         sephira={selectedSephira}
         pathItem={selectedPath}
         onClose={() => {
-          setSelectedSephira(null);
-          setSelectedPath(null);
+          setSelectedSephiraId(null);
+          setSelectedPathId(null);
         }}
         onGenerateAiMeditation={handleGenerateAiMeditation}
       />

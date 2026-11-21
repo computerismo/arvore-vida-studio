@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ZoomIn, ZoomOut, RotateCcw, Columns } from 'lucide-react';
 import {
@@ -11,12 +11,19 @@ import {
   Sephira,
   Path,
 } from '@/lib/qabalah-data';
+import { Language, UI_STRINGS } from '@/lib/i18n';
+import {
+  getLocalizedSephirothData,
+  getLocalizedPathsData,
+  getLocalizedPillarName,
+} from '@/lib/qabalah-pt';
 
 export type HoveredItem =
   | { type: 'sephira'; data: Sephira }
   | { type: 'path'; data: Path };
 
 interface TreeOfLifeCanvasProps {
+  language: Language;
   selectedScale: 'atziluth' | 'briah' | 'yetzirah' | 'assiah';
   activeFilter: string | null;
   activeMode: 'default' | 'lightning' | 'serpent';
@@ -72,7 +79,186 @@ function isLightHex(hex: string): boolean {
   return getRelativeLuminance(hex) > 0.22;
 }
 
+const FLUTE_OFFSETS = [-10.5, -3.5, 3.5, 10.5];
+
+interface ClassicalPillarProps {
+  cx: number;
+  variant: 'boaz' | 'jachin';
+  title: string;
+  subtitle: string;
+}
+
+function ClassicalPillar({ cx, variant, title, subtitle }: ClassicalPillarProps) {
+  const isBoaz = variant === 'boaz';
+  const orbFill = isBoaz ? 'url(#orb-dark)' : 'url(#orb-light)';
+  const orbStroke = isBoaz ? '#7c817a' : '#a3a89d';
+  const signStroke = isBoaz ? '#5c6158' : '#94865b';
+  const primaryFill = isBoaz ? '#b5b6b1' : '#e8e6de';
+  const secondaryFill = isBoaz ? '#d2d2c9' : '#f9f8f2';
+  const shadowFill = isBoaz ? '#90958f' : '#c9cbc5';
+  const strokeColor = isBoaz ? '#7c817a' : '#a3a89d';
+
+  return (
+    <g className="pointer-events-none">
+      {/* Crowned Orb */}
+      <circle
+        cx={cx}
+        cy={71}
+        r={26}
+        fill={orbFill}
+        stroke={orbStroke}
+        strokeWidth="0.65"
+      />
+      <line
+        x1={cx - 5.6}
+        y1={71}
+        x2={cx + 5.6}
+        y2={71}
+        stroke={signStroke}
+        strokeWidth="1.25"
+      />
+      {!isBoaz && (
+        <line
+          x1={cx}
+          y1={65.4}
+          x2={cx}
+          y2={76.6}
+          stroke={signStroke}
+          strokeWidth="1.25"
+        />
+      )}
+
+      {/* Stepped Capital */}
+      <rect
+        x={cx - 39}
+        y={85}
+        width={78}
+        height={12.5}
+        fill={primaryFill}
+        stroke={strokeColor}
+        strokeWidth="0.65"
+      />
+      <rect
+        x={cx - 32.5}
+        y={97.5}
+        width={65}
+        height={9}
+        fill={secondaryFill}
+        stroke={strokeColor}
+        strokeWidth="0.6"
+      />
+      <rect
+        x={cx - 27}
+        y={106.5}
+        width={54}
+        height={11.5}
+        fill={primaryFill}
+        stroke={strokeColor}
+        strokeWidth="0.6"
+      />
+      <line
+        x1={cx - 36}
+        y1={88}
+        x2={cx + 36}
+        y2={88}
+        stroke="#aa8c50"
+        strokeWidth="0.75"
+      />
+
+      {/* Fluted Shaft */}
+      <rect
+        x={cx - 22}
+        y={118}
+        width={44}
+        height={702}
+        fill={primaryFill}
+        stroke={strokeColor}
+        strokeWidth="0.65"
+      />
+      <rect x={cx - 21.3} y={118.6} width={5.6} height={700.8} fill={shadowFill} />
+      <rect x={cx + 14.9} y={118.6} width={6.4} height={700.8} fill={secondaryFill} />
+
+      {FLUTE_OFFSETS.map((offset) => (
+        <g key={offset}>
+          <line
+            x1={cx + offset}
+            y1={124}
+            x2={cx + offset}
+            y2={813}
+            stroke={shadowFill}
+            strokeWidth="0.65"
+          />
+          <line
+            x1={cx + offset + 1.3}
+            y1={124}
+            x2={cx + offset + 1.3}
+            y2={813}
+            stroke={secondaryFill}
+            strokeWidth="0.65"
+          />
+        </g>
+      ))}
+
+      {/* Stepped Base Plinth */}
+      <rect
+        x={cx - 27}
+        y={820}
+        width={54}
+        height={8.5}
+        fill={secondaryFill}
+        stroke={strokeColor}
+        strokeWidth="0.6"
+      />
+      <rect
+        x={cx - 32.5}
+        y={828.5}
+        width={65}
+        height={10}
+        fill={primaryFill}
+        stroke={strokeColor}
+        strokeWidth="0.6"
+      />
+      <rect
+        x={cx - 39}
+        y={838.5}
+        width={78}
+        height={11.5}
+        fill={secondaryFill}
+        stroke={strokeColor}
+        strokeWidth="0.6"
+      />
+      <line
+        x1={cx - 29.5}
+        y1={831.5}
+        x2={cx + 29.5}
+        y2={831.5}
+        stroke="#aa8c50"
+        strokeWidth="0.7"
+      />
+
+      {/* Pillar Inscription */}
+      <text
+        x={cx}
+        y={865}
+        textAnchor="middle"
+        className="fill-[#252b2e] text-[10.5px] font-serif font-bold tracking-[0.14em]"
+      >
+        {title}
+      </text>
+      <text
+        x={cx}
+        y={877}
+        textAnchor="middle"
+        className="fill-[#434d5e] text-[8.5px] font-serif italic"
+      >
+        {subtitle}
+      </text>
+    </g>
+  );
+}
+
 export default function TreeOfLifeCanvas({
+  language,
   selectedScale,
   activeFilter,
   activeMode,
@@ -85,6 +271,21 @@ export default function TreeOfLifeCanvas({
   showPillars: controlledShowPillars,
   onTogglePillars,
 }: TreeOfLifeCanvasProps) {
+  const t = UI_STRINGS[language].canvas;
+  const scaleLabel =
+    UI_STRINGS[language].controls.scales.find((s) => s.id === selectedScale)?.label ??
+    selectedScale;
+  const localizedSephiroth = useMemo(
+    () => getLocalizedSephirothData(language),
+    [language]
+  );
+  const localizedPaths = useMemo(() => getLocalizedPathsData(language), [language]);
+  const baseSephirothById = useMemo(
+    () => new Map(SEPHIROTH_DATA.map((s) => [s.id, s])),
+    []
+  );
+  const basePathsById = useMemo(() => new Map(PATHS_DATA.map((p) => [p.id, p])), []);
+
   const [internalShowPillars, setInternalShowPillars] = useState(true);
   const showPillars =
     controlledShowPillars !== undefined ? controlledShowPillars : internalShowPillars;
@@ -343,24 +544,36 @@ export default function TreeOfLifeCanvas({
   const isSephiraFiltered = (sephira: Sephira) => {
     if (!activeFilter) return true;
     const filterLower = activeFilter.toLowerCase();
+    const base = baseSephirothById.get(sephira.id) ?? sephira;
     return (
       sephira.pillar.toLowerCase().includes(filterLower) ||
       sephira.element.toLowerCase().includes(filterLower) ||
       sephira.astrological.toLowerCase().includes(filterLower) ||
       sephira.name.toLowerCase().includes(filterLower) ||
-      sephira.archangel.toLowerCase().includes(filterLower)
+      sephira.archangel.toLowerCase().includes(filterLower) ||
+      base.pillar.toLowerCase().includes(filterLower) ||
+      base.element.toLowerCase().includes(filterLower) ||
+      base.astrological.toLowerCase().includes(filterLower) ||
+      base.name.toLowerCase().includes(filterLower) ||
+      base.archangel.toLowerCase().includes(filterLower)
     );
   };
 
   const isPathFiltered = (path: Path) => {
     if (!activeFilter) return true;
     const filterLower = activeFilter.toLowerCase();
+    const base = basePathsById.get(path.id) ?? path;
     return (
       path.attribution.toLowerCase().includes(filterLower) ||
       path.attributionType.toLowerCase().includes(filterLower) ||
       path.tarotCardName.toLowerCase().includes(filterLower) ||
       path.hebrewLetterName.toLowerCase().includes(filterLower) ||
-      path.name.toLowerCase().includes(filterLower)
+      path.name.toLowerCase().includes(filterLower) ||
+      base.attribution.toLowerCase().includes(filterLower) ||
+      base.attributionType.toLowerCase().includes(filterLower) ||
+      base.tarotCardName.toLowerCase().includes(filterLower) ||
+      base.hebrewLetterName.toLowerCase().includes(filterLower) ||
+      base.name.toLowerCase().includes(filterLower)
     );
   };
 
@@ -374,12 +587,14 @@ export default function TreeOfLifeCanvas({
   const showFloatingTooltip = isFinePointer && hoveredItem && !isDragging;
 
   return (
-    <div className="relative w-full md:max-w-[660px] mx-auto h-full flex flex-col md:bg-[#dce2ec] md:rounded-2xl md:border md:border-[#b3bdd0] md:p-3.5 lg:p-4 md:shadow-md select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col md:bg-[#dce2ec] md:rounded-2xl md:border md:border-[#b3bdd0] md:p-3.5 lg:p-4 md:shadow-md select-none overflow-hidden">
       {/* Tablet & Desktop Canvas Toolbar (Hidden on Mobile so the Tree gets maximum screen height) */}
       <div className="hidden md:flex items-center justify-between gap-2 mb-2 px-1 shrink-0">
         <div className="flex items-center gap-2 min-w-0">
           <span className="font-mono text-xs text-[#7c5814] font-semibold tracking-wider truncate">
-            Tree of Life · <span className="capitalize">{selectedScale}</span> Scale
+            {language === 'pt'
+              ? `${t.treeOfLife} · ${t.scaleWord} ${scaleLabel}`
+              : `${t.treeOfLife} · ${scaleLabel} ${t.scaleWord}`}
           </span>
         </div>
 
@@ -389,8 +604,8 @@ export default function TreeOfLifeCanvas({
               type="button"
               onClick={() => zoomAtFocalPoint(zoom - 0.5)}
               disabled={zoom <= MIN_ZOOM}
-              aria-label="Zoom out"
-              title="Zoom out"
+              aria-label={t.zoomOut}
+              title={t.zoomOut}
               className="min-h-[32px] min-w-[32px] flex items-center justify-center rounded-lg text-[#2c364a] hover:text-[#5e400b] hover:bg-[#dce2ec] disabled:opacity-35 disabled:hover:bg-transparent transition-colors"
             >
               <ZoomOut className="w-3.5 h-3.5" />
@@ -399,7 +614,7 @@ export default function TreeOfLifeCanvas({
               type="button"
               onClick={handleResetView}
               disabled={zoom <= MIN_ZOOM}
-              title={zoom > 1 ? 'Click to reset zoom' : '100% zoom'}
+              title={zoom > 1 ? t.clickToResetZoom : t.zoomPercentLabel}
               className="px-1.5 text-[11px] font-mono tabular-nums text-[#2c364a] hover:text-[#5e400b] disabled:hover:text-[#2c364a] min-w-[44px] text-center"
             >
               {Math.round(zoom * 100)}%
@@ -408,8 +623,8 @@ export default function TreeOfLifeCanvas({
               type="button"
               onClick={() => zoomAtFocalPoint(zoom + 0.5)}
               disabled={zoom >= MAX_ZOOM}
-              aria-label="Zoom in"
-              title="Zoom in"
+              aria-label={t.zoomIn}
+              title={t.zoomIn}
               className="min-h-[32px] min-w-[32px] flex items-center justify-center rounded-lg text-[#2c364a] hover:text-[#5e400b] hover:bg-[#dce2ec] disabled:opacity-35 disabled:hover:bg-transparent transition-colors"
             >
               <ZoomIn className="w-3.5 h-3.5" />
@@ -418,8 +633,8 @@ export default function TreeOfLifeCanvas({
               <button
                 type="button"
                 onClick={handleResetView}
-                aria-label="Reset zoom"
-                title="Reset zoom"
+                aria-label={t.resetZoom}
+                title={t.resetZoom}
                 className="min-h-[32px] min-w-[32px] flex items-center justify-center rounded-lg text-[#7c5814] hover:bg-[#9a7022]/15 transition-colors"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
@@ -437,7 +652,7 @@ export default function TreeOfLifeCanvas({
             }`}
           >
             <Columns className="w-3.5 h-3.5" />
-            <span>Pillars</span>
+            <span>{t.pillars}</span>
           </button>
         </div>
       </div>
@@ -471,12 +686,12 @@ export default function TreeOfLifeCanvas({
           }}
         >
           <svg
-            viewBox="35 -28 530 912"
+            viewBox="35 -28 530 920"
             preserveAspectRatio="xMidYMid meet"
             className="w-full h-full max-w-full max-h-full drop-shadow-lg"
             xmlns="http://www.w3.org/2000/svg"
             role="img"
-            aria-label="Interactive Hermetic Qabalah Tree of Life diagram with 10 Sephiroth, Daath, and 22 connecting paths"
+            aria-label={t.svgAriaLabel}
           >
             <defs>
               <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
@@ -489,43 +704,48 @@ export default function TreeOfLifeCanvas({
                 <stop offset="50%" stopColor="#d4a74a" stopOpacity="1" />
                 <stop offset="100%" stopColor="#6e4b0e" stopOpacity="0.95" />
               </linearGradient>
+
+              <radialGradient id="orb-dark" cx="35%" cy="25%">
+                <stop offset="0" stopColor="#dadad1" />
+                <stop offset=".68" stopColor="#b1b4ac" />
+                <stop offset="1" stopColor="#8e958c" />
+              </radialGradient>
+
+              <radialGradient id="orb-light" cx="35%" cy="25%">
+                <stop offset="0" stopColor="#fffefa" />
+                <stop offset=".7" stopColor="#efeee5" />
+                <stop offset="1" stopColor="#c8cec3" />
+              </radialGradient>
             </defs>
 
-            {/* SUBTLE BACKGROUND PILLARS */}
+            {/* CLASSICAL ARCHITECTURAL PILLARS (BOAZ & JACHIN) + MIDDLE AXIS */}
             {showPillars && (
               <g className="transition-opacity duration-300">
-                <rect
-                  x="72"
-                  y="92"
-                  width="116"
-                  height="566"
-                  rx="10"
-                  fill="#b8c2d3"
-                  stroke="#8291a8"
-                  strokeWidth="1"
-                  strokeDasharray="4 4"
-                  opacity="0.68"
+                <ClassicalPillar
+                  cx={130}
+                  variant="boaz"
+                  title="BOAZ"
+                  subtitle={t.pillarSeveritySubtitle}
                 />
-                <text
-                  x="130"
-                  y="114"
-                  textAnchor="middle"
-                  className="fill-[#334057] text-[10px] font-serif tracking-[0.14em] uppercase font-semibold pointer-events-none"
-                >
-                  Severity (Boaz)
-                </text>
 
-                <rect
-                  x="242"
-                  y="-16"
-                  width="116"
-                  height="888"
-                  rx="10"
-                  fill="#b8c2d3"
-                  stroke="#8e6c24"
-                  strokeWidth="1"
-                  strokeDasharray="4 4"
-                  opacity="0.68"
+                <ClassicalPillar
+                  cx={470}
+                  variant="jachin"
+                  title="JACHIN"
+                  subtitle={t.pillarMercySubtitle}
+                />
+
+                {/* Middle Pillar Axis */}
+                <line
+                  x1="300"
+                  y1="20"
+                  x2="300"
+                  y2="854"
+                  stroke="#7e7255"
+                  strokeWidth="0.9"
+                  strokeDasharray="1.8 5"
+                  opacity="0.65"
+                  className="pointer-events-none"
                 />
                 <text
                   x="300"
@@ -533,35 +753,14 @@ export default function TreeOfLifeCanvas({
                   textAnchor="middle"
                   className="fill-[#6d4b0f] text-[10px] font-serif tracking-[0.14em] uppercase font-bold pointer-events-none"
                 >
-                  Mildness (Middle)
-                </text>
-
-                <rect
-                  x="412"
-                  y="92"
-                  width="116"
-                  height="566"
-                  rx="10"
-                  fill="#b8c2d3"
-                  stroke="#8291a8"
-                  strokeWidth="1"
-                  strokeDasharray="4 4"
-                  opacity="0.68"
-                />
-                <text
-                  x="470"
-                  y="114"
-                  textAnchor="middle"
-                  className="fill-[#334057] text-[10px] font-serif tracking-[0.14em] uppercase font-semibold pointer-events-none"
-                >
-                  Mercy (Jachin)
+                  {t.pillarMildness}
                 </text>
               </g>
             )}
 
             {/* THE 22 CONNECTING PATHS */}
             <g id="paths-group">
-              {PATHS_DATA.map((pathItem) => {
+              {localizedPaths.map((pathItem) => {
                 const start = SVG_COORDS[pathItem.fromSephiraId];
                 const end = SVG_COORDS[pathItem.toSephiraId];
                 if (!start || !end) return null;
@@ -597,7 +796,11 @@ export default function TreeOfLifeCanvas({
                     key={pathItem.id}
                     role="button"
                     tabIndex={0}
-                    aria-label={`Path ${pathItem.number}, ${pathItem.hebrewLetterName}, ${pathItem.tarotCardName}`}
+                    aria-label={
+                      language === 'pt'
+                        ? `Caminho ${pathItem.number}, ${pathItem.hebrewLetterName}, ${pathItem.tarotCardName}`
+                        : `Path ${pathItem.number}, ${pathItem.hebrewLetterName}, ${pathItem.tarotCardName}`
+                    }
                     className="cursor-pointer group focus:outline-none"
                     onClick={() => handleSelectPathSafe(pathItem)}
                     onKeyDown={(e) => {
@@ -742,7 +945,7 @@ export default function TreeOfLifeCanvas({
 
             {/* THE 10 SEPHIROTH + DA'ATH SPHERES */}
             <g id="sephiroth-group">
-              {SEPHIROTH_DATA.map((sephira) => {
+              {localizedSephiroth.map((sephira) => {
                 const coord = SVG_COORDS[sephira.id];
                 if (!coord) return null;
 
@@ -769,7 +972,11 @@ export default function TreeOfLifeCanvas({
                     role="button"
                     tabIndex={0}
                     aria-label={`${
-                      isDaath ? "Da'ath" : `Sephira ${sephira.number}`
+                      isDaath
+                        ? "Da'ath"
+                        : language === 'pt'
+                        ? `Sephirah ${sephira.number}`
+                        : `Sephira ${sephira.number}`
                     }, ${sephira.name}, ${sephira.translation}`}
                     className="cursor-pointer group focus:outline-none"
                     onClick={() => handleSelectSephiraSafe(sephira)}
@@ -934,7 +1141,7 @@ export default function TreeOfLifeCanvas({
             type="button"
             onClick={() => zoomAtFocalPoint(zoom - 0.5)}
             disabled={zoom <= MIN_ZOOM}
-            aria-label="Zoom out"
+            aria-label={t.zoomOut}
             className="min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-[#2c364a] active:text-[#5e400b] disabled:opacity-35"
           >
             <ZoomOut className="w-4 h-4" />
@@ -946,7 +1153,7 @@ export default function TreeOfLifeCanvas({
             type="button"
             onClick={() => zoomAtFocalPoint(zoom + 0.5)}
             disabled={zoom >= MAX_ZOOM}
-            aria-label="Zoom in"
+            aria-label={t.zoomIn}
             className="min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-[#2c364a] active:text-[#5e400b] disabled:opacity-35"
           >
             <ZoomIn className="w-4 h-4" />
@@ -955,7 +1162,7 @@ export default function TreeOfLifeCanvas({
             <button
               type="button"
               onClick={handleResetView}
-              aria-label="Reset zoom"
+              aria-label={t.resetZoom}
               className="min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-[#7c5814]"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -971,16 +1178,14 @@ export default function TreeOfLifeCanvas({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 4, scale: 0.98 }}
               transition={{ duration: 0.14 }}
-              className="absolute bottom-3 left-3 right-3 bg-[#dce2ec]/96 border border-[#8c631a]/60 rounded-xl p-3 shadow-xl text-[#161e2e] z-30 pointer-events-none backdrop-blur-md"
+              className="absolute bottom-3 inset-x-3 md:max-w-2xl md:mx-auto bg-[#dce2ec]/96 border border-[#8c631a]/60 rounded-xl p-3 shadow-xl text-[#161e2e] z-30 pointer-events-none backdrop-blur-md"
             >
               {hoveredItem.type === 'sephira' ? (
                 <div>
                   <div className="flex items-center justify-between gap-2 border-b border-[#b3bdd0] pb-1.5 mb-1.5">
                     <div className="flex items-center gap-2 min-w-0">
                       <span className="text-[#7c5814] font-mono text-xs font-semibold shrink-0">
-                        {hoveredItem.data.number === 0
-                          ? "Da'ath"
-                          : `Sephira ${hoveredItem.data.number}`}
+                        {t.tooltipSphere(hoveredItem.data.number)}
                       </span>
                       <span className="text-[#8291a8]" aria-hidden="true">·</span>
                       <h4 className="font-serif font-bold text-[#161e2e] text-sm truncate">
@@ -993,19 +1198,19 @@ export default function TreeOfLifeCanvas({
                   </div>
                   <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-[#2c364a]">
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">Pillar:</span>{' '}
-                      {hoveredItem.data.pillar}
+                      <span className="text-[#7c5814] font-semibold">{t.tooltipPillar}</span>{' '}
+                      {getLocalizedPillarName(hoveredItem.data.pillar, language)}
                     </div>
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">Divine Name:</span>{' '}
+                      <span className="text-[#7c5814] font-semibold">{t.tooltipDivineName}</span>{' '}
                       {hoveredItem.data.divineName}
                     </div>
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">Archangel:</span>{' '}
+                      <span className="text-[#7c5814] font-semibold">{t.tooltipArchangel}</span>{' '}
                       {hoveredItem.data.archangel}
                     </div>
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">Astrological:</span>{' '}
+                      <span className="text-[#7c5814] font-semibold">{t.tooltipAstrological}</span>{' '}
                       {hoveredItem.data.astrological}
                     </div>
                   </div>
@@ -1015,7 +1220,7 @@ export default function TreeOfLifeCanvas({
                   <div className="flex items-center justify-between gap-2 border-b border-[#b3bdd0] pb-1.5 mb-1.5">
                     <div className="flex items-center gap-2 min-w-0">
                       <span className="text-[#7c5814] font-mono text-xs font-semibold shrink-0">
-                        Path {hoveredItem.data.number} ({hoveredItem.data.hebrewLetter})
+                        {t.tooltipPath(hoveredItem.data.number, hoveredItem.data.hebrewLetter)}
                       </span>
                       <span className="text-[#8291a8]" aria-hidden="true">·</span>
                       <h4 className="font-serif font-bold text-[#161e2e] text-sm truncate">
@@ -1028,11 +1233,11 @@ export default function TreeOfLifeCanvas({
                   </div>
                   <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-[#2c364a]">
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">Title:</span>{' '}
+                      <span className="text-[#7c5814] font-semibold">{t.tooltipTitle}</span>{' '}
                       {hoveredItem.data.name}
                     </div>
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">Letter Meaning:</span>{' '}
+                      <span className="text-[#7c5814] font-semibold">{t.tooltipLetterMeaning}</span>{' '}
                       {hoveredItem.data.letterMeaning}
                     </div>
                   </div>

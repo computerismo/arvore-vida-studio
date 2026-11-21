@@ -45,7 +45,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="en"
+      lang="pt-BR"
       className={`${cinzel.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable}`}
     >
       <body

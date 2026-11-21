@@ -1,15 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PILLARS_DATA, SEPHIROTH_DATA, Sephira } from '@/lib/qabalah-data';
+import { Sephira } from '@/lib/qabalah-data';
+import { getLocalizedPillarsData, getLocalizedSephirothData } from '@/lib/qabalah-pt';
+import { Language, UI_STRINGS } from '@/lib/i18n';
 import { Scale, ChevronRight } from 'lucide-react';
 
 interface PillarsExplorerProps {
+  language: Language;
   onSelectSephira: (sephira: Sephira) => void;
   embedded?: boolean;
 }
 
 export default function PillarsExplorer({
+  language,
   onSelectSephira,
   embedded = false,
 }: PillarsExplorerProps) {
@@ -17,8 +21,11 @@ export default function PillarsExplorer({
     'Mildness'
   );
 
-  const activePillar = PILLARS_DATA[selectedPillarId];
-  const pillarSephiroth = SEPHIROTH_DATA.filter((s) => s.pillar === selectedPillarId);
+  const t = UI_STRINGS[language].pillarsExplorer;
+  const pillarsData = getLocalizedPillarsData(language);
+  const sephirothData = getLocalizedSephirothData(language);
+  const activePillar = pillarsData[selectedPillarId];
+  const pillarSephiroth = sephirothData.filter((s) => s.pillar === selectedPillarId);
 
   return (
     <div
@@ -31,17 +38,15 @@ export default function PillarsExplorer({
       <div className="border-b border-[#b3bdd0] pb-4">
         <h2 className="text-lg sm:text-xl font-serif font-bold text-[#161e2e] flex items-center gap-2">
           <Scale className="w-5 h-5 text-[#7c5814] shrink-0" />
-          <span>The Three Pillars of the Tree of Life</span>
+          <span>{t.title}</span>
         </h2>
-        <p className="text-xs text-[#4b576e] mt-1">
-          Explore the three cosmic columns balancing Force (Mercy), Form (Severity), and Consciousness (Equilibrium).
-        </p>
+        <p className="text-xs text-[#4b576e] mt-1">{t.subtitle}</p>
       </div>
 
       {/* Pillar Switcher: Stacked comfortably on narrow phones, 3-column on sm+ tablets & desktop */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
         {(['Severity', 'Mildness', 'Mercy'] as const).map((pillarKey) => {
-          const pillar = PILLARS_DATA[pillarKey];
+          const pillar = pillarsData[pillarKey];
           const isSelected = selectedPillarId === pillarKey;
           return (
             <button
@@ -65,7 +70,7 @@ export default function PillarsExplorer({
       <div className="p-4 sm:p-5 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] space-y-4">
         <div>
           <span className="text-[11px] font-mono tracking-wider text-[#7c5814] block mb-1 font-semibold">
-            Column Characteristics
+            {t.characteristics}
           </span>
           <h3 className="text-base sm:text-lg font-serif font-bold text-[#161e2e]">
             {activePillar.title}
@@ -79,7 +84,7 @@ export default function PillarsExplorer({
 
         <div>
           <h4 className="text-sm font-serif font-semibold text-[#7c5814] mb-3">
-            Sephiroth on this Pillar
+            {t.sephirothOnPillar}
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
             {pillarSephiroth.map((s) => (

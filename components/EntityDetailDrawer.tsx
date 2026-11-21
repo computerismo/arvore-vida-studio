@@ -2,7 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sephira, Path, SEPHIROTH_DATA } from '@/lib/qabalah-data';
+import { Sephira, Path } from '@/lib/qabalah-data';
+import {
+  getLocalizedSephirothData,
+  getLocalizedPillarName,
+  getLocalizedAttributionType,
+} from '@/lib/qabalah-pt';
+import { Language, UI_STRINGS } from '@/lib/i18n';
 import {
   X,
   Sparkles,
@@ -16,6 +22,7 @@ import {
 } from 'lucide-react';
 
 interface EntityDetailContentProps {
+  language: Language;
   sephira: Sephira | null;
   pathItem: Path | null;
   onClose?: () => void;
@@ -24,6 +31,7 @@ interface EntityDetailContentProps {
 }
 
 export function EntityDetailContent({
+  language,
   sephira,
   pathItem,
   onClose,
@@ -35,6 +43,8 @@ export function EntityDetailContent({
     tab: 'overview' | 'attributions' | 'commentary' | 'meditation';
   }>({ entityKey: '', tab: 'overview' });
 
+  const t = UI_STRINGS[language].drawer;
+  const sephirothList = getLocalizedSephirothData(language);
   const entityKey = sephira ? `s-${sephira.id}` : pathItem ? `p-${pathItem.id}` : '';
   const activeTab = tabState.entityKey === entityKey ? tabState.tab : 'overview';
   const setActiveTab = (
@@ -48,27 +58,21 @@ export function EntityDetailContent({
           <Compass className="w-7 h-7 text-[#7c5814]" />
         </div>
         <div className="space-y-1.5 max-w-sm">
-          <h3 className="font-serif text-lg font-bold text-[#161e2e]">
-            Select a Sphere or Path
-          </h3>
-          <p className="text-xs text-[#4b576e] leading-relaxed">
-            Tap any of the 10 Sephiroth, Da&apos;ath, or 22 Hebrew letter paths on the Tree
-            of Life to inspect divine names, Golden Dawn color scales, Tarot keys, and
-            pathworking commentary here.
-          </p>
+          <h3 className="font-serif text-lg font-bold text-[#161e2e]">{t.emptyTitle}</h3>
+          <p className="text-xs text-[#4b576e] leading-relaxed">{t.emptyDescription}</p>
         </div>
         <div className="grid grid-cols-3 gap-2.5 w-full max-w-xs pt-2">
           <div className="p-2.5 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
             <div className="font-serif font-bold text-base text-[#7c5814] tabular-nums">10</div>
-            <div className="text-[10px] text-[#4b576e]">Sephiroth</div>
+            <div className="text-[10px] text-[#4b576e]">{t.statSephiroth}</div>
           </div>
           <div className="p-2.5 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
             <div className="font-serif font-bold text-base text-[#7c5814] tabular-nums">22</div>
-            <div className="text-[10px] text-[#4b576e]">Paths</div>
+            <div className="text-[10px] text-[#4b576e]">{t.statPaths}</div>
           </div>
           <div className="p-2.5 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
             <div className="font-serif font-bold text-base text-[#7c5814] tabular-nums">4</div>
-            <div className="text-[10px] text-[#4b576e]">Color Scales</div>
+            <div className="text-[10px] text-[#4b576e]">{t.statScales}</div>
           </div>
         </div>
       </div>
@@ -125,10 +129,12 @@ export function EntityDetailContent({
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-mono">
                 <span className="text-[#7c5814] font-semibold">
-                  {sephira.number === 0 ? "Da'ath" : `Sphere ${sephira.number}`}
+                  {t.sphereLabel(sephira.number)}
                 </span>
                 <span className="text-[#8291a8]" aria-hidden="true">·</span>
-                <span className="text-[#4b576e]">{sephira.pillar} Pillar</span>
+                <span className="text-[#4b576e]">
+                  {t.pillarSuffix(getLocalizedPillarName(sephira.pillar, language))}
+                </span>
               </div>
               <h2 className="text-lg sm:text-xl font-serif font-bold text-[#161e2e] mt-0.5 truncate">
                 {sephira.name}
@@ -149,7 +155,7 @@ export function EntityDetailContent({
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-mono">
                 <span className="text-[#7c5814] font-semibold">
-                  Path {pathItem.number} ({pathItem.hebrewLetterName})
+                  {t.pathLabel(pathItem.number, pathItem.hebrewLetterName)}
                 </span>
                 <span className="text-[#8291a8]" aria-hidden="true">·</span>
                 <span className="text-[#4b576e]">
@@ -160,7 +166,7 @@ export function EntityDetailContent({
                 {pathItem.tarotCardName}
               </h2>
               <p className="text-xs text-[#4b576e] italic truncate">
-                Tarot Key {pathItem.tarotKey} · {pathItem.name}
+                {t.tarotKeySubtitle(pathItem.tarotKey, pathItem.name)}
               </p>
             </div>
           </div>
@@ -170,7 +176,7 @@ export function EntityDetailContent({
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close details panel"
+            aria-label={t.closeAria}
             className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-full bg-[#c5cede] hover:bg-[#b8c3d6] text-[#2c364a] hover:text-[#161e2e] transition-colors border border-[#aeb9cc] shrink-0"
           >
             <X className="w-4 h-4" />
@@ -185,10 +191,10 @@ export function EntityDetailContent({
       >
         {(
           [
-            { id: 'overview', label: 'Overview', icon: Crown },
-            { id: 'attributions', label: 'Attributions', icon: Compass },
-            { id: 'commentary', label: 'Excerpts', icon: BookOpen },
-            { id: 'meditation', label: 'Pathworking', icon: Sparkles },
+            { id: 'overview', label: t.tabs.overview, icon: Crown },
+            { id: 'attributions', label: t.tabs.attributions, icon: Compass },
+            { id: 'commentary', label: t.tabs.commentary, icon: BookOpen },
+            { id: 'meditation', label: t.tabs.meditation, icon: Sparkles },
           ] as const
         ).map((tab) => {
           const Icon = tab.icon;
@@ -225,7 +231,7 @@ export function EntityDetailContent({
             <div>
               <h3 className="text-xs font-serif font-bold tracking-wider text-[#7c5814] mb-2 flex items-center gap-2">
                 <Sun className="w-4 h-4 text-[#7c5814]" />
-                Core Symbolism &amp; Essence
+                {t.overview.coreSymbolism}
               </h3>
               <p className="text-[#242e42] leading-relaxed text-sm sm:text-[13px] bg-[#cfd6e2] p-3.5 rounded-xl border border-[#b3bdd0]">
                 {sephira.overview}
@@ -235,7 +241,7 @@ export function EntityDetailContent({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm sm:text-xs">
               <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] space-y-1">
                 <span className="text-[11px] font-semibold text-[#7c5814]">
-                  Spiritual Experience
+                  {t.overview.spiritualExperience}
                 </span>
                 <p className="font-serif text-[#161e2e] font-medium">
                   {sephira.spiritualExperience}
@@ -244,7 +250,7 @@ export function EntityDetailContent({
 
               <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] space-y-1">
                 <span className="text-[11px] font-semibold text-[#7c5814]">
-                  Magical Image
+                  {t.overview.magicalImage}
                 </span>
                 <p className="font-serif text-[#161e2e] font-medium">
                   {sephira.magicalImage}
@@ -252,13 +258,15 @@ export function EntityDetailContent({
               </div>
 
               <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] space-y-1">
-                <span className="text-[11px] font-semibold text-[#7c5814]">Virtue</span>
+                <span className="text-[11px] font-semibold text-[#7c5814]">
+                  {t.overview.virtue}
+                </span>
                 <p className="text-[#2c364a]">{sephira.virtue}</p>
               </div>
 
               <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] space-y-1">
                 <span className="text-[11px] font-semibold text-[#7c5814]">
-                  Vice / Illusion
+                  {t.overview.vice}
                 </span>
                 <p className="text-[#2c364a]">{sephira.vice}</p>
               </div>
@@ -267,22 +275,23 @@ export function EntityDetailContent({
             <div>
               <h4 className="text-xs font-serif font-bold tracking-wider text-[#7c5814] mb-2.5 flex items-center gap-2">
                 <Layers className="w-4 h-4 text-[#7c5814]" />
-                Golden Dawn Four Color Scales
+                {t.overview.fourScales}
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
                 {(
                   [
-                    { key: 'atziluth', title: 'Atziluth (Archetypal)' },
-                    { key: 'briah', title: 'Briah (Creative)' },
-                    { key: 'yetzirah', title: 'Yetzirah (Formative)' },
-                    { key: 'assiah', title: 'Assiah (Material)' },
+                    { key: 'atziluth', title: t.overview.scaleTitles.atziluth },
+                    { key: 'briah', title: t.overview.scaleTitles.briah },
+                    { key: 'yetzirah', title: t.overview.scaleTitles.yetzirah },
+                    { key: 'assiah', title: t.overview.scaleTitles.assiah },
                   ] as const
                 ).map((scale) => (
                   <div
                     key={scale.key}
                     className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]"
                   >
-                    {sephira.quarteredColors && (scale.key === 'briah' || scale.key === 'yetzirah') ? (
+                    {sephira.quarteredColors &&
+                    (scale.key === 'briah' || scale.key === 'yetzirah') ? (
                       <div className="w-full h-2.5 rounded-full mb-2 border border-[#161e2e]/20 overflow-hidden grid grid-cols-4">
                         <span style={{ backgroundColor: sephira.quarteredColors[0] }} />
                         <span style={{ backgroundColor: sephira.quarteredColors[1] }} />
@@ -311,14 +320,14 @@ export function EntityDetailContent({
         {pathItem && activeTab === 'overview' && (
           <div className="space-y-4">
             {(() => {
-              const fromSeph = SEPHIROTH_DATA.find(
+              const fromSeph = sephirothList.find(
                 (s) => s.id === pathItem.fromSephiraId
               );
-              const toSeph = SEPHIROTH_DATA.find((s) => s.id === pathItem.toSephiraId);
+              const toSeph = sephirothList.find((s) => s.id === pathItem.toSephiraId);
               return (
                 <div className="p-3.5 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] flex items-center justify-between gap-2">
                   <div className="text-center flex-1 min-w-0">
-                    <span className="text-[11px] text-[#4b576e] block">From</span>
+                    <span className="text-[11px] text-[#4b576e] block">{t.overview.from}</span>
                     <span className="text-sm font-serif font-bold text-[#5e400b] truncate block">
                       {fromSeph ? `${fromSeph.number}. ${fromSeph.name}` : ''}
                     </span>
@@ -327,7 +336,7 @@ export function EntityDetailContent({
                     <ArrowRight className="w-4 h-4" />
                   </div>
                   <div className="text-center flex-1 min-w-0">
-                    <span className="text-[11px] text-[#4b576e] block">To</span>
+                    <span className="text-[11px] text-[#4b576e] block">{t.overview.to}</span>
                     <span className="text-sm font-serif font-bold text-[#5e400b] truncate block">
                       {toSeph ? `${toSeph.number}. ${toSeph.name}` : ''}
                     </span>
@@ -338,7 +347,7 @@ export function EntityDetailContent({
 
             <div>
               <h3 className="text-xs font-serif font-bold tracking-wider text-[#7c5814] mb-2">
-                Path Title &amp; Esoteric Intelligence
+                {t.overview.pathTitleHeading}
               </h3>
               <p className="text-sm font-serif font-medium text-[#161e2e] bg-[#cfd6e2] p-3.5 rounded-xl border border-[#b3bdd0]">
                 &ldquo;{pathItem.name}&rdquo;
@@ -348,24 +357,25 @@ export function EntityDetailContent({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm sm:text-xs">
               <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
                 <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                  Hebrew Letter Meaning
+                  {t.overview.letterMeaning}
                 </span>
                 <p className="text-[#242e42] font-medium">{pathItem.letterMeaning}</p>
               </div>
 
               <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
                 <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                  Attribution
+                  {t.overview.attribution}
                 </span>
                 <p className="text-[#242e42] font-medium">
-                  {pathItem.attributionType}: {pathItem.attribution} {pathItem.symbolIcon}
+                  {getLocalizedAttributionType(pathItem.attributionType, language)}:{' '}
+                  {pathItem.attribution} {pathItem.symbolIcon}
                 </p>
               </div>
             </div>
 
             <div>
               <h3 className="text-xs font-serif font-bold tracking-wider text-[#7c5814] mb-2">
-                Overview &amp; Symbolism
+                {t.overview.overviewSymbolism}
               </h3>
               <p className="text-sm sm:text-[13px] text-[#242e42] leading-relaxed bg-[#cfd6e2] p-3.5 rounded-xl border border-[#b3bdd0]">
                 {pathItem.overview}
@@ -378,7 +388,7 @@ export function EntityDetailContent({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm sm:text-xs">
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Divine Name
+                {t.attributions.divineName}
               </span>
               <p className="text-sm font-serif font-bold text-[#161e2e]">
                 {sephira.divineName}
@@ -387,7 +397,7 @@ export function EntityDetailContent({
 
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Archangel
+                {t.attributions.archangel}
               </span>
               <p className="text-sm font-serif font-bold text-[#161e2e]">
                 {sephira.archangel}
@@ -396,49 +406,49 @@ export function EntityDetailContent({
 
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Angelic Order
+                {t.attributions.angelicOrder}
               </span>
               <p className="text-[#242e42]">{sephira.angelicOrder}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Astrological
+                {t.attributions.astrological}
               </span>
               <p className="text-[#242e42]">{sephira.astrological}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Element
+                {t.attributions.element}
               </span>
               <p className="text-[#242e42]">{sephira.element}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Microcosm / Body Part
+                {t.attributions.bodyPart}
               </span>
               <p className="text-[#242e42]">{sephira.chakraOrBodyPart}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Gemstone
+                {t.attributions.gemstone}
               </span>
               <p className="text-[#242e42]">{sephira.preciousStone}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Incense &amp; Botanicals
+                {t.attributions.incensePlants}
               </span>
               <p className="text-[#242e42]">{sephira.incenseAndPlants}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] sm:col-span-2">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Tarot Attribution
+                {t.attributions.tarotAttribution}
               </span>
               <p className="text-[#242e42]">{sephira.tarotCards}</p>
             </div>
@@ -449,7 +459,7 @@ export function EntityDetailContent({
           <div className="grid grid-cols-1 gap-2.5 text-sm sm:text-xs">
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Hebrew Letter &amp; Meaning
+                {t.attributions.letterAndMeaning}
               </span>
               <p className="text-sm font-serif font-bold text-[#161e2e]">
                 {pathItem.hebrewLetter} ({pathItem.hebrewLetterName}) ·{' '}
@@ -459,16 +469,17 @@ export function EntityDetailContent({
 
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Tarot Key
+                {t.attributions.tarotKey}
               </span>
               <p className="text-sm font-serif font-bold text-[#161e2e]">
-                Key {pathItem.tarotKey} — {pathItem.tarotCardName}
+                {language === 'pt' ? 'Arcano' : 'Key'} {pathItem.tarotKey} —{' '}
+                {pathItem.tarotCardName}
               </p>
             </div>
 
             <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
-                Esoteric Title
+                {t.attributions.esotericTitle}
               </span>
               <p className="text-[#242e42] italic">&ldquo;{pathItem.name}&rdquo;</p>
             </div>
@@ -480,7 +491,7 @@ export function EntityDetailContent({
             <div className="p-4 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <div className="flex items-center gap-2 text-[#5e400b] font-serif font-bold text-sm mb-2">
                 <Scroll className="w-4 h-4 text-[#7c5814] shrink-0" />
-                Dion Fortune — &ldquo;The Mystical Qabalah&rdquo;
+                {t.commentary.dionFortuneTitle}
               </div>
               <blockquote className="text-sm sm:text-[13px] text-[#242e42] italic leading-relaxed">
                 &ldquo;{sephira.dionFortuneInsight}&rdquo;
@@ -490,7 +501,7 @@ export function EntityDetailContent({
             <div className="p-4 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <div className="flex items-center gap-2 text-[#5e400b] font-serif font-bold text-sm mb-2">
                 <BookOpen className="w-4 h-4 text-[#7c5814] shrink-0" />
-                Israel Regardie — &ldquo;The Garden of Pomegranates&rdquo;
+                {t.commentary.israelRegardieTitle}
               </div>
               <blockquote className="text-sm sm:text-[13px] text-[#242e42] italic leading-relaxed">
                 &ldquo;{sephira.regardieInsight}&rdquo;
@@ -504,13 +515,18 @@ export function EntityDetailContent({
             <div className="p-4 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
               <div className="flex items-center gap-2 text-[#5e400b] font-serif font-bold text-sm mb-2">
                 <BookOpen className="w-4 h-4 text-[#7c5814] shrink-0" />
-                Traditional Hermetic Path Attribution
+                {t.commentary.traditionalPathTitle}
               </div>
               <p className="text-sm sm:text-[13px] text-[#242e42] leading-relaxed">
-                Path {pathItem.number} connects {pathItem.fromSephiraId.toUpperCase()} to{' '}
-                {pathItem.toSephiraId.toUpperCase()}. In 777 correspondences, it represents
-                the transformative bridge governed by {pathItem.tarotCardName} and the
-                astrological or elemental force of {pathItem.attribution}.
+                {t.commentary.traditionalPathBody(
+                  pathItem.number,
+                  sephirothList.find((s) => s.id === pathItem.fromSephiraId)?.name ||
+                    pathItem.fromSephiraId.toUpperCase(),
+                  sephirothList.find((s) => s.id === pathItem.toSephiraId)?.name ||
+                    pathItem.toSephiraId.toUpperCase(),
+                  pathItem.tarotCardName,
+                  pathItem.attribution
+                )}
               </p>
             </div>
           </div>
@@ -521,7 +537,7 @@ export function EntityDetailContent({
             <div className="p-4 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] space-y-2.5">
               <h4 className="text-sm font-serif font-bold text-[#5e400b] flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[#7c5814]" />
-                Traditional Pathworking Meditation
+                {t.meditation.traditionalTitle}
               </h4>
               <p className="text-sm sm:text-[13px] text-[#242e42] leading-relaxed italic">
                 &ldquo;
@@ -532,11 +548,16 @@ export function EntityDetailContent({
 
             <div className="p-4 rounded-xl bg-[#cfd6e2] border border-[#8c631a]/50 space-y-3">
               <h4 className="text-sm font-serif font-bold text-[#5e400b]">
-                Guided Pathworking Oracle
+                {t.meditation.oracleTitle}
               </h4>
               <p className="text-sm sm:text-xs text-[#2c364a] leading-relaxed">
-                Generate an expanded step-by-step guided meditation journey specifically
-                tailored to {sephira ? sephira.name : `Path ${pathItem?.number}`}.
+                {t.meditation.oracleDescription(
+                  sephira
+                    ? sephira.name
+                    : language === 'pt'
+                    ? `o Caminho ${pathItem?.number}`
+                    : `Path ${pathItem?.number}`
+                )}
               </p>
               <button
                 type="button"
@@ -545,14 +566,16 @@ export function EntityDetailContent({
                   onGenerateAiMeditation(
                     sephira
                       ? sephira.name
-                      : `Path ${pathItem?.number} (${pathItem?.hebrewLetterName} - ${pathItem?.tarotCardName})`,
+                      : `${language === 'pt' ? 'Caminho' : 'Path'} ${pathItem?.number} (${
+                          pathItem?.hebrewLetterName
+                        } - ${pathItem?.tarotCardName})`,
                     sephira ? 'sephira' : 'path'
                   );
                 }}
                 className="w-full min-h-[46px] py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#8f681d] to-[#745112] text-[#f5f1e6] font-bold text-xs uppercase tracking-wider transition-all hover:brightness-110 active:scale-[0.99] flex items-center justify-center gap-2 shadow-md"
               >
                 <Sparkles className="w-4 h-4" />
-                Generate Guided Meditation
+                {t.meditation.generateButton}
               </button>
             </div>
           </div>
@@ -563,6 +586,7 @@ export function EntityDetailContent({
 }
 
 interface EntityDetailDrawerProps {
+  language: Language;
   sephira: Sephira | null;
   pathItem: Path | null;
   onClose: () => void;
@@ -570,6 +594,7 @@ interface EntityDetailDrawerProps {
 }
 
 export default function EntityDetailDrawer({
+  language,
   sephira,
   pathItem,
   onClose,
@@ -615,15 +640,17 @@ export default function EntityDetailDrawer({
         exit: { x: 0, y: '100%' },
       };
 
+  const dialogAriaLabel = sephira
+    ? `${sephira.name}`
+    : `${language === 'pt' ? 'Caminho' : 'Path'} ${pathItem?.number}`;
+
   return (
     <AnimatePresence>
       {isOpen && (
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={
-            sephira ? `${sephira.name} details` : `Path ${pathItem?.number} details`
-          }
+          aria-label={dialogAriaLabel}
           className="fixed inset-0 z-50 flex items-end md:items-stretch md:justify-end pointer-events-none"
         >
           {/* Backdrop */}
@@ -659,6 +686,7 @@ export default function EntityDetailDrawer({
             </div>
 
             <EntityDetailContent
+              language={language}
               sephira={sephira}
               pathItem={pathItem}
               onClose={onClose}

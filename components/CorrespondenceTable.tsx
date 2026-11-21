@@ -2,15 +2,19 @@
 
 import React, { useState } from 'react';
 import { SEPHIROTH_DATA, PATHS_DATA, Sephira, Path } from '@/lib/qabalah-data';
+import { getLocalizedSephirothData, getLocalizedPathsData } from '@/lib/qabalah-pt';
+import { Language, UI_STRINGS } from '@/lib/i18n';
 import { Search, BookOpen, X, ChevronRight } from 'lucide-react';
 
 interface CorrespondenceTableProps {
+  language: Language;
   onSelectSephira: (sephira: Sephira) => void;
   onSelectPath: (path: Path) => void;
   embedded?: boolean;
 }
 
 export default function CorrespondenceTable({
+  language,
   onSelectSephira,
   onSelectPath,
   embedded = false,
@@ -18,10 +22,14 @@ export default function CorrespondenceTable({
   const [activeTab, setActiveTab] = useState<'sephiroth' | 'paths'>('sephiroth');
   const [searchQuery, setSearchQuery] = useState('');
 
+  const t = UI_STRINGS[language].table;
+  const sephirothList = getLocalizedSephirothData(language);
+  const pathsList = getLocalizedPathsData(language);
   const query = searchQuery.trim().toLowerCase();
 
-  const filteredSephiroth = SEPHIROTH_DATA.filter((s) => {
+  const filteredSephiroth = sephirothList.filter((s, index) => {
     if (!query) return true;
+    const base = SEPHIROTH_DATA[index];
     return (
       s.name.toLowerCase().includes(query) ||
       s.hebrewName.toLowerCase().includes(query) ||
@@ -29,19 +37,28 @@ export default function CorrespondenceTable({
       s.divineName.toLowerCase().includes(query) ||
       s.archangel.toLowerCase().includes(query) ||
       s.astrological.toLowerCase().includes(query) ||
-      s.element.toLowerCase().includes(query)
+      s.element.toLowerCase().includes(query) ||
+      (base &&
+        (base.translation.toLowerCase().includes(query) ||
+          base.astrological.toLowerCase().includes(query) ||
+          base.element.toLowerCase().includes(query)))
     );
   });
 
-  const filteredPaths = PATHS_DATA.filter((p) => {
+  const filteredPaths = pathsList.filter((p, index) => {
     if (!query) return true;
+    const base = PATHS_DATA[index];
     return (
       p.name.toLowerCase().includes(query) ||
       p.hebrewLetterName.toLowerCase().includes(query) ||
       p.tarotCardName.toLowerCase().includes(query) ||
       p.attribution.toLowerCase().includes(query) ||
       p.letterMeaning.toLowerCase().includes(query) ||
-      String(p.number).includes(query)
+      String(p.number).includes(query) ||
+      (base &&
+        (base.tarotCardName.toLowerCase().includes(query) ||
+          base.attribution.toLowerCase().includes(query) ||
+          base.name.toLowerCase().includes(query)))
     );
   });
 
@@ -58,18 +75,16 @@ export default function CorrespondenceTable({
         <div>
           <h2 className="text-lg sm:text-xl font-serif font-bold text-[#161e2e] flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-[#7c5814] shrink-0" />
-            <span>Master Correspondence Index</span>
+            <span>{t.title}</span>
           </h2>
-          <p className="text-xs sm:text-xs text-[#4b576e] mt-1">
-            777 reference across Divine Names, Archangels, Astrology, and Tarot keys.
-          </p>
+          <p className="text-xs sm:text-xs text-[#4b576e] mt-1">{t.subtitle}</p>
         </div>
 
         <div className="relative w-full md:w-64 lg:w-60 xl:w-72">
           <Search className="w-4 h-4 text-[#4b576e] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="search"
-            placeholder="Search Hebrew, Archangel, Tarot..."
+            placeholder={t.searchPlaceholder}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full min-h-[44px] md:min-h-[38px] pl-10 pr-10 py-2 rounded-xl bg-[#cfd6e2] border border-[#aeb9cc] text-base sm:text-xs text-[#161e2e] placeholder-[#526078] focus:outline-none focus:border-[#8c631a]"
@@ -78,7 +93,7 @@ export default function CorrespondenceTable({
             <button
               type="button"
               onClick={() => setSearchQuery('')}
-              aria-label="Clear search"
+              aria-label={t.clearSearchAria}
               className="absolute right-1.5 top-1/2 -translate-y-1/2 min-h-[36px] min-w-[36px] flex items-center justify-center text-[#4b576e] hover:text-[#161e2e]"
             >
               <X className="w-4 h-4" />
@@ -98,7 +113,7 @@ export default function CorrespondenceTable({
               : 'text-[#3b475e] hover:text-[#161e2e] border border-transparent'
           }`}
         >
-          Sephiroth ({filteredSephiroth.length})
+          {t.sephirothTab(filteredSephiroth.length)}
         </button>
         <button
           type="button"
@@ -109,7 +124,7 @@ export default function CorrespondenceTable({
               : 'text-[#3b475e] hover:text-[#161e2e] border border-transparent'
           }`}
         >
-          22 Paths ({filteredPaths.length})
+          {t.pathsTab(filteredPaths.length)}
         </button>
       </div>
 
@@ -179,7 +194,7 @@ export default function CorrespondenceTable({
             })
           ) : (
             <div className="p-6 text-center text-xs text-[#4b576e]">
-              No Sephiroth match &ldquo;{searchQuery}&rdquo;.
+              {t.emptySephiroth(searchQuery)}
             </div>
           )
         ) : filteredPaths.length > 0 ? (
@@ -199,7 +214,7 @@ export default function CorrespondenceTable({
               <div className="flex-1 min-w-0">
                 <div className="flex items-baseline gap-2">
                   <span className="font-mono text-xs tabular-nums text-[#7c5814] font-semibold">
-                    Path {p.number}
+                    {language === 'pt' ? `Caminho ${p.number}` : `Path ${p.number}`}
                   </span>
                   <span className="font-serif font-bold text-sm text-[#161e2e] truncate">
                     {p.tarotCardName}
@@ -217,7 +232,7 @@ export default function CorrespondenceTable({
           ))
         ) : (
           <div className="p-6 text-center text-xs text-[#4b576e]">
-            No Paths match &ldquo;{searchQuery}&rdquo;.
+            {t.emptyPaths(searchQuery)}
           </div>
         )}
       </div>
@@ -229,15 +244,15 @@ export default function CorrespondenceTable({
             <table className="w-full text-left text-xs text-[#2c364a] border-collapse">
               <thead className="bg-[#c6cfde] text-[#6d4b0f] font-serif sticky top-0 z-10 border-b border-[#aeb9cc]">
                 <tr>
-                  <th className="py-3 px-3 whitespace-nowrap">#</th>
-                  <th className="py-3 px-3 whitespace-nowrap">Sephira</th>
-                  <th className="py-3 px-3 whitespace-nowrap">Hebrew</th>
-                  <th className="py-3 px-3 whitespace-nowrap">Translation</th>
-                  <th className="py-3 px-3 whitespace-nowrap">Divine Name</th>
-                  <th className="py-3 px-3 whitespace-nowrap">Archangel</th>
-                  <th className="py-3 px-3 whitespace-nowrap">Astrological</th>
+                  <th className="py-3 px-3 whitespace-nowrap">{t.headersSephiroth.num}</th>
+                  <th className="py-3 px-3 whitespace-nowrap">{t.headersSephiroth.sephira}</th>
+                  <th className="py-3 px-3 whitespace-nowrap">{t.headersSephiroth.hebrew}</th>
+                  <th className="py-3 px-3 whitespace-nowrap">{t.headersSephiroth.translation}</th>
+                  <th className="py-3 px-3 whitespace-nowrap">{t.headersSephiroth.divineName}</th>
+                  <th className="py-3 px-3 whitespace-nowrap">{t.headersSephiroth.archangel}</th>
+                  <th className="py-3 px-3 whitespace-nowrap">{t.headersSephiroth.astrological}</th>
                   <th className="py-3 px-3 whitespace-nowrap hidden lg:table-cell">
-                    Spiritual Experience
+                    {t.headersSephiroth.experience}
                   </th>
                 </tr>
               </thead>
@@ -270,20 +285,20 @@ export default function CorrespondenceTable({
             </table>
           ) : (
             <div className="p-8 text-center text-xs text-[#4b576e]">
-              No Sephiroth match &ldquo;{searchQuery}&rdquo;.
+              {t.emptySephiroth(searchQuery)}
             </div>
           )
         ) : filteredPaths.length > 0 ? (
           <table className="w-full text-left text-xs text-[#2c364a] border-collapse">
             <thead className="bg-[#c6cfde] text-[#6d4b0f] font-serif sticky top-0 z-10 border-b border-[#aeb9cc]">
               <tr>
-                <th className="py-3 px-3 whitespace-nowrap">Path #</th>
-                <th className="py-3 px-3 whitespace-nowrap">Hebrew Letter</th>
-                <th className="py-3 px-3 whitespace-nowrap">Meaning</th>
-                <th className="py-3 px-3 whitespace-nowrap">Tarot Key</th>
-                <th className="py-3 px-3 whitespace-nowrap">Attribution</th>
+                <th className="py-3 px-3 whitespace-nowrap">{t.headersPaths.num}</th>
+                <th className="py-3 px-3 whitespace-nowrap">{t.headersPaths.letter}</th>
+                <th className="py-3 px-3 whitespace-nowrap">{t.headersPaths.meaning}</th>
+                <th className="py-3 px-3 whitespace-nowrap">{t.headersPaths.tarotKey}</th>
+                <th className="py-3 px-3 whitespace-nowrap">{t.headersPaths.attribution}</th>
                 <th className="py-3 px-3 whitespace-nowrap hidden lg:table-cell">
-                  Intelligence Title
+                  {t.headersPaths.title}
                 </th>
               </tr>
             </thead>
@@ -316,7 +331,7 @@ export default function CorrespondenceTable({
           </table>
         ) : (
           <div className="p-8 text-center text-xs text-[#4b576e]">
-            No Paths match &ldquo;{searchQuery}&rdquo;.
+            {t.emptyPaths(searchQuery)}
           </div>
         )}
       </div>

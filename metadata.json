@@ -1,0 +1,6 @@
+{
+  "name": "Hermetic Qabalah Tree of Life",
+  "description": "Interactive study guide and visualizer for the Qabalistic Tree of Life, featuring Sephira, Paths, Pillars, Golden Dawn attributions, and AI pathworking guidance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

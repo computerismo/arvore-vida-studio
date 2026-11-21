@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-serif: var(--font-cinzel), Georgia, serif;
+  --font-sans: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #050507;
+    color: #e0e0e0;
+    overscroll-behavior-y: none;
+  }
+}
+
+.bg-radial-pattern {
+  background-image: radial-gradient(circle, rgba(197, 160, 89, 0.12) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+/* Safe area helpers for notched mobile devices and tablets */
+.pb-safe {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+.pb-mobile-nav {
+  padding-bottom: calc(4.65rem + env(safe-area-inset-bottom));
+}
+
+/* Hide scrollbars cleanly on horizontal touch carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom scrollbar for desktop dark aesthetic */
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #08080a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2d2d30;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c5a059;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

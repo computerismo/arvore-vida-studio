@@ -120,6 +120,9 @@ export interface UiStrings {
       attribution: string;
       overviewSymbolism: string;
       yetziraticText: string;
+      tarotCardHeading: string;
+      tarotCardCaption: (tarotKey: string, name: string) => string;
+      tarotCardZoomAria: (name: string) => string;
     };
     attributions: {
       divineName: string;
@@ -359,6 +362,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
         attribution: 'Atribuição',
         overviewSymbolism: 'Visão Geral e Simbolismo',
         yetziraticText: 'Texto do Sepher Yetzirah (32 Caminhos da Sabedoria)',
+        tarotCardHeading: 'Arcano Maior (Rider-Waite-Smith)',
+        tarotCardCaption: (tarotKey, name) => `Arcano ${tarotKey} · ${name}`,
+        tarotCardZoomAria: (name) => `Ampliar carta do Tarô: ${name}`,
       },
       attributions: {
         divineName: 'Nome Divino',
@@ -633,6 +639,9 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
         attribution: 'Attribution',
         overviewSymbolism: 'Overview & Symbolism',
         yetziraticText: 'Sepher Yetzirah Text (32 Paths of Wisdom)',
+        tarotCardHeading: 'Major Arcana (Rider-Waite-Smith)',
+        tarotCardCaption: (tarotKey, name) => `Key ${tarotKey} · ${name}`,
+        tarotCardZoomAria: (name) => `Enlarge Tarot card: ${name}`,
       },
       attributions: {
         divineName: 'Divine Name',

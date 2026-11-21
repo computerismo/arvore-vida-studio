@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sephira, Path } from '@/lib/qabalah-data';
 import {
@@ -19,6 +20,7 @@ import {
   ArrowRight,
   Layers,
   Sun,
+  ZoomIn,
 } from 'lucide-react';
 
 interface EntityDetailContentProps {
@@ -40,14 +42,28 @@ export function EntityDetailContent({
     entityKey: string;
     tab: 'overview' | 'attributions' | 'commentary' | 'meditation';
   }>({ entityKey: '', tab: 'overview' });
+  const [zoomedEntityKey, setZoomedEntityKey] = useState<string | null>(null);
 
   const t = UI_STRINGS[language].drawer;
   const sephirothList = getLocalizedSephirothData(language);
   const entityKey = sephira ? `s-${sephira.id}` : pathItem ? `p-${pathItem.id}` : '';
   const activeTab = tabState.entityKey === entityKey ? tabState.tab : 'overview';
+  const isCardZoomed = Boolean(pathItem && zoomedEntityKey === entityKey);
   const setActiveTab = (
     tab: 'overview' | 'attributions' | 'commentary' | 'meditation'
   ) => setTabState({ entityKey, tab });
+
+  useEffect(() => {
+    if (!isCardZoomed) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.stopImmediatePropagation();
+        setZoomedEntityKey(null);
+      }
+    };
+    window.addEventListener('keydown', handleEscape, true);
+    return () => window.removeEventListener('keydown', handleEscape, true);
+  }, [isCardZoomed]);
 
   if (!sephira && !pathItem) {
     return (
@@ -365,33 +381,68 @@ export function EntityDetailContent({
               );
             })()}
 
-            <div>
-              <h3 className="text-xs font-serif font-bold tracking-wider text-[#8E6636] mb-2">
-                {t.overview.pathTitleHeading}
-              </h3>
-              <p className="text-[13px] font-medium text-[#302B26] bg-gradient-to-b from-[#F9F3EA] to-[#F3ECE0] p-3.5 rounded-xl border border-[#C2B5A2]/75 leading-snug">
-                &ldquo;{pathItem.name}&rdquo;
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[13px]">
-              <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
-                <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
-                  {t.overview.letterMeaning}
+            <div className="flex flex-col sm:flex-row gap-3.5 items-stretch">
+              <button
+                type="button"
+                onClick={() => setZoomedEntityKey(entityKey)}
+                aria-label={t.overview.tarotCardZoomAria(pathItem.tarotCardName)}
+                className="group relative sm:w-[158px] shrink-0 mx-auto sm:mx-0 flex flex-col items-center justify-between p-2.5 rounded-xl bg-gradient-to-b from-[#F9F3EA] to-[#EFE5D3] border border-[#8E6636]/55 hover:border-[#8E6636] shadow-sm transition-all cursor-zoom-in text-center"
+              >
+                <div className="relative w-[144px] sm:w-full overflow-hidden rounded-lg border border-[#C2B5A2]/80 bg-[#FAF7EF]">
+                  <Image
+                    src={pathItem.tarotImage}
+                    alt={t.overview.tarotCardCaption(
+                      pathItem.tarotKey,
+                      pathItem.tarotCardName
+                    )}
+                    width={350}
+                    height={600}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-auto block transition-transform duration-300 group-hover:scale-[1.02]"
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="absolute bottom-1.5 right-1.5 w-6 h-6 rounded-full bg-[#302B26]/75 text-[#FAF7EF] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-xs"
+                  >
+                    <ZoomIn className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+                <span className="mt-2 block text-[11px] font-semibold text-[#8E6636] leading-tight">
+                  {t.overview.tarotCardCaption(
+                    pathItem.tarotKey,
+                    pathItem.tarotCardName
+                  )}
                 </span>
-                <p className="text-[#302B26] font-medium leading-snug">
-                  {pathItem.letterMeaning}
-                </p>
-              </div>
+              </button>
 
-              <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
-                <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
-                  {t.overview.attribution}
-                </span>
-                <p className="text-[#302B26] font-medium leading-snug">
-                  {getLocalizedAttributionType(pathItem.attributionType, language)}:{' '}
-                  {pathItem.attribution} {pathItem.symbolIcon}
-                </p>
+              <div className="flex-1 min-w-0 flex flex-col justify-between gap-2.5 text-[13px]">
+                <div className="p-3 rounded-xl bg-gradient-to-b from-[#F9F3EA] to-[#F3ECE0] border border-[#C2B5A2]/75">
+                  <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
+                    {t.overview.pathTitleHeading}
+                  </span>
+                  <p className="text-[13px] font-medium text-[#302B26] leading-snug">
+                    &ldquo;{pathItem.name}&rdquo;
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
+                  <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
+                    {t.overview.letterMeaning}
+                  </span>
+                  <p className="text-[#302B26] font-medium leading-snug">
+                    {pathItem.letterMeaning}
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
+                  <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
+                    {t.overview.attribution}
+                  </span>
+                  <p className="text-[#302B26] font-medium leading-snug">
+                    {getLocalizedAttributionType(pathItem.attributionType, language)}:{' '}
+                    {pathItem.attribution} {pathItem.symbolIcon}
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -699,6 +750,60 @@ export function EntityDetailContent({
           </div>
         )}
       </div>
+
+      {/* Enlarged Tarot Card Lightbox */}
+      <AnimatePresence>
+        {isCardZoomed && pathItem && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.16 }}
+            onClick={() => setZoomedEntityKey(null)}
+            className="fixed inset-0 z-[70] bg-[#1F242C]/70 backdrop-blur-xs flex items-center justify-center p-4 pointer-events-auto"
+          >
+            <motion.div
+              initial={{ scale: 0.94, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.94, opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-[320px] w-full rounded-2xl bg-gradient-to-b from-[#F9F3EA] to-[#EAE0CE] border border-[#8E6636]/75 p-3.5 shadow-2xl text-center"
+            >
+              <button
+                type="button"
+                onClick={() => setZoomedEntityKey(null)}
+                aria-label={t.closeAria}
+                className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#F9F3EA] hover:bg-[#ECE4D5] border border-[#8E6636]/60 text-[#302B26] flex items-center justify-center shadow-md transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              <div className="overflow-hidden rounded-xl border border-[#C2B5A2] bg-[#FAF7EF]">
+                <Image
+                  src={pathItem.tarotImage}
+                  alt={t.overview.tarotCardCaption(
+                    pathItem.tarotKey,
+                    pathItem.tarotCardName
+                  )}
+                  width={350}
+                  height={600}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-auto block"
+                />
+              </div>
+              <p className="mt-2.5 font-serif text-sm font-bold text-[#302B26]">
+                {t.overview.tarotCardCaption(
+                  pathItem.tarotKey,
+                  pathItem.tarotCardName
+                )}
+              </p>
+              <p className="text-xs text-[#5D554A] mt-0.5">
+                {t.overview.tarotCardHeading}
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

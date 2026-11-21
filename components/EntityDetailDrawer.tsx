@@ -26,7 +26,6 @@ interface EntityDetailContentProps {
   sephira: Sephira | null;
   pathItem: Path | null;
   onClose?: () => void;
-  onGenerateAiMeditation: (entityName: string, entityType: 'sephira' | 'path') => void;
   embedded?: boolean;
 }
 
@@ -35,7 +34,6 @@ export function EntityDetailContent({
   sephira,
   pathItem,
   onClose,
-  onGenerateAiMeditation,
   embedded = false,
 }: EntityDetailContentProps) {
   const [tabState, setTabState] = useState<{
@@ -227,66 +225,66 @@ export function EntityDetailContent({
         } overflow-y-auto overscroll-contain space-y-5 flex-1 min-h-0`}
       >
         {sephira && activeTab === 'overview' && (
-          <div className="space-y-4">
+          <div className="space-y-4 font-sans">
             <div>
               <h3 className="text-xs font-serif font-bold tracking-wider text-[#8E6636] mb-2 flex items-center gap-2">
                 <Sun className="w-4 h-4 text-[#8E6636]" />
                 {t.overview.coreSymbolism}
               </h3>
-              <p className="text-[#302B26] leading-relaxed text-sm sm:text-[13px] bg-gradient-to-b from-[#F9F3EA] to-[#F3ECE0] p-3.5 rounded-xl border border-[#C2B5A2]/75 shadow-xs">
+              <p className="text-[#302B26] leading-relaxed text-[13px] bg-gradient-to-b from-[#F9F3EA] to-[#F3ECE0] p-3.5 rounded-xl border border-[#C2B5A2]/75 shadow-xs">
                 {sephira.overview}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm sm:text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[13px]">
               <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 space-y-1">
-                <span className="text-[11px] font-semibold text-[#8E6636]">
+                <span className="block text-[11px] font-semibold text-[#8E6636]">
                   {t.overview.planet}
                 </span>
-                <p className="font-serif text-[#302B26] font-semibold">
+                <p className="text-[#302B26] font-semibold leading-snug">
                   {sephira.planet}
                 </p>
               </div>
 
               <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 space-y-1">
-                <span className="text-[11px] font-semibold text-[#8E6636]">
+                <span className="block text-[11px] font-semibold text-[#8E6636]">
                   {t.overview.yetziraticTitle}
                 </span>
-                <p className="font-serif text-[#302B26] font-medium">
+                <p className="text-[#302B26] font-medium leading-snug">
                   {sephira.yetziraticTitle}
                 </p>
               </div>
 
               <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 space-y-1">
-                <span className="text-[11px] font-semibold text-[#8E6636]">
+                <span className="block text-[11px] font-semibold text-[#8E6636]">
                   {t.overview.spiritualExperience}
                 </span>
-                <p className="font-serif text-[#302B26] font-medium">
+                <p className="text-[#302B26] font-medium leading-snug">
                   {sephira.spiritualExperience}
                 </p>
               </div>
 
               <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 space-y-1">
-                <span className="text-[11px] font-semibold text-[#8E6636]">
+                <span className="block text-[11px] font-semibold text-[#8E6636]">
                   {t.overview.magicalImage}
                 </span>
-                <p className="font-serif text-[#302B26] font-medium">
+                <p className="text-[#302B26] font-medium leading-snug">
                   {sephira.magicalImage}
                 </p>
               </div>
 
               <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 space-y-1">
-                <span className="text-[11px] font-semibold text-[#8E6636]">
+                <span className="block text-[11px] font-semibold text-[#8E6636]">
                   {t.overview.virtue}
                 </span>
-                <p className="text-[#302B26]">{sephira.virtue}</p>
+                <p className="text-[#302B26] leading-snug">{sephira.virtue}</p>
               </div>
 
               <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 space-y-1">
-                <span className="text-[11px] font-semibold text-[#8E6636]">
+                <span className="block text-[11px] font-semibold text-[#8E6636]">
                   {t.overview.vice}
                 </span>
-                <p className="text-[#302B26]">{sephira.vice}</p>
+                <p className="text-[#302B26] leading-snug">{sephira.vice}</p>
               </div>
             </div>
 
@@ -295,7 +293,7 @@ export function EntityDetailContent({
                 <Layers className="w-4 h-4 text-[#8E6636]" />
                 {t.overview.fourScales}
               </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {(
                   [
                     { key: 'atziluth', title: t.overview.scaleTitles.atziluth },
@@ -325,7 +323,7 @@ export function EntityDetailContent({
                     <span className="font-semibold text-[#302B26] block text-xs">
                       {scale.title}
                     </span>
-                    <span className="text-[#5D554A] text-[11px]">
+                    <span className="text-[#5D554A] text-xs leading-snug">
                       {sephira.colorDescriptions[scale.key]}
                     </span>
                   </div>
@@ -336,7 +334,7 @@ export function EntityDetailContent({
         )}
 
         {pathItem && activeTab === 'overview' && (
-          <div className="space-y-4">
+          <div className="space-y-4 font-sans">
             {(() => {
               const fromSeph = sephirothList.find(
                 (s) => s.id === pathItem.fromSephiraId
@@ -345,8 +343,10 @@ export function EntityDetailContent({
               return (
                 <div className="p-3.5 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 flex items-center justify-between gap-2">
                   <div className="text-center flex-1 min-w-0">
-                    <span className="text-[11px] text-[#5D554A] block">{t.overview.from}</span>
-                    <span className="text-sm font-serif font-bold text-[#302B26] truncate block">
+                    <span className="text-[11px] font-semibold text-[#8E6636] block">
+                      {t.overview.from}
+                    </span>
+                    <span className="text-[13px] font-semibold text-[#302B26] truncate block mt-0.5">
                       {fromSeph ? `${fromSeph.number}. ${fromSeph.name}` : ''}
                     </span>
                   </div>
@@ -354,8 +354,10 @@ export function EntityDetailContent({
                     <ArrowRight className="w-4 h-4" />
                   </div>
                   <div className="text-center flex-1 min-w-0">
-                    <span className="text-[11px] text-[#5D554A] block">{t.overview.to}</span>
-                    <span className="text-sm font-serif font-bold text-[#302B26] truncate block">
+                    <span className="text-[11px] font-semibold text-[#8E6636] block">
+                      {t.overview.to}
+                    </span>
+                    <span className="text-[13px] font-semibold text-[#302B26] truncate block mt-0.5">
                       {toSeph ? `${toSeph.number}. ${toSeph.name}` : ''}
                     </span>
                   </div>
@@ -367,24 +369,26 @@ export function EntityDetailContent({
               <h3 className="text-xs font-serif font-bold tracking-wider text-[#8E6636] mb-2">
                 {t.overview.pathTitleHeading}
               </h3>
-              <p className="text-sm font-serif font-medium text-[#302B26] bg-gradient-to-b from-[#F9F3EA] to-[#F3ECE0] p-3.5 rounded-xl border border-[#C2B5A2]/75">
+              <p className="text-[13px] font-medium text-[#302B26] bg-gradient-to-b from-[#F9F3EA] to-[#F3ECE0] p-3.5 rounded-xl border border-[#C2B5A2]/75 leading-snug">
                 &ldquo;{pathItem.name}&rdquo;
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm sm:text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[13px]">
               <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
                 <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                   {t.overview.letterMeaning}
                 </span>
-                <p className="text-[#302B26] font-medium">{pathItem.letterMeaning}</p>
+                <p className="text-[#302B26] font-medium leading-snug">
+                  {pathItem.letterMeaning}
+                </p>
               </div>
 
               <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
                 <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                   {t.overview.attribution}
                 </span>
-                <p className="text-[#302B26] font-medium">
+                <p className="text-[#302B26] font-medium leading-snug">
                   {getLocalizedAttributionType(pathItem.attributionType, language)}:{' '}
                   {pathItem.attribution} {pathItem.symbolIcon}
                 </p>
@@ -395,7 +399,7 @@ export function EntityDetailContent({
               <h3 className="text-xs font-serif font-bold tracking-wider text-[#8E6636] mb-2">
                 {t.overview.overviewSymbolism}
               </h3>
-              <p className="text-sm sm:text-[13px] text-[#302B26] leading-relaxed bg-gradient-to-b from-[#F9F3EA] to-[#F3ECE0] p-3.5 rounded-xl border border-[#C2B5A2]/75 shadow-xs">
+              <p className="text-[13px] text-[#302B26] leading-relaxed bg-gradient-to-b from-[#F9F3EA] to-[#F3ECE0] p-3.5 rounded-xl border border-[#C2B5A2]/75 shadow-xs">
                 {pathItem.overview}
               </p>
             </div>
@@ -405,7 +409,7 @@ export function EntityDetailContent({
                 <Layers className="w-4 h-4 text-[#8E6636]" />
                 {t.overview.fourScales}
               </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {(
                   [
                     { key: 'atziluth', title: t.overview.scaleTitles.atziluth },
@@ -425,7 +429,7 @@ export function EntityDetailContent({
                     <span className="font-semibold text-[#302B26] block text-xs">
                       {scale.title}
                     </span>
-                    <span className="text-[#5D554A] text-[11px]">
+                    <span className="text-[#5D554A] text-xs leading-snug">
                       {pathItem.colorDescriptions[scale.key]}
                     </span>
                   </div>
@@ -436,12 +440,12 @@ export function EntityDetailContent({
         )}
 
         {sephira && activeTab === 'attributions' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm sm:text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[13px] font-sans">
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.divineName}
               </span>
-              <p className="text-sm font-serif font-bold text-[#302B26]">
+              <p className="font-semibold text-[#302B26] leading-snug">
                 {sephira.divineName}
               </p>
             </div>
@@ -450,7 +454,7 @@ export function EntityDetailContent({
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.archangel}
               </span>
-              <p className="text-sm font-serif font-bold text-[#302B26]">
+              <p className="font-semibold text-[#302B26] leading-snug">
                 {sephira.archangel}
               </p>
             </div>
@@ -459,77 +463,77 @@ export function EntityDetailContent({
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.planet}
               </span>
-              <p className="text-[#302B26] font-medium">{sephira.planet}</p>
+              <p className="text-[#302B26] font-medium leading-snug">{sephira.planet}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.astrological}
               </span>
-              <p className="text-[#302B26]">{sephira.astrological}</p>
+              <p className="text-[#302B26] leading-snug">{sephira.astrological}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.angelicOrder}
               </span>
-              <p className="text-[#302B26]">{sephira.angelicOrder}</p>
+              <p className="text-[#302B26] leading-snug">{sephira.angelicOrder}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.yetziraticTitle}
               </span>
-              <p className="text-[#302B26]">{sephira.yetziraticTitle}</p>
+              <p className="text-[#302B26] leading-snug">{sephira.yetziraticTitle}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.soulPart}
               </span>
-              <p className="text-[#302B26]">{sephira.soulPart}</p>
+              <p className="text-[#302B26] leading-snug">{sephira.soulPart}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.element}
               </span>
-              <p className="text-[#302B26]">{sephira.element}</p>
+              <p className="text-[#302B26] leading-snug">{sephira.element}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.bodyPart}
               </span>
-              <p className="text-[#302B26]">{sephira.chakraOrBodyPart}</p>
+              <p className="text-[#302B26] leading-snug">{sephira.chakraOrBodyPart}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.gemstone}
               </span>
-              <p className="text-[#302B26]">{sephira.preciousStone}</p>
+              <p className="text-[#302B26] leading-snug">{sephira.preciousStone}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.incensePlants}
               </span>
-              <p className="text-[#302B26]">{sephira.incenseAndPlants}</p>
+              <p className="text-[#302B26] leading-snug">{sephira.incenseAndPlants}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.qliphoth}
               </span>
-              <p className="text-[#302B26]">{sephira.qliphoth}</p>
+              <p className="text-[#302B26] leading-snug">{sephira.qliphoth}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 sm:col-span-2">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.tarotAttribution}
               </span>
-              <p className="text-[#302B26]">{sephira.tarotCards}</p>
+              <p className="text-[#302B26] leading-snug">{sephira.tarotCards}</p>
             </div>
 
             {sephira.symbols.length > 0 && (
@@ -541,7 +545,7 @@ export function EntityDetailContent({
                   {sephira.symbols.map((sym) => (
                     <span
                       key={sym}
-                      className="px-2.5 py-1 rounded-lg bg-[#EAE3D7] border border-[#C2B5A2]/80 text-[#302B26] text-[11px] font-medium"
+                      className="px-2.5 py-1 rounded-lg bg-[#EAE3D7] border border-[#C2B5A2]/80 text-[#302B26] text-xs font-medium"
                     >
                       {sym}
                     </span>
@@ -553,12 +557,12 @@ export function EntityDetailContent({
         )}
 
         {pathItem && activeTab === 'attributions' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm sm:text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[13px] font-sans">
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 sm:col-span-2">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.letterAndMeaning}
               </span>
-              <p className="text-sm font-serif font-bold text-[#302B26]">
+              <p className="font-semibold text-[#302B26] leading-snug">
                 {pathItem.hebrewLetter} ({pathItem.hebrewLetterName}) ·{' '}
                 {pathItem.letterMeaning}
               </p>
@@ -568,7 +572,7 @@ export function EntityDetailContent({
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.tarotKey}
               </span>
-              <p className="text-sm font-serif font-bold text-[#302B26]">
+              <p className="font-semibold text-[#302B26] leading-snug">
                 {language === 'pt' ? 'Arcano' : 'Key'} {pathItem.tarotKey} —{' '}
                 {pathItem.tarotCardName}
               </p>
@@ -578,7 +582,7 @@ export function EntityDetailContent({
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.pathAttribution}
               </span>
-              <p className="text-sm font-serif font-bold text-[#302B26]">
+              <p className="font-semibold text-[#302B26] leading-snug">
                 {getLocalizedAttributionType(pathItem.attributionType, language)}:{' '}
                 {pathItem.attribution} {pathItem.symbolIcon}
               </p>
@@ -588,14 +592,16 @@ export function EntityDetailContent({
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.esotericTitle}
               </span>
-              <p className="text-[#302B26] italic">&ldquo;{pathItem.name}&rdquo;</p>
+              <p className="text-[#302B26] italic leading-snug">
+                &ldquo;{pathItem.name}&rdquo;
+              </p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 sm:col-span-2">
               <span className="text-[11px] font-semibold text-[#8E6636] block mb-1">
                 {t.attributions.consciousnessAspect}
               </span>
-              <p className="text-[#302B26]">{pathItem.consciousnessAspect}</p>
+              <p className="text-[#302B26] leading-snug">{pathItem.consciousnessAspect}</p>
             </div>
 
             <div className="p-3 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 sm:col-span-2">
@@ -610,13 +616,13 @@ export function EntityDetailContent({
         )}
 
         {sephira && activeTab === 'commentary' && (
-          <div className="space-y-3.5">
+          <div className="space-y-3.5 font-sans">
             <div className="p-4 rounded-xl bg-gradient-to-b from-[#F9F3EA] to-[#F3ECE0] border border-[#C2B5A2]/75 shadow-xs">
               <div className="flex items-center gap-2 text-[#302B26] font-serif font-bold text-sm mb-2">
                 <Scroll className="w-4 h-4 text-[#8E6636] shrink-0" />
                 {t.commentary.dionFortuneTitle}
               </div>
-              <blockquote className="text-sm sm:text-[13px] text-[#5D554A] italic leading-relaxed">
+              <blockquote className="text-[13px] text-[#5D554A] italic leading-relaxed">
                 &ldquo;{sephira.dionFortuneInsight}&rdquo;
               </blockquote>
             </div>
@@ -626,31 +632,31 @@ export function EntityDetailContent({
                 <BookOpen className="w-4 h-4 text-[#8E6636] shrink-0" />
                 {t.commentary.israelRegardieTitle}
               </div>
-              <blockquote className="text-sm sm:text-[13px] text-[#5D554A] italic leading-relaxed">
+              <blockquote className="text-[13px] text-[#5D554A] italic leading-relaxed">
                 &ldquo;{sephira.regardieInsight}&rdquo;
               </blockquote>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 space-y-1.5 text-xs">
+            <div className="p-3.5 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#C2B5A2]/75 space-y-1 text-[13px]">
               <span className="text-[11px] font-semibold text-[#8E6636] block">
                 {t.attributions.yetziraticTitle} · {t.attributions.soulPart}
               </span>
-              <p className="font-serif font-semibold text-[#302B26]">
+              <p className="font-semibold text-[#302B26] leading-snug">
                 {sephira.yetziraticTitle}
               </p>
-              <p className="text-[#5D554A]">{sephira.soulPart}</p>
+              <p className="text-[#5D554A] leading-snug">{sephira.soulPart}</p>
             </div>
           </div>
         )}
 
         {pathItem && activeTab === 'commentary' && (
-          <div className="space-y-3.5">
+          <div className="space-y-3.5 font-sans">
             <div className="p-4 rounded-xl bg-gradient-to-b from-[#F9F3EA] to-[#F3ECE0] border border-[#C2B5A2]/75 shadow-xs">
               <div className="flex items-center gap-2 text-[#302B26] font-serif font-bold text-sm mb-2">
                 <Scroll className="w-4 h-4 text-[#8E6636] shrink-0" />
                 {t.commentary.dionFortunePathTitle}
               </div>
-              <blockquote className="text-sm sm:text-[13px] text-[#5D554A] italic leading-relaxed">
+              <blockquote className="text-[13px] text-[#5D554A] italic leading-relaxed">
                 &ldquo;{pathItem.dionFortuneInsight}&rdquo;
               </blockquote>
             </div>
@@ -660,7 +666,7 @@ export function EntityDetailContent({
                 <BookOpen className="w-4 h-4 text-[#8E6636] shrink-0" />
                 {t.commentary.israelRegardiePathTitle}
               </div>
-              <blockquote className="text-sm sm:text-[13px] text-[#5D554A] italic leading-relaxed">
+              <blockquote className="text-[13px] text-[#5D554A] italic leading-relaxed">
                 &ldquo;{pathItem.regardieInsight}&rdquo;
               </blockquote>
             </div>
@@ -670,7 +676,7 @@ export function EntityDetailContent({
                 <Crown className="w-3.5 h-3.5 text-[#8E6636] shrink-0" />
                 {t.commentary.yetziraticTitle}
               </div>
-              <p className="text-xs text-[#5D554A] italic leading-relaxed">
+              <p className="text-[13px] text-[#5D554A] italic leading-relaxed">
                 &ldquo;{pathItem.yetziraticText}&rdquo;
               </p>
             </div>
@@ -678,50 +684,17 @@ export function EntityDetailContent({
         )}
 
         {activeTab === 'meditation' && (
-          <div className="space-y-4">
+          <div className="space-y-4 font-sans">
             <div className="p-4 rounded-xl bg-gradient-to-b from-[#F9F3EA] to-[#F3ECE0] border border-[#C2B5A2]/75 space-y-2.5 shadow-xs">
               <h4 className="text-sm font-serif font-bold text-[#302B26] flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[#8E6636]" />
                 {t.meditation.traditionalTitle}
               </h4>
-              <p className="text-sm sm:text-[13px] text-[#5D554A] leading-relaxed italic">
+              <p className="text-[13px] text-[#5D554A] leading-relaxed italic">
                 &ldquo;
                 {sephira ? sephira.pathworkingGuidance : pathItem?.pathworkingMeditation}
                 &rdquo;
               </p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-gradient-to-b from-[#F5EFE6] to-[#F0E9DD] border border-[#8E6636]/45 space-y-3">
-              <h4 className="text-sm font-serif font-bold text-[#302B26]">
-                {t.meditation.oracleTitle}
-              </h4>
-              <p className="text-sm sm:text-xs text-[#5D554A] leading-relaxed">
-                {t.meditation.oracleDescription(
-                  sephira
-                    ? sephira.name
-                    : language === 'pt'
-                    ? `o Caminho ${pathItem?.number}`
-                    : `Path ${pathItem?.number}`
-                )}
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  onClose?.();
-                  onGenerateAiMeditation(
-                    sephira
-                      ? sephira.name
-                      : `${language === 'pt' ? 'Caminho' : 'Path'} ${pathItem?.number} (${
-                          pathItem?.hebrewLetterName
-                        } - ${pathItem?.tarotCardName})`,
-                    sephira ? 'sephira' : 'path'
-                  );
-                }}
-                className="w-full min-h-[46px] py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#8E6636] to-[#745126] text-[#F9F3EA] font-bold text-xs uppercase tracking-wider transition-all hover:brightness-110 active:scale-[0.99] flex items-center justify-center gap-2 shadow-md"
-              >
-                <Sparkles className="w-4 h-4" />
-                {t.meditation.generateButton}
-              </button>
             </div>
           </div>
         )}
@@ -735,7 +708,6 @@ interface EntityDetailDrawerProps {
   sephira: Sephira | null;
   pathItem: Path | null;
   onClose: () => void;
-  onGenerateAiMeditation: (entityName: string, entityType: 'sephira' | 'path') => void;
 }
 
 export default function EntityDetailDrawer({
@@ -743,7 +715,6 @@ export default function EntityDetailDrawer({
   sephira,
   pathItem,
   onClose,
-  onGenerateAiMeditation,
 }: EntityDetailDrawerProps) {
   const [isTabletOrUp, setIsTabletOrUp] = useState(false);
 
@@ -835,7 +806,6 @@ export default function EntityDetailDrawer({
               sephira={sephira}
               pathItem={pathItem}
               onClose={onClose}
-              onGenerateAiMeditation={onGenerateAiMeditation}
             />
           </motion.aside>
         </div>

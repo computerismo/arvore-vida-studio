@@ -8,15 +8,11 @@ import TreeOfLifeCanvas, { HoveredItem } from '@/components/TreeOfLifeCanvas';
 import EntityDetailDrawer from '@/components/EntityDetailDrawer';
 import PillarsExplorer from '@/components/PillarsExplorer';
 import CorrespondenceTable from '@/components/CorrespondenceTable';
-import AiQabalahGuide from '@/components/AiQabalahGuide';
 import FilterBar from '@/components/FilterBar';
 import MobileControlsSheet from '@/components/MobileControlsSheet';
 import {
-  Info,
   Table,
   Columns,
-  Bot,
-  X,
   Compass,
   SlidersHorizontal,
   BookOpen,
@@ -24,8 +20,8 @@ import {
   ChevronUp,
 } from 'lucide-react';
 
-type MobileView = 'tree' | '777' | 'pillars' | 'ai';
-type ConsoleTab = '777' | 'pillars' | 'ai';
+type MobileView = 'tree' | '777' | 'pillars';
+type ConsoleTab = '777' | 'pillars';
 
 export default function Home() {
   const [language, setLanguage] = useState<Language>('pt');
@@ -49,14 +45,6 @@ export default function Home() {
   // Tablet & Desktop collapsible reference console state
   const [activeConsoleTab, setActiveConsoleTab] = useState<ConsoleTab>('777');
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
-
-  // Study guide modal
-  const [showHowToStudy, setShowHowToStudy] = useState(false);
-
-  const [aiPromptTarget, setAiPromptTarget] = useState<{
-    name: string;
-    type: 'sephira' | 'path';
-  } | null>(null);
 
   useEffect(() => {
     document.documentElement.lang = language === 'pt' ? 'pt-BR' : 'en';
@@ -85,17 +73,6 @@ export default function Home() {
         .getElementById(elementId)
         ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 90);
-  };
-
-  const handleGenerateAiMeditation = (
-    entityName: string,
-    entityType: 'sephira' | 'path'
-  ) => {
-    setAiPromptTarget({ name: entityName, type: entityType });
-    setMobileView('ai');
-    setActiveConsoleTab('ai');
-    setIsConsoleOpen(true);
-    scrollToConsole('ai-guide-section');
   };
 
   const handleSelectSephira = (s: Sephira) => {
@@ -140,12 +117,7 @@ export default function Home() {
     { id: 'tree', label: t.mobileNav.tree, icon: Compass },
     { id: '777', label: t.mobileNav.index777, icon: Table },
     { id: 'pillars', label: t.mobileNav.pillars, icon: Columns },
-    { id: 'ai', label: t.mobileNav.oracle, icon: Bot },
   ];
-
-  const aiInitialPrompt = aiPromptTarget
-    ? t.aiGuide.meditationPrompt(aiPromptTarget.name)
-    : undefined;
 
   const selectedScaleLabel =
     t.controls.scales.find((s) => s.id === selectedScale)?.label ?? selectedScale;
@@ -231,17 +203,6 @@ export default function Home() {
               </button>
             )}
 
-            {/* Guide Button */}
-            <button
-              type="button"
-              onClick={() => setShowHowToStudy(true)}
-              aria-label={t.header.guideAria}
-              className="min-h-[40px] min-w-[40px] sm:min-w-0 sm:px-3.5 py-2 rounded-xl bg-[#F8F4EC] border border-[#D1C6B3] hover:border-[#8C631A] text-xs text-[#3A3E45] hover:text-[#5E400B] transition-colors flex items-center justify-center gap-2 font-medium whitespace-nowrap shrink-0"
-            >
-              <Info className="w-4 h-4 text-[#7C5814]" />
-              <span className="hidden sm:inline">{t.header.guide}</span>
-            </button>
-
             {/* Tablet & Desktop Reference Console Toggle */}
             <button
               type="button"
@@ -312,17 +273,6 @@ export default function Home() {
               onSelectSephira={handleSelectSephira}
             />
           )}
-
-          {mobileView === 'ai' && (
-            <div id="ai-guide-section">
-              <AiQabalahGuide
-                language={language}
-                initialPrompt={aiInitialPrompt}
-                initialEntityName={aiPromptTarget?.name}
-                initialEntityType={aiPromptTarget?.type}
-              />
-            </div>
-          )}
         </div>
 
         {/* TABLET & DESKTOP COLLAPSIBLE HERMETIC REFERENCE CONSOLE (md+) */}
@@ -370,19 +320,6 @@ export default function Home() {
 
               <button
                 type="button"
-                onClick={() => handleOpenConsoleTab('ai')}
-                className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap ${
-                  isConsoleOpen && activeConsoleTab === 'ai'
-                    ? 'bg-[#EEE0C7] text-[#5E400B] border border-[#8C631A]'
-                    : 'bg-[#F0E9DE] text-[#3A3E45] border border-[#D1C6B3] hover:text-[#1F242C] hover:border-[#8C631A]/60'
-                }`}
-              >
-                <Bot className="w-3.5 h-3.5" />
-                {t.console.tabOracle}
-              </button>
-
-              <button
-                type="button"
                 onClick={() => setIsConsoleOpen((prev) => !prev)}
                 className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-xl bg-[#F0E9DE] border border-[#D1C6B3] text-[#3A3E45] hover:text-[#1F242C] transition-colors"
                 aria-label={
@@ -416,17 +353,6 @@ export default function Home() {
                   onSelectSephira={handleSelectSephira}
                 />
               )}
-
-              {activeConsoleTab === 'ai' && (
-                <div id="ai-guide-section">
-                  <AiQabalahGuide
-                    language={language}
-                    initialPrompt={aiInitialPrompt}
-                    initialEntityName={aiPromptTarget?.name}
-                    initialEntityType={aiPromptTarget?.type}
-                  />
-                </div>
-              )}
             </div>
           )}
         </section>
@@ -437,7 +363,7 @@ export default function Home() {
         aria-label={t.mobileNav.ariaLabel}
         className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#F8F4EC]/95 backdrop-blur-md border-t border-[#D1C6B3] pb-safe"
       >
-        <div className="grid grid-cols-4 items-center h-16 max-w-lg mx-auto px-1">
+        <div className="grid grid-cols-3 items-center h-16 max-w-lg mx-auto px-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = mobileView === item.id;
@@ -478,58 +404,6 @@ export default function Home() {
         onTogglePillars={() => setShowPillars((prev) => !prev)}
       />
 
-      {/* Responsive "How to Study" Modal */}
-      {showHowToStudy && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label={t.studyModal.ariaLabel}
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#1f242c]/45 backdrop-blur-sm"
-          onClick={() => setShowHowToStudy(false)}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="bg-[#F8F4EC] border-t sm:border border-[#D1C6B3] rounded-t-3xl sm:rounded-2xl p-5 sm:p-6 pb-safe max-w-lg w-full max-h-[85dvh] overflow-y-auto space-y-4 text-[#1F242C] shadow-2xl"
-          >
-            <div className="sm:hidden flex justify-center -mt-1 pb-1">
-              <div className="w-10 h-1.5 rounded-full bg-[#C7BBA5]" aria-hidden="true" />
-            </div>
-
-            <div className="flex items-center justify-between border-b border-[#D1C6B3] pb-3">
-              <h3 className="text-base sm:text-lg font-serif font-bold text-[#6D4B0F] flex items-center gap-2">
-                <Info className="w-5 h-5 text-[#7C5814] shrink-0" />
-                {t.studyModal.title}
-              </h3>
-              <button
-                type="button"
-                onClick={() => setShowHowToStudy(false)}
-                aria-label={t.studyModal.closeAria}
-                className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-[#F0E9DE] text-[#3A3E45] hover:text-[#1F242C] border border-[#D1C6B3]"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <ul className="text-sm sm:text-xs text-[#3A3E45] space-y-3 leading-relaxed list-disc list-inside">
-              {t.studyModal.items.map((item) => (
-                <li key={item.lead}>
-                  <strong className="text-[#1F242C]">{item.lead}</strong>{' '}
-                  {item.body}
-                </li>
-              ))}
-            </ul>
-
-            <button
-              type="button"
-              onClick={() => setShowHowToStudy(false)}
-              className="w-full min-h-[48px] py-3 rounded-xl bg-gradient-to-r from-[#8f681d] to-[#745112] text-[#FAF7EF] font-bold text-xs uppercase tracking-wider transition-all hover:brightness-110 shadow-md"
-            >
-              {t.studyModal.closeButton}
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* On-Demand Detail Sheet (Bottom Sheet on Mobile, Right Slide-Over Drawer on Tablet & Desktop) */}
       <EntityDetailDrawer
         language={language}
@@ -539,7 +413,6 @@ export default function Home() {
           setSelectedSephiraId(null);
           setSelectedPathId(null);
         }}
-        onGenerateAiMeditation={handleGenerateAiMeditation}
       />
     </main>
   );

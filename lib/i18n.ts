@@ -242,7 +242,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     console: {
       title: 'Painel de Referência Hermética',
-      subtitle: 'Índice 777, Análise dos 3 Pilares e Oráculo de Pathworking',
+      subtitle: 'Índice 777 e Análise dos 3 Pilares',
       tab777: 'Índice 777',
       tabPillars: '3 Pilares',
       tabOracle: 'Oráculo',
@@ -516,7 +516,7 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
     },
     console: {
       title: 'Hermetic Reference Console',
-      subtitle: '777 Index, 3 Pillars Analysis, and Pathworking Oracle',
+      subtitle: '777 Index and 3 Pillars Analysis',
       tab777: '777 Index',
       tabPillars: '3 Pillars',
       tabOracle: 'Oracle',

@@ -100,6 +100,8 @@ export interface UiStrings {
     };
     overview: {
       coreSymbolism: string;
+      planet: string;
+      yetziraticTitle: string;
       spiritualExperience: string;
       magicalImage: string;
       virtue: string;
@@ -117,24 +119,36 @@ export interface UiStrings {
       letterMeaning: string;
       attribution: string;
       overviewSymbolism: string;
+      yetziraticText: string;
     };
     attributions: {
       divineName: string;
       archangel: string;
       angelicOrder: string;
+      planet: string;
       astrological: string;
+      yetziraticTitle: string;
+      soulPart: string;
       element: string;
       bodyPart: string;
       gemstone: string;
       incensePlants: string;
+      qliphoth: string;
+      symbols: string;
       tarotAttribution: string;
       letterAndMeaning: string;
       tarotKey: string;
       esotericTitle: string;
+      pathAttribution: string;
+      consciousnessAspect: string;
+      yetziraticText: string;
     };
     commentary: {
       dionFortuneTitle: string;
       israelRegardieTitle: string;
+      dionFortunePathTitle: string;
+      israelRegardiePathTitle: string;
+      yetziraticTitle: string;
       traditionalPathTitle: string;
       traditionalPathBody: (
         num: number,
@@ -325,6 +339,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       },
       overview: {
         coreSymbolism: 'Simbolismo Central e Essência',
+        planet: 'Planeta / Esfera Celeste',
+        yetziraticTitle: 'Título Yetzirático',
         spiritualExperience: 'Experiência Espiritual',
         magicalImage: 'Imagem Mágica',
         virtue: 'Virtude',
@@ -342,24 +358,36 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
         letterMeaning: 'Significado da Letra Hebraica',
         attribution: 'Atribuição',
         overviewSymbolism: 'Visão Geral e Simbolismo',
+        yetziraticText: 'Texto do Sepher Yetzirah (32 Caminhos da Sabedoria)',
       },
       attributions: {
         divineName: 'Nome Divino',
         archangel: 'Arcanjo',
         angelicOrder: 'Ordem Angélica',
-        astrological: 'Astrológico',
+        planet: 'Planeta / Esfera Celeste',
+        astrological: 'Chakra Mundano (Astrológico)',
+        yetziraticTitle: 'Inteligência Yetzirática',
+        soulPart: 'Parte da Alma (Psicologia Cabalística)',
         element: 'Elemento',
         bodyPart: 'Microcosmo / Parte do Corpo',
         gemstone: 'Pedra Preciosa',
         incensePlants: 'Incensos e Plantas',
+        qliphoth: 'Qliphoth (Aspecto Adverso / Sombra)',
+        symbols: 'Símbolos Mágicos (777)',
         tarotAttribution: 'Atribuição no Tarô',
         letterAndMeaning: 'Letra Hebraica e Significado',
         tarotKey: 'Chave do Tarô',
         esotericTitle: 'Título Esotérico',
+        pathAttribution: 'Regência Astrológica / Elemental',
+        consciousnessAspect: 'Correspondências 777 (Bestas, Plantas e Minerais)',
+        yetziraticText: 'Passagem do Sepher Yetzirah',
       },
       commentary: {
         dionFortuneTitle: 'Dion Fortune — "A Cabala Mística"',
-        israelRegardieTitle: 'Israel Regardie — "O Jardim das Romãs"',
+        israelRegardieTitle: 'Israel Regardie — "O Jardim das Romãs" e "O Pilar do Meio"',
+        dionFortunePathTitle: 'Dion Fortune — Simbolismo do Caminho',
+        israelRegardiePathTitle: 'Israel Regardie — Análise Hermética e 777',
+        yetziraticTitle: 'Sepher Yetzirah — Os Trinta e Dois Caminhos',
         traditionalPathTitle: 'Atribuição Hermética Tradicional do Caminho',
         traditionalPathBody: (num, fromName, toName, tarotCardName, attribution) =>
           `O Caminho ${num} conecta ${fromName} a ${toName}. Nas correspondências do 777, representa a ponte transformadora regida por ${tarotCardName} e pela força astrológica ou elemental de ${attribution}.`,
@@ -585,6 +613,8 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
       },
       overview: {
         coreSymbolism: 'Core Symbolism & Essence',
+        planet: 'Planet / Celestial Sphere',
+        yetziraticTitle: 'Yetziratic Title',
         spiritualExperience: 'Spiritual Experience',
         magicalImage: 'Magical Image',
         virtue: 'Virtue',
@@ -602,24 +632,36 @@ export const UI_STRINGS: Record<Language, UiStrings> = {
         letterMeaning: 'Hebrew Letter Meaning',
         attribution: 'Attribution',
         overviewSymbolism: 'Overview & Symbolism',
+        yetziraticText: 'Sepher Yetzirah Text (32 Paths of Wisdom)',
       },
       attributions: {
         divineName: 'Divine Name',
         archangel: 'Archangel',
         angelicOrder: 'Angelic Order',
-        astrological: 'Astrological',
+        planet: 'Planet / Celestial Sphere',
+        astrological: 'Mundane Chakra (Astrological)',
+        yetziraticTitle: 'Yetziratic Intelligence',
+        soulPart: 'Part of the Soul (Qabalistic Psychology)',
         element: 'Element',
         bodyPart: 'Microcosm / Body Part',
         gemstone: 'Gemstone',
         incensePlants: 'Incense & Botanicals',
+        qliphoth: 'Qliphoth (Adverse Aspect / Shell)',
+        symbols: 'Magical Symbols (777)',
         tarotAttribution: 'Tarot Attribution',
         letterAndMeaning: 'Hebrew Letter & Meaning',
         tarotKey: 'Tarot Key',
         esotericTitle: 'Esoteric Title',
+        pathAttribution: 'Astrological / Elemental Rulership',
+        consciousnessAspect: '777 Correspondences (Sacred Beasts, Plants & Stones)',
+        yetziraticText: 'Sepher Yetzirah Passage',
       },
       commentary: {
         dionFortuneTitle: 'Dion Fortune — "The Mystical Qabalah"',
-        israelRegardieTitle: 'Israel Regardie — "The Garden of Pomegranates"',
+        israelRegardieTitle: 'Israel Regardie — "A Garden of Pomegranates" & "The Middle Pillar"',
+        dionFortunePathTitle: 'Dion Fortune — Path Symbolism',
+        israelRegardiePathTitle: 'Israel Regardie — Hermetic & 777 Analysis',
+        yetziraticTitle: 'Sepher Yetzirah — The Thirty-Two Paths',
         traditionalPathTitle: 'Traditional Hermetic Path Attribution',
         traditionalPathBody: (num, fromName, toName, tarotCardName, attribution) =>
           `Path ${num} connects ${fromName} to ${toName}. In 777 correspondences, it represents the transformative bridge governed by ${tarotCardName} and the astrological or elemental force of ${attribution}.`,

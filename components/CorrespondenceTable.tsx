@@ -37,10 +37,12 @@ export default function CorrespondenceTable({
       s.divineName.toLowerCase().includes(query) ||
       s.archangel.toLowerCase().includes(query) ||
       s.astrological.toLowerCase().includes(query) ||
+      s.planet.toLowerCase().includes(query) ||
       s.element.toLowerCase().includes(query) ||
       (base &&
         (base.translation.toLowerCase().includes(query) ||
           base.astrological.toLowerCase().includes(query) ||
+          base.planet.toLowerCase().includes(query) ||
           base.element.toLowerCase().includes(query)))
     );
   });

@@ -549,11 +549,13 @@ export default function TreeOfLifeCanvas({
       sephira.pillar.toLowerCase().includes(filterLower) ||
       sephira.element.toLowerCase().includes(filterLower) ||
       sephira.astrological.toLowerCase().includes(filterLower) ||
+      sephira.planet.toLowerCase().includes(filterLower) ||
       sephira.name.toLowerCase().includes(filterLower) ||
       sephira.archangel.toLowerCase().includes(filterLower) ||
       base.pillar.toLowerCase().includes(filterLower) ||
       base.element.toLowerCase().includes(filterLower) ||
       base.astrological.toLowerCase().includes(filterLower) ||
+      base.planet.toLowerCase().includes(filterLower) ||
       base.name.toLowerCase().includes(filterLower) ||
       base.archangel.toLowerCase().includes(filterLower)
     );

@@ -14,6 +14,7 @@ export interface Sephira {
     yetzirah: string; // Prince Scale
     assiah: string;   // Princess Scale
   };
+  quarteredColors?: [string, string, string, string]; // Top (Citrine), Right (Olive), Bottom (Black), Left (Russet)
   colorDescriptions: {
     atziluth: string;
     briah: string;
@@ -121,10 +122,10 @@ export const SEPHIROTH_DATA: Sephira[] = [
     pillar: 'Mildness',
     coordinates: { x: 50, y: 8 },
     colors: {
-      atziluth: '#FFFFFF',
-      briah: '#F8FAFC',
-      yetzirah: '#F1F5F9',
-      assiah: '#E2E8F0'
+      atziluth: '#ffffff',
+      briah: '#fffefa',
+      yetzirah: '#f5f7fa',
+      assiah: '#efe8d5'
     },
     colorDescriptions: {
       atziluth: 'Brilliant Pure White Light',
@@ -160,10 +161,10 @@ export const SEPHIROTH_DATA: Sephira[] = [
     pillar: 'Mercy',
     coordinates: { x: 80, y: 20 },
     colors: {
-      atziluth: '#38BDF8',
-      briah: '#0284C7',
-      yetzirah: '#0369A1',
-      assiah: '#0C4A6E'
+      atziluth: '#60a5fa',
+      briah: '#a6abaa',
+      yetzirah: '#b7bdbe',
+      assiah: '#8c9398'
     },
     colorDescriptions: {
       atziluth: 'Pure Soft Blue',
@@ -199,10 +200,10 @@ export const SEPHIROTH_DATA: Sephira[] = [
     pillar: 'Severity',
     coordinates: { x: 20, y: 20 },
     colors: {
-      atziluth: '#A855F7',
-      briah: '#000000',
-      yetzirah: '#4C1D95',
-      assiah: '#3B0764'
+      atziluth: '#b52758',
+      briah: '#191c20',
+      yetzirah: '#4e3629',
+      assiah: '#6d6266'
     },
     colorDescriptions: {
       atziluth: 'Crimson',
@@ -277,10 +278,10 @@ export const SEPHIROTH_DATA: Sephira[] = [
     pillar: 'Mercy',
     coordinates: { x: 80, y: 44 },
     colors: {
-      atziluth: '#2563EB',
-      briah: '#1D4ED8',
-      yetzirah: '#1E40AF',
-      assiah: '#1E3A8A'
+      atziluth: '#3b4cb8',
+      briah: '#2452ab',
+      yetzirah: '#323a8c',
+      assiah: '#1d3976'
     },
     colorDescriptions: {
       atziluth: 'Deep Violet Blue',
@@ -316,10 +317,10 @@ export const SEPHIROTH_DATA: Sephira[] = [
     pillar: 'Severity',
     coordinates: { x: 20, y: 44 },
     colors: {
-      atziluth: '#EF4444',
-      briah: '#DC2626',
-      yetzirah: '#B91C1C',
-      assiah: '#991B1B'
+      atziluth: '#e34e2b',
+      briah: '#d6332b',
+      yetzirah: '#b82520',
+      assiah: '#8c1e1a'
     },
     colorDescriptions: {
       atziluth: 'Orange-Red',
@@ -355,10 +356,10 @@ export const SEPHIROTH_DATA: Sephira[] = [
     pillar: 'Mildness',
     coordinates: { x: 50, y: 56 },
     colors: {
-      atziluth: '#F59E0B',
-      briah: '#D97706',
-      yetzirah: '#B45309',
-      assiah: '#78350F'
+      atziluth: '#f194b4',
+      briah: '#edc944',
+      yetzirah: '#e88b78',
+      assiah: '#c98a2c'
     },
     colorDescriptions: {
       atziluth: 'Clear Pink Rose',
@@ -394,10 +395,10 @@ export const SEPHIROTH_DATA: Sephira[] = [
     pillar: 'Mercy',
     coordinates: { x: 80, y: 68 },
     colors: {
-      atziluth: '#10B981',
-      briah: '#059669',
-      yetzirah: '#047857',
-      assiah: '#065F46'
+      atziluth: '#91b53e',
+      briah: '#168354',
+      yetzirah: '#9dc43b',
+      assiah: '#667532'
     },
     colorDescriptions: {
       atziluth: 'Amber Green',
@@ -433,10 +434,10 @@ export const SEPHIROTH_DATA: Sephira[] = [
     pillar: 'Severity',
     coordinates: { x: 20, y: 68 },
     colors: {
-      atziluth: '#F97316',
-      briah: '#EA580C',
-      yetzirah: '#C2410C',
-      assiah: '#9A3412'
+      atziluth: '#8650b1',
+      briah: '#ed862d',
+      yetzirah: '#8e402a',
+      assiah: '#9e7037'
     },
     colorDescriptions: {
       atziluth: 'Violet-Purple',
@@ -472,10 +473,10 @@ export const SEPHIROTH_DATA: Sephira[] = [
     pillar: 'Mildness',
     coordinates: { x: 50, y: 80 },
     colors: {
-      atziluth: '#A855F7',
-      briah: '#7E22CE',
-      yetzirah: '#6B21A8',
-      assiah: '#581C87'
+      atziluth: '#393578',
+      briah: '#8552b1',
+      yetzirah: '#56317a',
+      assiah: '#7a7048'
     },
     colorDescriptions: {
       atziluth: 'Deep Violet',
@@ -511,11 +512,12 @@ export const SEPHIROTH_DATA: Sephira[] = [
     pillar: 'Mildness',
     coordinates: { x: 50, y: 92 },
     colors: {
-      atziluth: '#F59E0B',
-      briah: '#10B981',
-      yetzirah: '#1E3A8A',
-      assiah: '#111827'
+      atziluth: '#edc944',
+      briah: '#7d803e',
+      yetzirah: '#98563b',
+      assiah: '#202328'
     },
+    quarteredColors: ['#c1ae3b', '#7d803e', '#202328', '#98563b'],
     colorDescriptions: {
       atziluth: 'Yellow / Gold / Four Elements',
       briah: 'Citrine, Olive, Russet, & Black',
@@ -559,10 +561,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Air',
     symbolIcon: '🜁',
     colors: {
-      atziluth: '#FEF08A',
-      briah: '#FDE047',
-      yetzirah: '#EAB308',
-      assiah: '#CA8A04'
+      atziluth: '#ede17d',
+      briah: '#7dd3fc',
+      yetzirah: '#34d399',
+      assiah: '#6ee7b7'
     },
     overview: 'Connects the supreme unity of Kether to the dynamic wisdom of Chokmah. Represents the original cosmic breath and pure unconditioned divine potential.',
     pathworkingMeditation: 'Step off the cliff of rational fear into the boundless ether of absolute trust, guided by divine spirit.'
@@ -582,10 +584,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Mercury',
     symbolIcon: '☿',
     colors: {
-      atziluth: '#F97316',
-      briah: '#EA580C',
-      yetzirah: '#C2410C',
-      assiah: '#9A3412'
+      atziluth: '#e8c833',
+      briah: '#8552b1',
+      yetzirah: '#a6abaa',
+      assiah: '#393578'
     },
     overview: 'Connects Kether to Binah. Represents the conscious intention directing elemental forces to construct reality.',
     pathworkingMeditation: 'Raise your right hand to heaven and point your left hand to earth, becoming a clear conduit for divine manifestation.'
@@ -605,10 +607,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Moon',
     symbolIcon: '☽',
     colors: {
-      atziluth: '#E0E7FF',
-      briah: '#C7D2FE',
-      yetzirah: '#A5B4FC',
-      assiah: '#818CF8'
+      atziluth: '#2b61b6',
+      briah: '#cbd5e1',
+      yetzirah: '#93c5fd',
+      assiah: '#94a3b8'
     },
     overview: 'The long path connecting Kether down the Middle Pillar across the Abyss directly to Tiphareth. Governs memory, intuition, and divine sanctuary.',
     pathworkingMeditation: 'Sit between the black and white pillars before the veil of the temple, listening to the quiet whisper of cosmic memory.'
@@ -628,10 +630,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Venus',
     symbolIcon: '♀',
     colors: {
-      atziluth: '#10B981',
-      briah: '#059669',
-      yetzirah: '#047857',
-      assiah: '#065F46'
+      atziluth: '#168354',
+      briah: '#60a5fa',
+      yetzirah: '#34a86e',
+      assiah: '#e879a0'
     },
     overview: 'Unites the Father (Chokmah) and Mother (Binah) across the top of the Tree. The gateway of love, abundance, and organic fertility.',
     pathworkingMeditation: 'Pass through the golden doorway of love into a meadow of flowers, celebrating the abundant fertility of creation.'
@@ -651,10 +653,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Aries',
     symbolIcon: '♈',
     colors: {
-      atziluth: '#EF4444',
-      briah: '#DC2626',
-      yetzirah: '#B91C1C',
-      assiah: '#991B1B'
+      atziluth: '#d6332b',
+      briah: '#e34e2b',
+      yetzirah: '#dc2626',
+      assiah: '#b91c1c'
     },
     overview: 'Connects Wisdom to Heart Consciousness. Establishes order, authority, vision, and leadership.',
     pathworkingMeditation: 'Look through the window of spiritual authority, governing your lower nature with wisdom and noble purpose.'
@@ -674,10 +676,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Taurus',
     symbolIcon: '♉',
     colors: {
-      atziluth: '#FB923C',
-      briah: '#F97316',
-      yetzirah: '#EA580C',
-      assiah: '#C2410C'
+      atziluth: '#dc612f',
+      briah: '#393578',
+      yetzirah: '#784830',
+      assiah: '#5c3d28'
     },
     overview: 'Connects Chokmah to Chesed along the Pillar of Mercy. The voice of inner initiation and traditional sacred wisdom.',
     pathworkingMeditation: 'Receive the solemn whisper of the ancient teacher, linking your human mind to divine revelation.'
@@ -697,10 +699,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Gemini',
     symbolIcon: '♊',
     colors: {
-      atziluth: '#FDE047',
-      briah: '#EAB308',
-      yetzirah: '#CA8A04',
-      assiah: '#A16207'
+      atziluth: '#e68a2d',
+      briah: '#c084fc',
+      yetzirah: '#ede17d',
+      assiah: '#9ca3af'
     },
     overview: 'Connects Binah to Tiphareth. Represents spiritual choice, union of opposites, and discrimination between divine and temporal.',
     pathworkingMeditation: 'Unite masculine and feminine polarities under the angel Raphael, choosing spiritual devotion over dualistic division.'
@@ -720,10 +722,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Cancer',
     symbolIcon: '♋',
     colors: {
-      atziluth: '#38BDF8',
-      briah: '#0284C7',
-      yetzirah: '#0369A1',
-      assiah: '#0C4A6E'
+      atziluth: '#e1aa3b',
+      briah: '#8c3b2b',
+      yetzirah: '#98563b',
+      assiah: '#2c5c52'
     },
     overview: 'Connects Binah to Geburah down the Pillar of Severity. The holy armor carrying divine soul through victory over lower astral instincts.',
     pathworkingMeditation: 'Steer your silver chariot forward guided by spiritual purpose, maintaining complete mastery over dual sphinxes.'
@@ -743,10 +745,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Leo',
     symbolIcon: '♌',
     colors: {
-      atziluth: '#FACC15',
-      briah: '#EAB308',
-      yetzirah: '#CA8A04',
-      assiah: '#854D0E'
+      atziluth: '#c4cc4f',
+      briah: '#6b3fa0',
+      yetzirah: '#a6abaa',
+      assiah: '#c97b38'
     },
     overview: 'Horizontal path bridging Chesed (Mercy) and Geburah (Severity). Governs the mastery of passions through gentle spiritual grace.',
     pathworkingMeditation: 'Gently place your hands upon the lion of passion, transmuting raw desire into radiant spiritual power.'
@@ -766,10 +768,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Virgo',
     symbolIcon: '♍',
     colors: {
-      atziluth: '#84CC16',
-      briah: '#65A30D',
-      yetzirah: '#4D7C0F',
-      assiah: '#3F6212'
+      atziluth: '#91b53e',
+      briah: '#64748b',
+      yetzirah: '#5c7a38',
+      assiah: '#704a52'
     },
     overview: 'Connects Chesed to Tiphareth. The lone seeker holding the lantern of truth to light the path for sincere seekers.',
     pathworkingMeditation: 'Hold up your golden lantern atop the mountain peak, quietly guiding souls with patient, humble wisdom.'
@@ -789,10 +791,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Jupiter',
     symbolIcon: '♃',
     colors: {
-      atziluth: '#818CF8',
-      briah: '#4338CA',
-      yetzirah: '#312E81',
-      assiah: '#1E1B4B'
+      atziluth: '#8650b1',
+      briah: '#2452ab',
+      yetzirah: '#6b46a1',
+      assiah: '#3b4ca8'
     },
     overview: 'Connects Chesed to Netzach down the Pillar of Mercy. Governs cosmic cycles, karma, luck, and rhythmic change.',
     pathworkingMeditation: 'Stand at the motionless center of the spinning wheel of fate, observing all changing conditions with calm detachment.'
@@ -812,10 +814,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Libra',
     symbolIcon: '♎',
     colors: {
-      atziluth: '#06B6D4',
-      briah: '#0891B2',
-      yetzirah: '#0E7490',
-      assiah: '#155E75'
+      atziluth: '#168354',
+      briah: '#2b61b6',
+      yetzirah: '#148c91',
+      assiah: '#2d6e5e'
     },
     overview: 'Connects Geburah to Tiphareth. The balance scale of Karma and truth, aligning personal action with universal law.',
     pathworkingMeditation: 'Hold the golden scales of truth in perfect equilibrium, weighing thoughts and actions with crystal clarity.'
@@ -835,10 +837,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Water',
     symbolIcon: '🜄',
     colors: {
-      atziluth: '#0284C7',
-      briah: '#0369A1',
-      yetzirah: '#075985',
-      assiah: '#0C4A6E'
+      atziluth: '#214483',
+      briah: '#148c91',
+      yetzirah: '#7d803e',
+      assiah: '#f1f5f9'
     },
     overview: 'Connects Geburah to Hod along the Pillar of Severity. Voluntary sacrifice of egoic perspective to gain divine enlightenment.',
     pathworkingMeditation: 'Suspend yourself upside down in silent watery meditation, viewing reality from an entirely inverted, selfless perspective.'
@@ -858,10 +860,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Scorpio',
     symbolIcon: '♏',
     colors: {
-      atziluth: '#881337',
-      briah: '#9F1239',
-      yetzirah: '#BE123C',
-      assiah: '#E11D48'
+      atziluth: '#148c91',
+      briah: '#5c4d3c',
+      yetzirah: '#6b382e',
+      assiah: '#2c2b40'
     },
     overview: 'Connects Tiphareth to Netzach. Transformation, profound rebirth, and release of dead forms to liberate living essence.',
     pathworkingMeditation: 'Shed all old identities like a serpent casting off dry skin, rising resurrected toward the solar dawn.'
@@ -881,10 +883,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Sagittarius',
     symbolIcon: '♐',
     colors: {
-      atziluth: '#2563EB',
-      briah: '#1D4ED8',
-      yetzirah: '#1E40AF',
-      assiah: '#1E3A8A'
+      atziluth: '#2b61b6',
+      briah: '#edc944',
+      yetzirah: '#168354',
+      assiah: '#1e3a78'
     },
     overview: 'The vertical middle path connecting Yesod (Astral) straight to Tiphareth (Solar Heart). The rainbow bridge of spiritual alchemy.',
     pathworkingMeditation: 'Pour golden and silver fluids between chalices in perfect rhythm, shooting your arrow of desire straight to the heart of God.'
@@ -904,10 +906,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Capricorn',
     symbolIcon: '♑',
     colors: {
-      atziluth: '#334155',
-      briah: '#1E293B',
-      yetzirah: '#0F172A',
-      assiah: '#020617'
+      atziluth: '#393578',
+      briah: '#191c20',
+      yetzirah: '#3b4a5e',
+      assiah: '#2d323b'
     },
     overview: 'Connects Tiphareth to Hod. Unmasking material illusions and confronting raw instinct to discover true spiritual freedom.',
     pathworkingMeditation: 'Look closely with open eyes at what binds you, realizing the chains around your neck are loose and easily cast off.'
@@ -927,10 +929,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Mars',
     symbolIcon: '♂',
     colors: {
-      atziluth: '#DC2626',
-      briah: '#B91C1C',
-      yetzirah: '#991B1B',
-      assiah: '#7F1D1D'
+      atziluth: '#d6332b',
+      briah: '#e34e2b',
+      yetzirah: '#ef4444',
+      assiah: '#b91c1c'
     },
     overview: 'Horizontal path connecting Emotion (Netzach) and Intellect (Hod). Lightning flash shattering false mental constructs.',
     pathworkingMeditation: 'Watch the lightning bolt of absolute truth shatter your false towers of pride, liberating pure light from rigid brick.'
@@ -950,10 +952,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Aquarius',
     symbolIcon: '♒',
     colors: {
-      atziluth: '#38BDF8',
-      briah: '#0284C7',
-      yetzirah: '#0369A1',
-      assiah: '#0C4A6E'
+      atziluth: '#8650b1',
+      briah: '#38bdf8',
+      yetzirah: '#a5b4fc',
+      assiah: '#e2e8f0'
     },
     overview: 'Connects Netzach to Yesod. The outpouring of living waters from the cosmic star, inspiring faith and hope.',
     pathworkingMeditation: 'Kneel by the crystal stream under seven brilliant stars, pouring living waters onto earth and sea in sweet surrender.'
@@ -973,10 +975,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Pisces',
     symbolIcon: '♓',
     colors: {
-      atziluth: '#A855F7',
-      briah: '#7E22CE',
-      yetzirah: '#6B21A8',
-      assiah: '#581C87'
+      atziluth: '#b52758',
+      briah: '#c4b89b',
+      yetzirah: '#6b4435',
+      assiah: '#3d3c42'
     },
     overview: 'Connects Netzach to Malkuth down the right side. Walking through shadow realms and instinctual dreams toward physical manifestation.',
     pathworkingMeditation: 'Walk carefully between the twin towers as the crayfish emerges from dark waters, trusting the inner light along the winding path.'
@@ -996,10 +998,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Sun',
     symbolIcon: '☉',
     colors: {
-      atziluth: '#F59E0B',
-      briah: '#D97706',
-      yetzirah: '#B45309',
-      assiah: '#78350F'
+      atziluth: '#e68a2d',
+      briah: '#edc944',
+      yetzirah: '#f59e0b',
+      assiah: '#d97706'
     },
     overview: 'Connects Hod to Yesod. Solar warmth, innocent joy, clear rational understanding illuminating subconscious depths.',
     pathworkingMeditation: 'Ride the white horse under the smiling solar disk, celebrating innocent joy and clear illumination.'
@@ -1019,10 +1021,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Fire / Spirit',
     symbolIcon: '🜂',
     colors: {
-      atziluth: '#EF4444',
-      briah: '#DC2626',
-      yetzirah: '#B91C1C',
-      assiah: '#991B1B'
+      atziluth: '#e34e2b',
+      briah: '#d6332b',
+      yetzirah: '#dc2626',
+      assiah: '#b52758'
     },
     overview: 'Connects Hod to Malkuth down the left side. The resurrection trumpet waking souls to higher spiritual awareness.',
     pathworkingMeditation: 'Hear the divine trumpet sound across the valley of time, stepping out of old sarcophagi into eternal fire.'
@@ -1042,10 +1044,10 @@ export const PATHS_DATA: Path[] = [
     attribution: 'Saturn / Earth',
     symbolIcon: '♄',
     colors: {
-      atziluth: '#334155',
-      briah: '#1E293B',
-      yetzirah: '#0F172A',
-      assiah: '#020617'
+      atziluth: '#393578',
+      briah: '#191c20',
+      yetzirah: '#2c3a4f',
+      assiah: '#1e2026'
     },
     overview: 'The final vertical path connecting the Astral Foundation (Yesod) to Physical Kingdom (Malkuth). Governs incarnation and completion.',
     pathworkingMeditation: 'Dance within the green laurel wreath surrounded by the four holy creatures, celebrating the realization of divine spirit in matter.'

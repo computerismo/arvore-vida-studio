@@ -117,18 +117,18 @@ export default function AiQabalahGuide({
       className={
         embedded
           ? 'p-4 flex flex-col flex-1 min-h-0 gap-3.5'
-          : 'bg-[#09090d] border border-[#24242c] rounded-2xl p-4 sm:p-6 shadow-xl space-y-4'
+          : 'bg-[#dce2ec] border border-[#b3bdd0] rounded-2xl p-4 sm:p-6 shadow-md space-y-4'
       }
     >
-      <div className="flex items-center gap-3 border-b border-[#22222a] pb-3 shrink-0">
-        <div className="p-2.5 rounded-xl bg-[#131319] text-[#c5a059] border border-[#c5a059]/35 shrink-0">
-          <Sparkles className="w-5 h-5 text-[#c5a059]" />
+      <div className="flex items-center gap-3 border-b border-[#b3bdd0] pb-3 shrink-0">
+        <div className="p-2.5 rounded-xl bg-[#cfd6e2] text-[#7c5814] border border-[#8c631a]/40 shrink-0">
+          <Sparkles className="w-5 h-5 text-[#7c5814]" />
         </div>
         <div className="min-w-0">
-          <h2 className="text-base sm:text-lg font-serif font-bold text-[#f0f0f5] truncate">
+          <h2 className="text-base sm:text-lg font-serif font-bold text-[#161e2e] truncate">
             Hermetic Qabalah Guide &amp; Oracle
           </h2>
-          <p className="text-xs text-[#9a9aa6] truncate">
+          <p className="text-xs text-[#4b576e] truncate">
             Pathworking meditations, 777 attributions, and Hermetic synthesis
           </p>
         </div>
@@ -141,7 +141,7 @@ export default function AiQabalahGuide({
             key={item.label}
             type="button"
             onClick={() => handleQuickPrompt(item.query)}
-            className="min-h-[40px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl bg-[#121218] border border-[#262630] text-[#b4b4be] hover:border-[#c5a059] hover:text-[#e8c982] transition-colors whitespace-nowrap shrink-0"
+            className="min-h-[40px] sm:min-h-[36px] px-3.5 py-1.5 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] text-[#2c364a] hover:border-[#8c631a] hover:text-[#5e400b] transition-colors whitespace-nowrap shrink-0"
           >
             {item.label}
           </button>
@@ -159,15 +159,15 @@ export default function AiQabalahGuide({
             key={i}
             className={`flex gap-3 p-3.5 rounded-xl border text-sm sm:text-[13px] leading-relaxed ${
               m.role === 'user'
-                ? 'bg-[#14141b] border-[#c5a059]/45 text-[#f0f0f5] ml-3 sm:ml-8'
-                : 'bg-[#101015] border-[#22222a] text-[#c0c0ca] mr-0 sm:mr-4'
+                ? 'bg-[#c5cede] border-[#8c631a]/50 text-[#161e2e] ml-3 sm:ml-8'
+                : 'bg-[#cfd6e2] border-[#b3bdd0] text-[#242e42] mr-0 sm:mr-4'
             }`}
           >
             <div className="shrink-0 mt-0.5">
               {m.role === 'user' ? (
-                <User className="w-4 h-4 text-[#c5a059]" />
+                <User className="w-4 h-4 text-[#7c5814]" />
               ) : (
-                <Bot className="w-4 h-4 text-[#c5a059]" />
+                <Bot className="w-4 h-4 text-[#7c5814]" />
               )}
             </div>
             <div className="min-w-0 flex-1 whitespace-pre-wrap break-words font-sans">
@@ -176,7 +176,7 @@ export default function AiQabalahGuide({
           </div>
         ))}
         {loading && (
-          <div className="flex items-center gap-2 text-xs text-[#c5a059] p-3.5 bg-[#121218] rounded-xl border border-[#24242c]">
+          <div className="flex items-center gap-2 text-xs text-[#7c5814] p-3.5 bg-[#cfd6e2] rounded-xl border border-[#b3bdd0]">
             <RefreshCw className="w-4 h-4 animate-spin shrink-0" />
             <span>Consulting Hermetic Archives...</span>
           </div>
@@ -191,13 +191,13 @@ export default function AiQabalahGuide({
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Ask about Sephiroth, Tarot, or pathworking..."
-          className="flex-1 min-w-0 min-h-[46px] px-3.5 sm:px-4 py-2.5 rounded-xl bg-[#121218] border border-[#272730] text-base sm:text-sm text-[#e8e8ec] placeholder-[#787884] focus:outline-none focus:border-[#c5a059]"
+          className="flex-1 min-w-0 min-h-[46px] px-3.5 sm:px-4 py-2.5 rounded-xl bg-[#cfd6e2] border border-[#aeb9cc] text-base sm:text-sm text-[#161e2e] placeholder-[#526078] focus:outline-none focus:border-[#8c631a]"
         />
         <button
           type="submit"
           disabled={loading || !prompt.trim()}
           aria-label="Send message"
-          className="min-h-[46px] min-w-[46px] px-3.5 sm:px-5 rounded-xl bg-[#c5a059]/15 border border-[#c5a059] text-[#e8c982] hover:bg-[#c5a059] hover:text-black font-semibold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 disabled:opacity-45 shrink-0 whitespace-nowrap"
+          className="min-h-[46px] min-w-[46px] px-3.5 sm:px-5 rounded-xl bg-[#9a7022]/16 border border-[#8c631a] text-[#5e400b] hover:bg-[#8c631a] hover:text-[#f5f1e6] font-semibold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 disabled:opacity-45 shrink-0 whitespace-nowrap"
         >
           <Send className="w-4 h-4" />
           <span className="hidden sm:inline">Send</span>

@@ -50,36 +50,36 @@ export default function CorrespondenceTable({
       className={
         embedded
           ? 'p-4 space-y-4'
-          : 'bg-[#09090d] border border-[#24242c] rounded-2xl p-4 sm:p-6 shadow-xl space-y-4'
+          : 'bg-[#dce2ec] border border-[#b3bdd0] rounded-2xl p-4 sm:p-6 shadow-md space-y-4'
       }
     >
       {/* Header + Search */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3.5 border-b border-[#22222a] pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3.5 border-b border-[#b3bdd0] pb-4">
         <div>
-          <h2 className="text-lg sm:text-xl font-serif font-bold text-[#f0f0f5] flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-[#c5a059] shrink-0" />
+          <h2 className="text-lg sm:text-xl font-serif font-bold text-[#161e2e] flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-[#7c5814] shrink-0" />
             <span>Master Correspondence Index</span>
           </h2>
-          <p className="text-xs sm:text-xs text-[#9a9aa6] mt-1">
+          <p className="text-xs sm:text-xs text-[#4b576e] mt-1">
             777 reference across Divine Names, Archangels, Astrology, and Tarot keys.
           </p>
         </div>
 
         <div className="relative w-full md:w-64 lg:w-60 xl:w-72">
-          <Search className="w-4 h-4 text-[#80808c] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <Search className="w-4 h-4 text-[#4b576e] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="search"
             placeholder="Search Hebrew, Archangel, Tarot..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full min-h-[44px] md:min-h-[38px] pl-10 pr-10 py-2 rounded-xl bg-[#121218] border border-[#272730] text-base sm:text-xs text-[#e8e8ec] placeholder-[#787884] focus:outline-none focus:border-[#c5a059]"
+            className="w-full min-h-[44px] md:min-h-[38px] pl-10 pr-10 py-2 rounded-xl bg-[#cfd6e2] border border-[#aeb9cc] text-base sm:text-xs text-[#161e2e] placeholder-[#526078] focus:outline-none focus:border-[#8c631a]"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery('')}
               aria-label="Clear search"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 min-h-[36px] min-w-[36px] flex items-center justify-center text-[#8e8e98] hover:text-white"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 min-h-[36px] min-w-[36px] flex items-center justify-center text-[#4b576e] hover:text-[#161e2e]"
             >
               <X className="w-4 h-4" />
             </button>
@@ -88,14 +88,14 @@ export default function CorrespondenceTable({
       </div>
 
       {/* Sub-Tabs */}
-      <div className="grid grid-cols-2 sm:inline-flex gap-1.5 p-1 bg-[#121218] border border-[#22222a] rounded-xl">
+      <div className="grid grid-cols-2 sm:inline-flex gap-1.5 p-1 bg-[#c5cede] border border-[#aeb9cc] rounded-xl">
         <button
           type="button"
           onClick={() => setActiveTab('sephiroth')}
           className={`min-h-[42px] md:min-h-[36px] px-3 sm:px-4 rounded-lg text-xs font-semibold transition-colors whitespace-nowrap ${
             activeTab === 'sephiroth'
-              ? 'bg-[#c5a059]/20 text-[#e8c982] border border-[#c5a059]/60'
-              : 'text-[#8e8e98] hover:text-[#e0e0e0] border border-transparent'
+              ? 'bg-[#dce2ec] text-[#5e400b] border border-[#8c631a]/65 shadow-xs'
+              : 'text-[#3b475e] hover:text-[#161e2e] border border-transparent'
           }`}
         >
           Sephiroth ({filteredSephiroth.length})
@@ -105,8 +105,8 @@ export default function CorrespondenceTable({
           onClick={() => setActiveTab('paths')}
           className={`min-h-[42px] md:min-h-[36px] px-3 sm:px-4 rounded-lg text-xs font-semibold transition-colors whitespace-nowrap ${
             activeTab === 'paths'
-              ? 'bg-[#c5a059]/20 text-[#e8c982] border border-[#c5a059]/60'
-              : 'text-[#8e8e98] hover:text-[#e0e0e0] border border-transparent'
+              ? 'bg-[#dce2ec] text-[#5e400b] border border-[#8c631a]/65 shadow-xs'
+              : 'text-[#3b475e] hover:text-[#161e2e] border border-transparent'
           }`}
         >
           22 Paths ({filteredPaths.length})
@@ -114,49 +114,71 @@ export default function CorrespondenceTable({
       </div>
 
       {/* MOBILE CARD LIST (< md) */}
-      <div className="md:hidden divide-y divide-[#1e1e26] rounded-xl border border-[#22222a] bg-[#0e0e13] overflow-hidden">
+      <div className="md:hidden divide-y divide-[#b8c2d4] rounded-xl border border-[#b3bdd0] bg-[#d3dae6] overflow-hidden">
         {activeTab === 'sephiroth' ? (
           filteredSephiroth.length > 0 ? (
-            filteredSephiroth.map((s) => (
+            filteredSephiroth.map((s) => {
+              const cleaned = s.colors.briah.replace('#', '');
+              const toLin = (v: number) => {
+                const c = v / 255;
+                return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+              };
+              const lum =
+                cleaned.length === 6
+                  ? 0.2126 * toLin(parseInt(cleaned.slice(0, 2), 16)) +
+                    0.7152 * toLin(parseInt(cleaned.slice(2, 4), 16)) +
+                    0.0722 * toLin(parseInt(cleaned.slice(4, 6), 16))
+                  : 0;
+              const isLight = Boolean(s.quarteredColors) || lum > 0.22;
+
+              return (
               <button
                 key={s.id}
                 type="button"
                 onClick={() => onSelectSephira(s)}
-                className="w-full text-left p-3.5 active:bg-[#171720] transition-colors flex items-center gap-3.5"
+                className="w-full text-left p-3.5 active:bg-[#c5cede] transition-colors flex items-center gap-3.5"
               >
                 <div
-                  className="w-11 h-11 rounded-full flex items-center justify-center border shrink-0 font-serif font-bold text-base text-white"
+                  className="relative w-11 h-11 rounded-full flex items-center justify-center border shrink-0 font-serif font-bold text-base overflow-hidden"
                   style={{
-                    backgroundColor: '#131319',
-                    borderColor: s.colors.briah || '#c5a059',
+                    background: s.quarteredColors
+                      ? `conic-gradient(from -45deg, ${s.quarteredColors[0]} 0deg 90deg, ${s.quarteredColors[1]} 90deg 180deg, ${s.quarteredColors[2]} 180deg 270deg, ${s.quarteredColors[3]} 270deg 360deg)`
+                      : s.colors.briah || '#1b2232',
+                    borderColor: '#525c70',
                   }}
                 >
-                  {s.hebrewName}
+                  {s.quarteredColors && (
+                    <span className="absolute inset-[4px] rounded-full bg-[#f7f5ee] border border-[#6b6658]/60" />
+                  )}
+                  <span className={`relative z-10 ${isLight ? 'text-[#161e2e]' : 'text-[#fffefa]'}`}>
+                    {s.hebrewName}
+                  </span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-mono text-xs tabular-nums text-[#c5a059] font-semibold">
+                    <span className="font-mono text-xs tabular-nums text-[#7c5814] font-semibold">
                       {s.number === 0 ? 'Da' : `#${s.number}`}
                     </span>
-                    <span className="font-serif font-bold text-sm text-[#f0f0f5] truncate">
+                    <span className="font-serif font-bold text-sm text-[#161e2e] truncate">
                       {s.name}
                     </span>
-                    <span className="text-xs text-[#8e8e98] truncate">
+                    <span className="text-xs text-[#4b576e] truncate">
                       · {s.translation}
                     </span>
                   </div>
-                  <div className="text-xs text-[#a8a8b2] mt-0.5 truncate">
+                  <div className="text-xs text-[#2c364a] mt-0.5 truncate">
                     {s.divineName} · {s.archangel}
                   </div>
-                  <div className="text-[11px] text-[#7e7e8a] mt-0.5 truncate">
+                  <div className="text-[11px] text-[#526078] mt-0.5 truncate">
                     {s.astrological}
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-[#6e6e7a] shrink-0" />
+                <ChevronRight className="w-4 h-4 text-[#526078] shrink-0" />
               </button>
-            ))
+              );
+            })
           ) : (
-            <div className="p-6 text-center text-xs text-[#8e8e98]">
+            <div className="p-6 text-center text-xs text-[#4b576e]">
               No Sephiroth match &ldquo;{searchQuery}&rdquo;.
             </div>
           )
@@ -166,43 +188,46 @@ export default function CorrespondenceTable({
               key={p.id}
               type="button"
               onClick={() => onSelectPath(p)}
-              className="w-full text-left p-3.5 active:bg-[#171720] transition-colors flex items-center gap-3.5"
+              className="w-full text-left p-3.5 active:bg-[#c5cede] transition-colors flex items-center gap-3.5"
             >
-              <div className="w-11 h-11 rounded-xl bg-[#14141b] border border-[#c5a059]/45 flex items-center justify-center font-serif font-bold text-lg text-[#c5a059] shrink-0">
+              <div
+                className="w-11 h-11 rounded-xl bg-[#f4f6fa] border-2 flex items-center justify-center font-serif font-bold text-lg text-[#161e2e] shrink-0"
+                style={{ borderColor: p.colors.atziluth || '#8c631a' }}
+              >
                 {p.hebrewLetter}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-baseline gap-2">
-                  <span className="font-mono text-xs tabular-nums text-[#c5a059] font-semibold">
+                  <span className="font-mono text-xs tabular-nums text-[#7c5814] font-semibold">
                     Path {p.number}
                   </span>
-                  <span className="font-serif font-bold text-sm text-[#f0f0f5] truncate">
+                  <span className="font-serif font-bold text-sm text-[#161e2e] truncate">
                     {p.tarotCardName}
                   </span>
                 </div>
-                <div className="text-xs text-[#a8a8b2] mt-0.5 truncate">
+                <div className="text-xs text-[#2c364a] mt-0.5 truncate">
                   {p.hebrewLetterName} ({p.letterMeaning}) · {p.attribution} {p.symbolIcon}
                 </div>
-                <div className="text-[11px] text-[#7e7e8a] mt-0.5 italic truncate">
+                <div className="text-[11px] text-[#526078] mt-0.5 italic truncate">
                   {p.name}
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-[#6e6e7a] shrink-0" />
+              <ChevronRight className="w-4 h-4 text-[#526078] shrink-0" />
             </button>
           ))
         ) : (
-          <div className="p-6 text-center text-xs text-[#8e8e98]">
+          <div className="p-6 text-center text-xs text-[#4b576e]">
             No Paths match &ldquo;{searchQuery}&rdquo;.
           </div>
         )}
       </div>
 
       {/* TABLET & DESKTOP TABLE (md+) */}
-      <div className="hidden md:block overflow-x-auto rounded-xl border border-[#24242c] bg-[#111116] max-h-[520px] overflow-y-auto">
+      <div className="hidden md:block overflow-x-auto rounded-xl border border-[#b3bdd0] bg-[#d3dae6] max-h-[520px] overflow-y-auto">
         {activeTab === 'sephiroth' ? (
           filteredSephiroth.length > 0 ? (
-            <table className="w-full text-left text-xs text-[#a8a8b2] border-collapse">
-              <thead className="bg-[#09090d] text-[#c5a059] font-serif sticky top-0 z-10 border-b border-[#24242c]">
+            <table className="w-full text-left text-xs text-[#2c364a] border-collapse">
+              <thead className="bg-[#c6cfde] text-[#6d4b0f] font-serif sticky top-0 z-10 border-b border-[#aeb9cc]">
                 <tr>
                   <th className="py-3 px-3 whitespace-nowrap">#</th>
                   <th className="py-3 px-3 whitespace-nowrap">Sephira</th>
@@ -216,27 +241,27 @@ export default function CorrespondenceTable({
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#202028] font-sans">
+              <tbody className="divide-y divide-[#bcc6d6] font-sans">
                 {filteredSephiroth.map((s) => (
                   <tr
                     key={s.id}
                     onClick={() => onSelectSephira(s)}
-                    className="hover:bg-[#191922] cursor-pointer transition-colors"
+                    className="hover:bg-[#c5cede] cursor-pointer transition-colors"
                   >
-                    <td className="py-3.5 px-3 font-mono tabular-nums font-bold text-[#c5a059]">
+                    <td className="py-3.5 px-3 font-mono tabular-nums font-bold text-[#7c5814]">
                       {s.number === 0 ? 'Da' : s.number}
                     </td>
-                    <td className="py-3.5 px-3 font-serif font-bold text-[#f0f0f5] whitespace-nowrap">
+                    <td className="py-3.5 px-3 font-serif font-bold text-[#161e2e] whitespace-nowrap">
                       {s.name}
                     </td>
-                    <td className="py-3.5 px-3 font-serif font-bold text-[#c5a059] text-sm whitespace-nowrap">
+                    <td className="py-3.5 px-3 font-serif font-bold text-[#7c5814] text-sm whitespace-nowrap">
                       {s.hebrewName}
                     </td>
-                    <td className="py-3.5 px-3 text-[#e0e0e6]">{s.translation}</td>
-                    <td className="py-3.5 px-3 text-[#e8c982]">{s.divineName}</td>
-                    <td className="py-3.5 px-3 text-[#b8b8c2]">{s.archangel}</td>
-                    <td className="py-3.5 px-3 text-[#9a9aa6]">{s.astrological}</td>
-                    <td className="py-3.5 px-3 text-[#8e8e98] italic text-[11px] hidden lg:table-cell">
+                    <td className="py-3.5 px-3 text-[#242e42]">{s.translation}</td>
+                    <td className="py-3.5 px-3 text-[#5e400b] font-medium">{s.divineName}</td>
+                    <td className="py-3.5 px-3 text-[#2c364a]">{s.archangel}</td>
+                    <td className="py-3.5 px-3 text-[#4b576e]">{s.astrological}</td>
+                    <td className="py-3.5 px-3 text-[#4b576e] italic text-[11px] hidden lg:table-cell">
                       {s.spiritualExperience}
                     </td>
                   </tr>
@@ -244,13 +269,13 @@ export default function CorrespondenceTable({
               </tbody>
             </table>
           ) : (
-            <div className="p-8 text-center text-xs text-[#8e8e98]">
+            <div className="p-8 text-center text-xs text-[#4b576e]">
               No Sephiroth match &ldquo;{searchQuery}&rdquo;.
             </div>
           )
         ) : filteredPaths.length > 0 ? (
-          <table className="w-full text-left text-xs text-[#a8a8b2] border-collapse">
-            <thead className="bg-[#09090d] text-[#c5a059] font-serif sticky top-0 z-10 border-b border-[#24242c]">
+          <table className="w-full text-left text-xs text-[#2c364a] border-collapse">
+            <thead className="bg-[#c6cfde] text-[#6d4b0f] font-serif sticky top-0 z-10 border-b border-[#aeb9cc]">
               <tr>
                 <th className="py-3 px-3 whitespace-nowrap">Path #</th>
                 <th className="py-3 px-3 whitespace-nowrap">Hebrew Letter</th>
@@ -262,27 +287,27 @@ export default function CorrespondenceTable({
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#202028] font-sans">
+            <tbody className="divide-y divide-[#bcc6d6] font-sans">
               {filteredPaths.map((p) => (
                 <tr
                   key={p.id}
                   onClick={() => onSelectPath(p)}
-                  className="hover:bg-[#191922] cursor-pointer transition-colors"
+                  className="hover:bg-[#c5cede] cursor-pointer transition-colors"
                 >
-                  <td className="py-3.5 px-3 font-mono tabular-nums font-bold text-[#c5a059]">
+                  <td className="py-3.5 px-3 font-mono tabular-nums font-bold text-[#7c5814]">
                     {p.number}
                   </td>
-                  <td className="py-3.5 px-3 font-serif font-bold text-[#c5a059] text-sm whitespace-nowrap">
+                  <td className="py-3.5 px-3 font-serif font-bold text-[#7c5814] text-sm whitespace-nowrap">
                     {p.hebrewLetter} ({p.hebrewLetterName})
                   </td>
-                  <td className="py-3.5 px-3 text-[#e0e0e6]">{p.letterMeaning}</td>
-                  <td className="py-3.5 px-3 text-[#e8c982] font-medium whitespace-nowrap">
+                  <td className="py-3.5 px-3 text-[#242e42]">{p.letterMeaning}</td>
+                  <td className="py-3.5 px-3 text-[#5e400b] font-medium whitespace-nowrap">
                     {p.tarotKey} — {p.tarotCardName}
                   </td>
-                  <td className="py-3.5 px-3 text-[#b8b8c2] whitespace-nowrap">
+                  <td className="py-3.5 px-3 text-[#2c364a] whitespace-nowrap">
                     {p.attribution} {p.symbolIcon}
                   </td>
-                  <td className="py-3.5 px-3 text-[#8e8e98] italic text-[11px] hidden lg:table-cell">
+                  <td className="py-3.5 px-3 text-[#4b576e] italic text-[11px] hidden lg:table-cell">
                     {p.name}
                   </td>
                 </tr>
@@ -290,7 +315,7 @@ export default function CorrespondenceTable({
             </tbody>
           </table>
         ) : (
-          <div className="p-8 text-center text-xs text-[#8e8e98]">
+          <div className="p-8 text-center text-xs text-[#4b576e]">
             No Paths match &ldquo;{searchQuery}&rdquo;.
           </div>
         )}

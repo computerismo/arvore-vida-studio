@@ -133,21 +133,21 @@ export default function Home() {
     <main
       className={`min-h-dvh ${
         mobileView === 'tree' ? 'h-dvh overflow-hidden md:h-auto md:overflow-visible' : ''
-      } bg-[#050507] text-[#e0e0e0] font-sans selection:bg-[#c5a059]/30 selection:text-[#e8c982] pb-mobile-nav md:pb-14 relative flex flex-col`}
+      } bg-[#cfd6e2] text-[#161e2e] font-sans selection:bg-[#9a7022]/25 selection:text-[#161e2e] pb-mobile-nav md:pb-14 relative flex flex-col`}
     >
       {/* Subtle Ambient Background */}
-      <div className="fixed inset-0 bg-radial-pattern opacity-15 pointer-events-none -z-10" />
-      <div className="fixed inset-0 bg-gradient-to-b from-[#0c0c12]/60 via-transparent to-[#050507] pointer-events-none -z-10" />
+      <div className="fixed inset-0 bg-radial-pattern opacity-45 pointer-events-none -z-10" />
+      <div className="fixed inset-0 bg-gradient-to-b from-[#dce2ec]/80 via-transparent to-[#c0c9d8]/80 pointer-events-none -z-10" />
 
       <div className="w-full max-w-6xl mx-auto px-2.5 sm:px-5 lg:px-8 pt-2.5 sm:pt-4 pb-1.5 md:pb-4 flex-1 min-h-0 flex flex-col gap-2 md:gap-4">
         {/* Adaptive Header */}
-        <header className="flex items-center justify-between gap-3 border-b border-[#c5a059]/20 pb-2 sm:pb-3.5 shrink-0 px-1 md:px-0">
+        <header className="flex items-center justify-between gap-3 border-b border-[#8a631c]/25 pb-2 sm:pb-3.5 shrink-0 px-1 md:px-0">
           <div className="min-w-0">
-            <h1 className="text-lg sm:text-2xl lg:text-[26px] font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#f4f4f6] via-[#d4b26a] to-[#f4f4f6] tracking-wide whitespace-nowrap truncate">
+            <h1 className="text-lg sm:text-2xl lg:text-[26px] font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#161e2e] via-[#7c5814] to-[#161e2e] tracking-wide whitespace-nowrap truncate">
               <span>Otz Chiim</span>
               <span className="hidden sm:inline"> · The Tree of Life</span>
             </h1>
-            <p className="hidden md:block text-xs text-[#9a9aa6] mt-0.5">
+            <p className="hidden md:block text-xs text-[#4b576e] mt-0.5">
               Hermetic Qabalah Reference · Golden Dawn Tradition
             </p>
           </div>
@@ -160,13 +160,13 @@ export default function Home() {
                 onClick={() => setMobileControlsOpen(true)}
                 className={`md:hidden min-h-[40px] px-3 rounded-xl border text-xs font-medium transition-colors flex items-center gap-1.5 whitespace-nowrap ${
                   hasCustomMobileControls
-                    ? 'bg-[#c5a059]/18 border-[#c5a059]/70 text-[#e8c982]'
-                    : 'bg-[#121218] border-[#24242e] text-[#d0d0da]'
+                    ? 'bg-[#9a7022]/16 border-[#8c631a]/75 text-[#5e400b]'
+                    : 'bg-[#dce2ec] border-[#b3bdd0] text-[#161e2e]'
                 }`}
               >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-[#c5a059]" />
+                <SlidersHorizontal className="w-3.5 h-3.5 text-[#7c5814]" />
                 <span>Controls</span>
-                <span className="text-[11px] text-[#9a9aa6] capitalize">
+                <span className="text-[11px] text-[#4b576e] capitalize">
                   · {selectedScale}
                 </span>
               </button>
@@ -177,9 +177,9 @@ export default function Home() {
               type="button"
               onClick={() => setShowHowToStudy(true)}
               aria-label="Study Guide"
-              className="min-h-[40px] min-w-[40px] sm:min-w-0 sm:px-3.5 py-2 rounded-xl bg-[#121218] border border-[#24242e] hover:border-[#c5a059] text-xs text-[#b4b4be] hover:text-[#e8c982] transition-colors flex items-center justify-center gap-2 font-medium whitespace-nowrap shrink-0"
+              className="min-h-[40px] min-w-[40px] sm:min-w-0 sm:px-3.5 py-2 rounded-xl bg-[#dce2ec] border border-[#b3bdd0] hover:border-[#8c631a] text-xs text-[#2c364a] hover:text-[#5e400b] transition-colors flex items-center justify-center gap-2 font-medium whitespace-nowrap shrink-0"
             >
-              <Info className="w-4 h-4 text-[#c5a059]" />
+              <Info className="w-4 h-4 text-[#7c5814]" />
               <span className="hidden sm:inline">Guide</span>
             </button>
 
@@ -187,7 +187,7 @@ export default function Home() {
             <button
               type="button"
               onClick={handleToggleConsoleFromHeader}
-              className="hidden md:flex min-h-[40px] px-4 py-2 rounded-xl bg-[#c5a059]/15 border border-[#c5a059]/50 hover:border-[#c5a059] text-xs text-[#e8c982] hover:text-white transition-colors items-center gap-2 font-semibold whitespace-nowrap shrink-0"
+              className="hidden md:flex min-h-[40px] px-4 py-2 rounded-xl bg-[#9a7022]/15 border border-[#8c631a]/55 hover:border-[#7c5814] text-xs text-[#5e400b] hover:bg-[#9a7022]/22 transition-colors items-center gap-2 font-semibold whitespace-nowrap shrink-0"
             >
               <Table className="w-4 h-4" />
               <span>Reference Console</span>
@@ -262,15 +262,15 @@ export default function Home() {
         {/* TABLET & DESKTOP COLLAPSIBLE HERMETIC REFERENCE CONSOLE (md+) */}
         <section
           id="study-console"
-          className="hidden md:block pt-2 border-t border-[#202028] space-y-4"
+          className="hidden md:block pt-2 border-t border-[#b3bdd0] space-y-4"
         >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#09090d]/90 border border-[#c5a059]/25 rounded-2xl p-4 shadow-xl backdrop-blur-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#dce2ec]/95 border border-[#b3bdd0] rounded-2xl p-4 shadow-sm backdrop-blur-sm">
             <div>
-              <h2 className="text-base font-serif font-bold text-[#f0f0f5] flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-[#c5a059]" />
+              <h2 className="text-base font-serif font-bold text-[#161e2e] flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-[#7c5814]" />
                 Hermetic Reference Console
               </h2>
-              <p className="text-xs text-[#8e8e98] mt-0.5">
+              <p className="text-xs text-[#4b576e] mt-0.5">
                 777 Index, 3 Pillars Analysis, and Pathworking Oracle
               </p>
             </div>
@@ -281,8 +281,8 @@ export default function Home() {
                 onClick={() => handleOpenConsoleTab('777')}
                 className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap ${
                   isConsoleOpen && activeConsoleTab === '777'
-                    ? 'bg-[#c5a059]/20 text-[#e8c982] border border-[#c5a059]'
-                    : 'bg-[#121218] text-[#8e8e98] border border-[#24242e] hover:text-[#e8e8ec]'
+                    ? 'bg-[#9a7022]/18 text-[#5e400b] border border-[#8c631a]'
+                    : 'bg-[#cfd6e2] text-[#2c364a] border border-[#aeb9cc] hover:text-[#161e2e] hover:border-[#8c631a]/60'
                 }`}
               >
                 <Table className="w-3.5 h-3.5" />
@@ -294,8 +294,8 @@ export default function Home() {
                 onClick={() => handleOpenConsoleTab('pillars')}
                 className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap ${
                   isConsoleOpen && activeConsoleTab === 'pillars'
-                    ? 'bg-[#c5a059]/20 text-[#e8c982] border border-[#c5a059]'
-                    : 'bg-[#121218] text-[#8e8e98] border border-[#24242e] hover:text-[#e8e8ec]'
+                    ? 'bg-[#9a7022]/18 text-[#5e400b] border border-[#8c631a]'
+                    : 'bg-[#cfd6e2] text-[#2c364a] border border-[#aeb9cc] hover:text-[#161e2e] hover:border-[#8c631a]/60'
                 }`}
               >
                 <Columns className="w-3.5 h-3.5" />
@@ -307,8 +307,8 @@ export default function Home() {
                 onClick={() => handleOpenConsoleTab('ai')}
                 className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap ${
                   isConsoleOpen && activeConsoleTab === 'ai'
-                    ? 'bg-[#c5a059]/20 text-[#e8c982] border border-[#c5a059]'
-                    : 'bg-[#121218] text-[#8e8e98] border border-[#24242e] hover:text-[#e8e8ec]'
+                    ? 'bg-[#9a7022]/18 text-[#5e400b] border border-[#8c631a]'
+                    : 'bg-[#cfd6e2] text-[#2c364a] border border-[#aeb9cc] hover:text-[#161e2e] hover:border-[#8c631a]/60'
                 }`}
               >
                 <Bot className="w-3.5 h-3.5" />
@@ -318,7 +318,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => setIsConsoleOpen((prev) => !prev)}
-                className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-xl bg-[#121218] border border-[#24242e] text-[#a0a0a8] hover:text-white transition-colors"
+                className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-xl bg-[#cfd6e2] border border-[#aeb9cc] text-[#2c364a] hover:text-[#161e2e] transition-colors"
                 aria-label={
                   isConsoleOpen
                     ? 'Collapse Reference Console'
@@ -364,7 +364,7 @@ export default function Home() {
       {/* MOBILE FIXED BOTTOM TAB NAVIGATION (< md) */}
       <nav
         aria-label="Primary navigation"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#09090d]/95 backdrop-blur-md border-t border-[#24242e] pb-safe"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#dce2ec]/95 backdrop-blur-md border-t border-[#b3bdd0] pb-safe"
       >
         <div className="grid grid-cols-4 items-center h-16 max-w-lg mx-auto px-1">
           {navItems.map((item) => {
@@ -377,11 +377,11 @@ export default function Home() {
                 onClick={() => handleSwitchMobileView(item.id)}
                 aria-current={isActive ? 'page' : undefined}
                 className={`min-h-[48px] flex flex-col items-center justify-center gap-1 rounded-xl transition-colors ${
-                  isActive ? 'text-[#e8c982]' : 'text-[#868694] active:text-[#e0e0e6]'
+                  isActive ? 'text-[#5e400b]' : 'text-[#4b576e] active:text-[#161e2e]'
                 }`}
               >
                 <Icon
-                  className={`w-5 h-5 ${isActive ? 'text-[#c5a059]' : 'text-current'}`}
+                  className={`w-5 h-5 ${isActive ? 'text-[#7c5814]' : 'text-current'}`}
                 />
                 <span className="text-[11px] font-medium tracking-tight leading-none whitespace-nowrap">
                   {item.label}
@@ -412,53 +412,53 @@ export default function Home() {
           role="dialog"
           aria-modal="true"
           aria-label="How to Study the Tree of Life"
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/80 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#161e2e]/45 backdrop-blur-sm"
           onClick={() => setShowHowToStudy(false)}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-[#09090d] border-t sm:border border-[#c5a059]/60 rounded-t-3xl sm:rounded-2xl p-5 sm:p-6 pb-safe max-w-lg w-full max-h-[85dvh] overflow-y-auto space-y-4 text-[#e0e0e0] shadow-2xl"
+            className="bg-[#dce2ec] border-t sm:border border-[#8c631a]/50 rounded-t-3xl sm:rounded-2xl p-5 sm:p-6 pb-safe max-w-lg w-full max-h-[85dvh] overflow-y-auto space-y-4 text-[#161e2e] shadow-2xl"
           >
             <div className="sm:hidden flex justify-center -mt-1 pb-1">
-              <div className="w-10 h-1.5 rounded-full bg-[#32323c]" aria-hidden="true" />
+              <div className="w-10 h-1.5 rounded-full bg-[#98a4b8]" aria-hidden="true" />
             </div>
 
-            <div className="flex items-center justify-between border-b border-[#22222a] pb-3">
-              <h3 className="text-base sm:text-lg font-serif font-bold text-[#e8c982] flex items-center gap-2">
-                <Info className="w-5 h-5 text-[#c5a059] shrink-0" />
+            <div className="flex items-center justify-between border-b border-[#b3bdd0] pb-3">
+              <h3 className="text-base sm:text-lg font-serif font-bold text-[#6d4b0f] flex items-center gap-2">
+                <Info className="w-5 h-5 text-[#7c5814] shrink-0" />
                 How to Study the Tree of Life
               </h3>
               <button
                 type="button"
                 onClick={() => setShowHowToStudy(false)}
                 aria-label="Close guide"
-                className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-[#121218] text-[#a0a0a8] hover:text-white border border-[#24242e]"
+                className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl bg-[#cfd6e2] text-[#2c364a] hover:text-[#161e2e] border border-[#aeb9cc]"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <ul className="text-sm sm:text-xs text-[#b8b8c2] space-y-3 leading-relaxed list-disc list-inside">
+            <ul className="text-sm sm:text-xs text-[#2c364a] space-y-3 leading-relaxed list-disc list-inside">
               <li>
-                <strong className="text-[#f0f0f5]">Spheres (1–10 + Da&apos;ath):</strong> Click or
+                <strong className="text-[#161e2e]">Spheres (1–10 + Da&apos;ath):</strong> Click or
                 tap any sphere on the diagram to slide open its divine names, archangels,
                 astrological attributions, and classic commentary.
               </li>
               <li>
-                <strong className="text-[#f0f0f5]">Connecting Pathways (11–32):</strong> Click any
+                <strong className="text-[#161e2e]">Connecting Pathways (11–32):</strong> Click any
                 Hebrew letter or path line to inspect its Tarot Major Arcana key and esoteric title.
               </li>
               <li>
-                <strong className="text-[#f0f0f5]">Golden Dawn Color Scales:</strong> Switch
+                <strong className="text-[#161e2e]">Golden Dawn Color Scales:</strong> Switch
                 between Atziluth (King), Briah (Queen), Yetzirah (Prince), and Assiah (Princess)
                 scales in the top toolbar or mobile Controls sheet.
               </li>
               <li>
-                <strong className="text-[#f0f0f5]">Diagram Overlays:</strong> Toggle the Lightning
+                <strong className="text-[#161e2e]">Diagram Overlays:</strong> Toggle the Lightning
                 Flash cosmic descent or Serpent of Wisdom ascent paths.
               </li>
               <li>
-                <strong className="text-[#f0f0f5]">Reference Console:</strong> Expand the
+                <strong className="text-[#161e2e]">Reference Console:</strong> Expand the
                 Reference Console below the Tree on tablet/desktop—or use the mobile bottom tabs—to
                 browse the 777 Index, 3 Pillars, and Pathworking Oracle.
               </li>
@@ -467,7 +467,7 @@ export default function Home() {
             <button
               type="button"
               onClick={() => setShowHowToStudy(false)}
-              className="w-full min-h-[48px] py-3 rounded-xl bg-gradient-to-r from-[#c5a059] to-[#a6833f] text-black font-bold text-xs uppercase tracking-wider transition-all hover:brightness-110 shadow-md"
+              className="w-full min-h-[48px] py-3 rounded-xl bg-gradient-to-r from-[#8f681d] to-[#745112] text-[#f5f1e6] font-bold text-xs uppercase tracking-wider transition-all hover:brightness-110 shadow-md"
             >
               Close Guide
             </button>

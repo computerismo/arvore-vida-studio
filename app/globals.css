@@ -13,14 +13,14 @@
   }
 
   body {
-    background-color: #050507;
-    color: #e0e0e0;
+    background-color: #cfd6e2;
+    color: #161e2e;
     overscroll-behavior-y: none;
   }
 }
 
 .bg-radial-pattern {
-  background-image: radial-gradient(circle, rgba(197, 160, 89, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(124, 88, 20, 0.14) 1px, transparent 1px);
   background-size: 36px 36px;
 }
 
@@ -42,21 +42,21 @@
   scrollbar-width: none;
 }
 
-/* Custom scrollbar for desktop dark aesthetic */
+/* Custom scrollbar for desktop slate-mist aesthetic */
 @media (pointer: fine) {
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #08080a;
+    background: #c4ccd9;
   }
   ::-webkit-scrollbar-thumb {
-    background: #2d2d30;
+    background: #98a4b8;
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #c5a059;
+    background: #8a631c;
   }
 }
 

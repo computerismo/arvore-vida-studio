@@ -13,8 +13,8 @@
   }
 
   body {
-    background-color: #cfd6e2;
-    color: #161e2e;
+    background-color: #EBE5DA;
+    color: #1F242C;
     overscroll-behavior-y: none;
   }
 }
@@ -22,6 +22,14 @@
 .bg-radial-pattern {
   background-image: radial-gradient(circle, rgba(124, 88, 20, 0.14) 1px, transparent 1px);
   background-size: 36px 36px;
+}
+
+.tree-stage-bg {
+  background: radial-gradient(
+    ellipse 52% 74% at 50% 54%,
+    #FAF7EF 0%,
+    #E9E0D0 100%
+  );
 }
 
 /* Safe area helpers for notched mobile devices and tablets */
@@ -42,21 +50,21 @@
   scrollbar-width: none;
 }
 
-/* Custom scrollbar for desktop slate-mist aesthetic */
+/* Custom scrollbar for desktop warm parchment aesthetic */
 @media (pointer: fine) {
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #c4ccd9;
+    background: #E4DAC9;
   }
   ::-webkit-scrollbar-thumb {
-    background: #98a4b8;
+    background: #C7BBA5;
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #8a631c;
+    background: #8C631A;
   }
 }
 

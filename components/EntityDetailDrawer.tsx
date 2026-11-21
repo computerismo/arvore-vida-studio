@@ -54,25 +54,25 @@ export function EntityDetailContent({
   if (!sephira && !pathItem) {
     return (
       <div className="h-full flex flex-col items-center justify-center text-center p-8 space-y-4">
-        <div className="w-14 h-14 rounded-2xl bg-[#cfd6e2] border border-[#8c631a]/40 flex items-center justify-center">
-          <Compass className="w-7 h-7 text-[#7c5814]" />
+        <div className="w-14 h-14 rounded-2xl bg-[#F0E9DE] border border-[#8C631A]/40 flex items-center justify-center">
+          <Compass className="w-7 h-7 text-[#7C5814]" />
         </div>
         <div className="space-y-1.5 max-w-sm">
-          <h3 className="font-serif text-lg font-bold text-[#161e2e]">{t.emptyTitle}</h3>
-          <p className="text-xs text-[#4b576e] leading-relaxed">{t.emptyDescription}</p>
+          <h3 className="font-serif text-lg font-bold text-[#1F242C]">{t.emptyTitle}</h3>
+          <p className="text-xs text-[#625D53] leading-relaxed">{t.emptyDescription}</p>
         </div>
         <div className="grid grid-cols-3 gap-2.5 w-full max-w-xs pt-2">
-          <div className="p-2.5 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-            <div className="font-serif font-bold text-base text-[#7c5814] tabular-nums">10</div>
-            <div className="text-[10px] text-[#4b576e]">{t.statSephiroth}</div>
+          <div className="p-2.5 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+            <div className="font-serif font-bold text-base text-[#7C5814] tabular-nums">10</div>
+            <div className="text-[10px] text-[#625D53]">{t.statSephiroth}</div>
           </div>
-          <div className="p-2.5 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-            <div className="font-serif font-bold text-base text-[#7c5814] tabular-nums">22</div>
-            <div className="text-[10px] text-[#4b576e]">{t.statPaths}</div>
+          <div className="p-2.5 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+            <div className="font-serif font-bold text-base text-[#7C5814] tabular-nums">22</div>
+            <div className="text-[10px] text-[#625D53]">{t.statPaths}</div>
           </div>
-          <div className="p-2.5 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-            <div className="font-serif font-bold text-base text-[#7c5814] tabular-nums">4</div>
-            <div className="text-[10px] text-[#4b576e]">{t.statScales}</div>
+          <div className="p-2.5 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+            <div className="font-serif font-bold text-base text-[#7C5814] tabular-nums">4</div>
+            <div className="text-[10px] text-[#625D53]">{t.statScales}</div>
           </div>
         </div>
       </div>
@@ -97,12 +97,12 @@ export function EntityDetailContent({
   const isLightBriah = Boolean(sephira?.quarteredColors) || isLightHex(sephira?.colors.briah);
 
   return (
-    <div className="flex flex-col h-full min-h-0 text-[#161e2e]">
+    <div className="flex flex-col h-full min-h-0 text-[#1F242C]">
       {/* Header */}
       <div
         className={`${
           embedded ? 'px-4 py-3.5' : 'px-4 py-3.5 sm:p-5 md:p-6'
-        } border-b border-[#b3bdd0] bg-[#d4dbe6] flex items-start justify-between gap-3 shrink-0`}
+        } border-b border-[#D1C6B3] bg-[#EFE6D7] flex items-start justify-between gap-3 shrink-0`}
       >
         {sephira ? (
           <div className="flex items-center gap-3.5 min-w-0">
@@ -112,15 +112,15 @@ export function EntityDetailContent({
                 background: sephira.quarteredColors
                   ? `conic-gradient(from -45deg, ${sephira.quarteredColors[0]} 0deg 90deg, ${sephira.quarteredColors[1]} 90deg 180deg, ${sephira.quarteredColors[2]} 180deg 270deg, ${sephira.quarteredColors[3]} 270deg 360deg)`
                   : sephira.colors.briah || '#1b2232',
-                borderColor: '#8c631a',
+                borderColor: '#8C631A',
               }}
             >
               {sephira.quarteredColors && (
-                <div className="absolute inset-[5px] rounded-full bg-[#f7f5ee] border border-[#6b6658]/60" />
+                <div className="absolute inset-[5px] rounded-full bg-[#FCF9F3] border border-[#6b6658]/60" />
               )}
               <span
                 className={`relative z-10 font-serif font-bold text-xl ${
-                  isLightBriah ? 'text-[#161e2e]' : 'text-[#fffefa]'
+                  isLightBriah ? 'text-[#1F242C]' : 'text-[#FFFEFA]'
                 }`}
               >
                 {sephira.hebrewName}
@@ -128,18 +128,18 @@ export function EntityDetailContent({
             </div>
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-mono">
-                <span className="text-[#7c5814] font-semibold">
+                <span className="text-[#7C5814] font-semibold">
                   {t.sphereLabel(sephira.number)}
                 </span>
-                <span className="text-[#8291a8]" aria-hidden="true">·</span>
-                <span className="text-[#4b576e]">
+                <span className="text-[#A89C86]" aria-hidden="true">·</span>
+                <span className="text-[#625D53]">
                   {t.pillarSuffix(getLocalizedPillarName(sephira.pillar, language))}
                 </span>
               </div>
-              <h2 className="text-lg sm:text-xl font-serif font-bold text-[#161e2e] mt-0.5 truncate">
+              <h2 className="text-lg sm:text-xl font-serif font-bold text-[#1F242C] mt-0.5 truncate">
                 {sephira.name}
               </h2>
-              <p className="text-xs text-[#4b576e] italic truncate">
+              <p className="text-xs text-[#625D53] italic truncate">
                 &ldquo;{sephira.translation}&rdquo;
               </p>
             </div>
@@ -147,25 +147,25 @@ export function EntityDetailContent({
         ) : pathItem ? (
           <div className="flex items-center gap-3.5 min-w-0">
             <div
-              className="w-12 h-12 rounded-2xl bg-[#1b2232] border-2 flex items-center justify-center text-2xl font-serif font-bold text-[#e8c982] shadow-md shrink-0"
-              style={{ borderColor: pathItem.colors.atziluth || '#8c631a' }}
+              className="w-12 h-12 rounded-2xl bg-[#24201B] border-2 flex items-center justify-center text-2xl font-serif font-bold text-[#E8C982] shadow-md shrink-0"
+              style={{ borderColor: pathItem.colors.atziluth || '#8C631A' }}
             >
               {pathItem.hebrewLetter}
             </div>
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-mono">
-                <span className="text-[#7c5814] font-semibold">
+                <span className="text-[#7C5814] font-semibold">
                   {t.pathLabel(pathItem.number, pathItem.hebrewLetterName)}
                 </span>
-                <span className="text-[#8291a8]" aria-hidden="true">·</span>
-                <span className="text-[#4b576e]">
+                <span className="text-[#A89C86]" aria-hidden="true">·</span>
+                <span className="text-[#625D53]">
                   {pathItem.attribution} {pathItem.symbolIcon}
                 </span>
               </div>
-              <h2 className="text-lg sm:text-xl font-serif font-bold text-[#161e2e] mt-0.5 truncate">
+              <h2 className="text-lg sm:text-xl font-serif font-bold text-[#1F242C] mt-0.5 truncate">
                 {pathItem.tarotCardName}
               </h2>
-              <p className="text-xs text-[#4b576e] italic truncate">
+              <p className="text-xs text-[#625D53] italic truncate">
                 {t.tarotKeySubtitle(pathItem.tarotKey, pathItem.name)}
               </p>
             </div>
@@ -177,7 +177,7 @@ export function EntityDetailContent({
             type="button"
             onClick={onClose}
             aria-label={t.closeAria}
-            className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-full bg-[#c5cede] hover:bg-[#b8c3d6] text-[#2c364a] hover:text-[#161e2e] transition-colors border border-[#aeb9cc] shrink-0"
+            className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-full bg-[#F0E9DE] hover:bg-[#EEE0C7] text-[#3A3E45] hover:text-[#1F242C] transition-colors border border-[#D1C6B3] shrink-0"
           >
             <X className="w-4 h-4" />
           </button>
@@ -187,7 +187,7 @@ export function EntityDetailContent({
       {/* Navigation Tabs */}
       <div
         role="tablist"
-        className="flex border-b border-[#b3bdd0] bg-[#d8dfe9] px-2 sm:px-3 gap-1 text-xs overflow-x-auto no-scrollbar shrink-0"
+        className="flex border-b border-[#D1C6B3] bg-[#F0E9DE] px-2 sm:px-3 gap-1 text-xs overflow-x-auto no-scrollbar shrink-0"
       >
         {(
           [
@@ -208,11 +208,11 @@ export function EntityDetailContent({
               onClick={() => setActiveTab(tab.id)}
               className={`min-h-[42px] py-2 px-3 font-medium border-b-2 transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                 isActive
-                  ? 'border-[#8c631a] text-[#5e400b] bg-[#9a7022]/12 font-semibold'
-                  : 'border-transparent text-[#4b576e] hover:text-[#161e2e]'
+                  ? 'border-[#8C631A] text-[#5E400B] bg-[#EEE0C7]/75 font-semibold'
+                  : 'border-transparent text-[#625D53] hover:text-[#1F242C]'
               }`}
             >
-              <Icon className="w-3.5 h-3.5 text-[#7c5814]" />
+              <Icon className="w-3.5 h-3.5 text-[#7C5814]" />
               {tab.label}
             </button>
           );
@@ -229,52 +229,52 @@ export function EntityDetailContent({
         {sephira && activeTab === 'overview' && (
           <div className="space-y-4">
             <div>
-              <h3 className="text-xs font-serif font-bold tracking-wider text-[#7c5814] mb-2 flex items-center gap-2">
-                <Sun className="w-4 h-4 text-[#7c5814]" />
+              <h3 className="text-xs font-serif font-bold tracking-wider text-[#7C5814] mb-2 flex items-center gap-2">
+                <Sun className="w-4 h-4 text-[#7C5814]" />
                 {t.overview.coreSymbolism}
               </h3>
-              <p className="text-[#242e42] leading-relaxed text-sm sm:text-[13px] bg-[#cfd6e2] p-3.5 rounded-xl border border-[#b3bdd0]">
+              <p className="text-[#2E3239] leading-relaxed text-sm sm:text-[13px] bg-[#FCF9F3] p-3.5 rounded-xl border border-[#D1C6B3]">
                 {sephira.overview}
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm sm:text-xs">
-              <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] space-y-1">
-                <span className="text-[11px] font-semibold text-[#7c5814]">
+              <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3] space-y-1">
+                <span className="text-[11px] font-semibold text-[#7C5814]">
                   {t.overview.spiritualExperience}
                 </span>
-                <p className="font-serif text-[#161e2e] font-medium">
+                <p className="font-serif text-[#1F242C] font-medium">
                   {sephira.spiritualExperience}
                 </p>
               </div>
 
-              <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] space-y-1">
-                <span className="text-[11px] font-semibold text-[#7c5814]">
+              <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3] space-y-1">
+                <span className="text-[11px] font-semibold text-[#7C5814]">
                   {t.overview.magicalImage}
                 </span>
-                <p className="font-serif text-[#161e2e] font-medium">
+                <p className="font-serif text-[#1F242C] font-medium">
                   {sephira.magicalImage}
                 </p>
               </div>
 
-              <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] space-y-1">
-                <span className="text-[11px] font-semibold text-[#7c5814]">
+              <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3] space-y-1">
+                <span className="text-[11px] font-semibold text-[#7C5814]">
                   {t.overview.virtue}
                 </span>
-                <p className="text-[#2c364a]">{sephira.virtue}</p>
+                <p className="text-[#2E3239]">{sephira.virtue}</p>
               </div>
 
-              <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] space-y-1">
-                <span className="text-[11px] font-semibold text-[#7c5814]">
+              <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3] space-y-1">
+                <span className="text-[11px] font-semibold text-[#7C5814]">
                   {t.overview.vice}
                 </span>
-                <p className="text-[#2c364a]">{sephira.vice}</p>
+                <p className="text-[#2E3239]">{sephira.vice}</p>
               </div>
             </div>
 
             <div>
-              <h4 className="text-xs font-serif font-bold tracking-wider text-[#7c5814] mb-2.5 flex items-center gap-2">
-                <Layers className="w-4 h-4 text-[#7c5814]" />
+              <h4 className="text-xs font-serif font-bold tracking-wider text-[#7C5814] mb-2.5 flex items-center gap-2">
+                <Layers className="w-4 h-4 text-[#7C5814]" />
                 {t.overview.fourScales}
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
@@ -288,11 +288,11 @@ export function EntityDetailContent({
                 ).map((scale) => (
                   <div
                     key={scale.key}
-                    className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]"
+                    className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]"
                   >
                     {sephira.quarteredColors &&
                     (scale.key === 'briah' || scale.key === 'yetzirah') ? (
-                      <div className="w-full h-2.5 rounded-full mb-2 border border-[#161e2e]/20 overflow-hidden grid grid-cols-4">
+                      <div className="w-full h-2.5 rounded-full mb-2 border border-[#1F242C]/20 overflow-hidden grid grid-cols-4">
                         <span style={{ backgroundColor: sephira.quarteredColors[0] }} />
                         <span style={{ backgroundColor: sephira.quarteredColors[1] }} />
                         <span style={{ backgroundColor: sephira.quarteredColors[3] }} />
@@ -300,14 +300,14 @@ export function EntityDetailContent({
                       </div>
                     ) : (
                       <div
-                        className="w-full h-2.5 rounded-full mb-2 border border-[#161e2e]/20"
+                        className="w-full h-2.5 rounded-full mb-2 border border-[#1F242C]/20"
                         style={{ backgroundColor: sephira.colors[scale.key] }}
                       />
                     )}
-                    <span className="font-semibold text-[#5e400b] block text-xs">
+                    <span className="font-semibold text-[#5E400B] block text-xs">
                       {scale.title}
                     </span>
-                    <span className="text-[#4b576e] text-[11px]">
+                    <span className="text-[#625D53] text-[11px]">
                       {sephira.colorDescriptions[scale.key]}
                     </span>
                   </div>
@@ -325,19 +325,19 @@ export function EntityDetailContent({
               );
               const toSeph = sephirothList.find((s) => s.id === pathItem.toSephiraId);
               return (
-                <div className="p-3.5 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] flex items-center justify-between gap-2">
+                <div className="p-3.5 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3] flex items-center justify-between gap-2">
                   <div className="text-center flex-1 min-w-0">
-                    <span className="text-[11px] text-[#4b576e] block">{t.overview.from}</span>
-                    <span className="text-sm font-serif font-bold text-[#5e400b] truncate block">
+                    <span className="text-[11px] text-[#625D53] block">{t.overview.from}</span>
+                    <span className="text-sm font-serif font-bold text-[#5E400B] truncate block">
                       {fromSeph ? `${fromSeph.number}. ${fromSeph.name}` : ''}
                     </span>
                   </div>
-                  <div className="px-2 text-[#7c5814] shrink-0">
+                  <div className="px-2 text-[#7C5814] shrink-0">
                     <ArrowRight className="w-4 h-4" />
                   </div>
                   <div className="text-center flex-1 min-w-0">
-                    <span className="text-[11px] text-[#4b576e] block">{t.overview.to}</span>
-                    <span className="text-sm font-serif font-bold text-[#5e400b] truncate block">
+                    <span className="text-[11px] text-[#625D53] block">{t.overview.to}</span>
+                    <span className="text-sm font-serif font-bold text-[#5E400B] truncate block">
                       {toSeph ? `${toSeph.number}. ${toSeph.name}` : ''}
                     </span>
                   </div>
@@ -346,27 +346,27 @@ export function EntityDetailContent({
             })()}
 
             <div>
-              <h3 className="text-xs font-serif font-bold tracking-wider text-[#7c5814] mb-2">
+              <h3 className="text-xs font-serif font-bold tracking-wider text-[#7C5814] mb-2">
                 {t.overview.pathTitleHeading}
               </h3>
-              <p className="text-sm font-serif font-medium text-[#161e2e] bg-[#cfd6e2] p-3.5 rounded-xl border border-[#b3bdd0]">
+              <p className="text-sm font-serif font-medium text-[#1F242C] bg-[#FCF9F3] p-3.5 rounded-xl border border-[#D1C6B3]">
                 &ldquo;{pathItem.name}&rdquo;
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm sm:text-xs">
-              <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-                <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+              <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+                <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                   {t.overview.letterMeaning}
                 </span>
-                <p className="text-[#242e42] font-medium">{pathItem.letterMeaning}</p>
+                <p className="text-[#2E3239] font-medium">{pathItem.letterMeaning}</p>
               </div>
 
-              <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-                <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+              <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+                <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                   {t.overview.attribution}
                 </span>
-                <p className="text-[#242e42] font-medium">
+                <p className="text-[#2E3239] font-medium">
                   {getLocalizedAttributionType(pathItem.attributionType, language)}:{' '}
                   {pathItem.attribution} {pathItem.symbolIcon}
                 </p>
@@ -374,10 +374,10 @@ export function EntityDetailContent({
             </div>
 
             <div>
-              <h3 className="text-xs font-serif font-bold tracking-wider text-[#7c5814] mb-2">
+              <h3 className="text-xs font-serif font-bold tracking-wider text-[#7C5814] mb-2">
                 {t.overview.overviewSymbolism}
               </h3>
-              <p className="text-sm sm:text-[13px] text-[#242e42] leading-relaxed bg-[#cfd6e2] p-3.5 rounded-xl border border-[#b3bdd0]">
+              <p className="text-sm sm:text-[13px] text-[#2E3239] leading-relaxed bg-[#FCF9F3] p-3.5 rounded-xl border border-[#D1C6B3]">
                 {pathItem.overview}
               </p>
             </div>
@@ -386,124 +386,124 @@ export function EntityDetailContent({
 
         {sephira && activeTab === 'attributions' && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm sm:text-xs">
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.divineName}
               </span>
-              <p className="text-sm font-serif font-bold text-[#161e2e]">
+              <p className="text-sm font-serif font-bold text-[#1F242C]">
                 {sephira.divineName}
               </p>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.archangel}
               </span>
-              <p className="text-sm font-serif font-bold text-[#161e2e]">
+              <p className="text-sm font-serif font-bold text-[#1F242C]">
                 {sephira.archangel}
               </p>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.angelicOrder}
               </span>
-              <p className="text-[#242e42]">{sephira.angelicOrder}</p>
+              <p className="text-[#2E3239]">{sephira.angelicOrder}</p>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.astrological}
               </span>
-              <p className="text-[#242e42]">{sephira.astrological}</p>
+              <p className="text-[#2E3239]">{sephira.astrological}</p>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.element}
               </span>
-              <p className="text-[#242e42]">{sephira.element}</p>
+              <p className="text-[#2E3239]">{sephira.element}</p>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.bodyPart}
               </span>
-              <p className="text-[#242e42]">{sephira.chakraOrBodyPart}</p>
+              <p className="text-[#2E3239]">{sephira.chakraOrBodyPart}</p>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.gemstone}
               </span>
-              <p className="text-[#242e42]">{sephira.preciousStone}</p>
+              <p className="text-[#2E3239]">{sephira.preciousStone}</p>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.incensePlants}
               </span>
-              <p className="text-[#242e42]">{sephira.incenseAndPlants}</p>
+              <p className="text-[#2E3239]">{sephira.incenseAndPlants}</p>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] sm:col-span-2">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3] sm:col-span-2">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.tarotAttribution}
               </span>
-              <p className="text-[#242e42]">{sephira.tarotCards}</p>
+              <p className="text-[#2E3239]">{sephira.tarotCards}</p>
             </div>
           </div>
         )}
 
         {pathItem && activeTab === 'attributions' && (
           <div className="grid grid-cols-1 gap-2.5 text-sm sm:text-xs">
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.letterAndMeaning}
               </span>
-              <p className="text-sm font-serif font-bold text-[#161e2e]">
+              <p className="text-sm font-serif font-bold text-[#1F242C]">
                 {pathItem.hebrewLetter} ({pathItem.hebrewLetterName}) ·{' '}
                 {pathItem.letterMeaning}
               </p>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.tarotKey}
               </span>
-              <p className="text-sm font-serif font-bold text-[#161e2e]">
+              <p className="text-sm font-serif font-bold text-[#1F242C]">
                 {language === 'pt' ? 'Arcano' : 'Key'} {pathItem.tarotKey} —{' '}
                 {pathItem.tarotCardName}
               </p>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <span className="text-[11px] font-semibold text-[#7c5814] block mb-1">
+            <div className="p-3 rounded-xl bg-[#F0E9DE] border border-[#D1C6B3]">
+              <span className="text-[11px] font-semibold text-[#7C5814] block mb-1">
                 {t.attributions.esotericTitle}
               </span>
-              <p className="text-[#242e42] italic">&ldquo;{pathItem.name}&rdquo;</p>
+              <p className="text-[#2E3239] italic">&ldquo;{pathItem.name}&rdquo;</p>
             </div>
           </div>
         )}
 
         {sephira && activeTab === 'commentary' && (
           <div className="space-y-3.5">
-            <div className="p-4 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <div className="flex items-center gap-2 text-[#5e400b] font-serif font-bold text-sm mb-2">
-                <Scroll className="w-4 h-4 text-[#7c5814] shrink-0" />
+            <div className="p-4 rounded-xl bg-[#FCF9F3] border border-[#D1C6B3]">
+              <div className="flex items-center gap-2 text-[#5E400B] font-serif font-bold text-sm mb-2">
+                <Scroll className="w-4 h-4 text-[#7C5814] shrink-0" />
                 {t.commentary.dionFortuneTitle}
               </div>
-              <blockquote className="text-sm sm:text-[13px] text-[#242e42] italic leading-relaxed">
+              <blockquote className="text-sm sm:text-[13px] text-[#2E3239] italic leading-relaxed">
                 &ldquo;{sephira.dionFortuneInsight}&rdquo;
               </blockquote>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <div className="flex items-center gap-2 text-[#5e400b] font-serif font-bold text-sm mb-2">
-                <BookOpen className="w-4 h-4 text-[#7c5814] shrink-0" />
+            <div className="p-4 rounded-xl bg-[#FCF9F3] border border-[#D1C6B3]">
+              <div className="flex items-center gap-2 text-[#5E400B] font-serif font-bold text-sm mb-2">
+                <BookOpen className="w-4 h-4 text-[#7C5814] shrink-0" />
                 {t.commentary.israelRegardieTitle}
               </div>
-              <blockquote className="text-sm sm:text-[13px] text-[#242e42] italic leading-relaxed">
+              <blockquote className="text-sm sm:text-[13px] text-[#2E3239] italic leading-relaxed">
                 &ldquo;{sephira.regardieInsight}&rdquo;
               </blockquote>
             </div>
@@ -512,12 +512,12 @@ export function EntityDetailContent({
 
         {pathItem && activeTab === 'commentary' && (
           <div className="space-y-3.5">
-            <div className="p-4 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0]">
-              <div className="flex items-center gap-2 text-[#5e400b] font-serif font-bold text-sm mb-2">
-                <BookOpen className="w-4 h-4 text-[#7c5814] shrink-0" />
+            <div className="p-4 rounded-xl bg-[#FCF9F3] border border-[#D1C6B3]">
+              <div className="flex items-center gap-2 text-[#5E400B] font-serif font-bold text-sm mb-2">
+                <BookOpen className="w-4 h-4 text-[#7C5814] shrink-0" />
                 {t.commentary.traditionalPathTitle}
               </div>
-              <p className="text-sm sm:text-[13px] text-[#242e42] leading-relaxed">
+              <p className="text-sm sm:text-[13px] text-[#2E3239] leading-relaxed">
                 {t.commentary.traditionalPathBody(
                   pathItem.number,
                   sephirothList.find((s) => s.id === pathItem.fromSephiraId)?.name ||
@@ -534,23 +534,23 @@ export function EntityDetailContent({
 
         {activeTab === 'meditation' && (
           <div className="space-y-4">
-            <div className="p-4 rounded-xl bg-[#cfd6e2] border border-[#b3bdd0] space-y-2.5">
-              <h4 className="text-sm font-serif font-bold text-[#5e400b] flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#7c5814]" />
+            <div className="p-4 rounded-xl bg-[#FCF9F3] border border-[#D1C6B3] space-y-2.5">
+              <h4 className="text-sm font-serif font-bold text-[#5E400B] flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#7C5814]" />
                 {t.meditation.traditionalTitle}
               </h4>
-              <p className="text-sm sm:text-[13px] text-[#242e42] leading-relaxed italic">
+              <p className="text-sm sm:text-[13px] text-[#2E3239] leading-relaxed italic">
                 &ldquo;
                 {sephira ? sephira.pathworkingGuidance : pathItem?.pathworkingMeditation}
                 &rdquo;
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#cfd6e2] border border-[#8c631a]/50 space-y-3">
-              <h4 className="text-sm font-serif font-bold text-[#5e400b]">
+            <div className="p-4 rounded-xl bg-[#F0E9DE] border border-[#8C631A]/50 space-y-3">
+              <h4 className="text-sm font-serif font-bold text-[#5E400B]">
                 {t.meditation.oracleTitle}
               </h4>
-              <p className="text-sm sm:text-xs text-[#2c364a] leading-relaxed">
+              <p className="text-sm sm:text-xs text-[#2E3239] leading-relaxed">
                 {t.meditation.oracleDescription(
                   sephira
                     ? sephira.name
@@ -572,7 +572,7 @@ export function EntityDetailContent({
                     sephira ? 'sephira' : 'path'
                   );
                 }}
-                className="w-full min-h-[46px] py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#8f681d] to-[#745112] text-[#f5f1e6] font-bold text-xs uppercase tracking-wider transition-all hover:brightness-110 active:scale-[0.99] flex items-center justify-center gap-2 shadow-md"
+                className="w-full min-h-[46px] py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#8f681d] to-[#745112] text-[#FAF7EF] font-bold text-xs uppercase tracking-wider transition-all hover:brightness-110 active:scale-[0.99] flex items-center justify-center gap-2 shadow-md"
               >
                 <Sparkles className="w-4 h-4" />
                 {t.meditation.generateButton}
@@ -660,7 +660,7 @@ export default function EntityDetailDrawer({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
             onClick={onClose}
-            className="fixed inset-0 bg-[#161e2e]/45 backdrop-blur-xs pointer-events-auto"
+            className="fixed inset-0 bg-[#1F242C]/45 backdrop-blur-xs pointer-events-auto"
           />
 
           {/* Bottom Sheet on Mobile (< md), Right Drawer on Tablet & Desktop (md+) */}
@@ -678,11 +678,11 @@ export default function EntityDetailDrawer({
                 onClose();
               }
             }}
-            className="relative w-full md:max-w-lg lg:max-w-xl max-h-[86dvh] md:max-h-none md:h-full bg-[#dce2ec] border-t md:border-t-0 md:border-l border-[#8c631a]/45 rounded-t-3xl md:rounded-none shadow-2xl flex flex-col pointer-events-auto z-10 overflow-hidden"
+            className="relative w-full md:max-w-lg lg:max-w-xl max-h-[86dvh] md:max-h-none md:h-full bg-[#F8F4EC] border-t md:border-t-0 md:border-l border-[#D1C6B3] rounded-t-3xl md:rounded-none shadow-2xl flex flex-col pointer-events-auto z-10 overflow-hidden"
           >
             {/* Mobile Drag Handle */}
-            <div className="md:hidden pt-3 pb-1 flex justify-center bg-[#d4dbe6] shrink-0">
-              <div className="w-10 h-1.5 rounded-full bg-[#98a4b8]" aria-hidden="true" />
+            <div className="md:hidden pt-3 pb-1 flex justify-center bg-[#EFE6D7] shrink-0">
+              <div className="w-10 h-1.5 rounded-full bg-[#C7BBA5]" aria-hidden="true" />
             </div>
 
             <EntityDetailContent

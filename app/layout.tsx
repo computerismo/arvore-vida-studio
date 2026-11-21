@@ -39,7 +39,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   viewportFit: 'cover',
-  themeColor: '#cfd6e2',
+  themeColor: '#EBE5DA',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body
         suppressHydrationWarning
-        className="font-sans antialiased bg-[#cfd6e2] text-[#161e2e] overflow-x-hidden"
+        className="font-sans antialiased bg-[#EBE5DA] text-[#1F242C] overflow-x-hidden"
       >
         {children}
       </body>

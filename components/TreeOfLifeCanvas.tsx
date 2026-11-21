@@ -241,7 +241,7 @@ function ClassicalPillar({ cx, variant, title, subtitle }: ClassicalPillarProps)
         x={cx}
         y={865}
         textAnchor="middle"
-        className="fill-[#252b2e] text-[10.5px] font-serif font-bold tracking-[0.14em]"
+        className="fill-[#24201B] text-[10.5px] font-serif font-bold tracking-[0.14em]"
       >
         {title}
       </text>
@@ -249,7 +249,7 @@ function ClassicalPillar({ cx, variant, title, subtitle }: ClassicalPillarProps)
         x={cx}
         y={877}
         textAnchor="middle"
-        className="fill-[#434d5e] text-[8.5px] font-serif italic"
+        className="fill-[#4E493F] text-[8.5px] font-serif italic"
       >
         {subtitle}
       </text>
@@ -587,11 +587,11 @@ export default function TreeOfLifeCanvas({
   const showFloatingTooltip = isFinePointer && hoveredItem && !isDragging;
 
   return (
-    <div className="relative w-full h-full flex flex-col md:bg-[#dce2ec] md:rounded-2xl md:border md:border-[#b3bdd0] md:p-3.5 lg:p-4 md:shadow-md select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col md:bg-[#F8F4EC] md:rounded-2xl md:border md:border-[#D1C6B3] md:p-3.5 lg:p-4 md:shadow-md select-none overflow-hidden">
       {/* Tablet & Desktop Canvas Toolbar (Hidden on Mobile so the Tree gets maximum screen height) */}
       <div className="hidden md:flex items-center justify-between gap-2 mb-2 px-1 shrink-0">
         <div className="flex items-center gap-2 min-w-0">
-          <span className="font-mono text-xs text-[#7c5814] font-semibold tracking-wider truncate">
+          <span className="font-mono text-xs text-[#7C5814] font-semibold tracking-wider truncate">
             {language === 'pt'
               ? `${t.treeOfLife} · ${t.scaleWord} ${scaleLabel}`
               : `${t.treeOfLife} · ${scaleLabel} ${t.scaleWord}`}
@@ -599,14 +599,14 @@ export default function TreeOfLifeCanvas({
         </div>
 
         <div className="flex items-center gap-1.5 shrink-0">
-          <div className="flex items-center bg-[#cfd6e2] border border-[#aeb9cc] rounded-xl p-0.5">
+          <div className="flex items-center bg-[#F0E9DE] border border-[#D1C6B3] rounded-xl p-0.5">
             <button
               type="button"
               onClick={() => zoomAtFocalPoint(zoom - 0.5)}
               disabled={zoom <= MIN_ZOOM}
               aria-label={t.zoomOut}
               title={t.zoomOut}
-              className="min-h-[32px] min-w-[32px] flex items-center justify-center rounded-lg text-[#2c364a] hover:text-[#5e400b] hover:bg-[#dce2ec] disabled:opacity-35 disabled:hover:bg-transparent transition-colors"
+              className="min-h-[32px] min-w-[32px] flex items-center justify-center rounded-lg text-[#2E3239] hover:text-[#5E400B] hover:bg-[#FCF9F3] disabled:opacity-35 disabled:hover:bg-transparent transition-colors"
             >
               <ZoomOut className="w-3.5 h-3.5" />
             </button>
@@ -615,7 +615,7 @@ export default function TreeOfLifeCanvas({
               onClick={handleResetView}
               disabled={zoom <= MIN_ZOOM}
               title={zoom > 1 ? t.clickToResetZoom : t.zoomPercentLabel}
-              className="px-1.5 text-[11px] font-mono tabular-nums text-[#2c364a] hover:text-[#5e400b] disabled:hover:text-[#2c364a] min-w-[44px] text-center"
+              className="px-1.5 text-[11px] font-mono tabular-nums text-[#2E3239] hover:text-[#5E400B] disabled:hover:text-[#2E3239] min-w-[44px] text-center"
             >
               {Math.round(zoom * 100)}%
             </button>
@@ -625,7 +625,7 @@ export default function TreeOfLifeCanvas({
               disabled={zoom >= MAX_ZOOM}
               aria-label={t.zoomIn}
               title={t.zoomIn}
-              className="min-h-[32px] min-w-[32px] flex items-center justify-center rounded-lg text-[#2c364a] hover:text-[#5e400b] hover:bg-[#dce2ec] disabled:opacity-35 disabled:hover:bg-transparent transition-colors"
+              className="min-h-[32px] min-w-[32px] flex items-center justify-center rounded-lg text-[#2E3239] hover:text-[#5E400B] hover:bg-[#FCF9F3] disabled:opacity-35 disabled:hover:bg-transparent transition-colors"
             >
               <ZoomIn className="w-3.5 h-3.5" />
             </button>
@@ -635,7 +635,7 @@ export default function TreeOfLifeCanvas({
                 onClick={handleResetView}
                 aria-label={t.resetZoom}
                 title={t.resetZoom}
-                className="min-h-[32px] min-w-[32px] flex items-center justify-center rounded-lg text-[#7c5814] hover:bg-[#9a7022]/15 transition-colors"
+                className="min-h-[32px] min-w-[32px] flex items-center justify-center rounded-lg text-[#7C5814] hover:bg-[#EEE0C7] transition-colors"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
               </button>
@@ -647,8 +647,8 @@ export default function TreeOfLifeCanvas({
             onClick={handleTogglePillars}
             className={`min-h-[34px] px-3 rounded-xl transition-colors border text-xs font-medium flex items-center gap-1.5 whitespace-nowrap ${
               showPillars
-                ? 'bg-[#9a7022]/16 border-[#8c631a]/65 text-[#5e400b]'
-                : 'bg-[#cfd6e2] border-[#aeb9cc] text-[#4b576e] hover:text-[#161e2e]'
+                ? 'bg-[#EEE0C7] border-[#8C631A]/75 text-[#5E400B]'
+                : 'bg-[#F0E9DE] border-[#D1C6B3] text-[#4F4C45] hover:text-[#1F242C]'
             }`}
           >
             <Columns className="w-3.5 h-3.5" />
@@ -666,7 +666,7 @@ export default function TreeOfLifeCanvas({
         onPointerCancel={handlePointerUp}
         onPointerLeave={handlePointerUp}
         onDoubleClick={handleDoubleClick}
-        className={`relative flex-1 min-h-0 w-full overflow-hidden md:rounded-xl md:bg-[#c5cede] md:border md:border-[#aeb9cc] flex items-center justify-center ${
+        className={`relative flex-1 min-h-0 w-full overflow-hidden tree-stage-bg rounded-xl border border-[#D1C6B3]/80 md:border-[#D1C6B3] flex items-center justify-center ${
           zoom > 1
             ? isDragging
               ? 'cursor-grabbing touch-none'
@@ -751,7 +751,7 @@ export default function TreeOfLifeCanvas({
                   x="300"
                   y="8"
                   textAnchor="middle"
-                  className="fill-[#6d4b0f] text-[10px] font-serif tracking-[0.14em] uppercase font-bold pointer-events-none"
+                  className="fill-[#6D4B0F] text-[10px] font-serif tracking-[0.14em] uppercase font-bold pointer-events-none"
                 >
                   {t.pillarMildness}
                 </text>
@@ -844,9 +844,9 @@ export default function TreeOfLifeCanvas({
                       y1={start.y}
                       x2={end.x}
                       y2={end.y}
-                      stroke="#dce2ec"
+                      stroke="#F3ECE0"
                       strokeWidth={isSelected || isHovered ? 8.8 : 7.8}
-                      opacity={matchesFilter ? 0.9 : 0.18}
+                      opacity={matchesFilter ? 0.92 : 0.18}
                     />
 
                     {/* Crisp dark casing border */}
@@ -857,10 +857,10 @@ export default function TreeOfLifeCanvas({
                       y2={end.y}
                       stroke={
                         isSelected
-                          ? '#7c5814'
+                          ? '#7C5814'
                           : isHovered
-                          ? '#161e2e'
-                          : '#4c576b'
+                          ? '#1F242C'
+                          : '#6B6352'
                       }
                       strokeWidth={isSelected || isHovered ? 6.8 : 6.0}
                       opacity={pathOpacity}
@@ -883,14 +883,14 @@ export default function TreeOfLifeCanvas({
                         <circle
                           r={isHovered ? 15.2 : 13.7}
                           fill="none"
-                          stroke="#4c576b"
+                          stroke="#6B6352"
                           strokeWidth="0.9"
                         />
                       )}
                       <circle
                         r={isHovered || isSelected ? 14 : 12.5}
-                        fill={isSelected ? '#1b2232' : isHovered ? '#fffefa' : '#f4f6fa'}
-                        stroke={isSelected ? '#c5a059' : pathColor}
+                        fill={isSelected ? '#24201B' : isHovered ? '#FFFEFA' : '#FCF9F3'}
+                        stroke={isSelected ? '#C5A059' : pathColor}
                         strokeWidth={isSelected ? 2.4 : 2.2}
                         className="transition-all duration-150"
                       />
@@ -899,8 +899,8 @@ export default function TreeOfLifeCanvas({
                         dy="4.5"
                         className={`text-[13px] font-serif font-bold pointer-events-none transition-colors ${
                           isSelected
-                            ? 'fill-[#e8c982]'
-                            : 'fill-[#161e2e]'
+                            ? 'fill-[#E8C982]'
+                            : 'fill-[#1F242C]'
                         }`}
                       >
                         {pathItem.hebrewLetter}
@@ -929,11 +929,11 @@ export default function TreeOfLifeCanvas({
                       key={`lf-step-${id}`}
                       transform={`translate(${coord.x - 24}, ${coord.y - 24})`}
                     >
-                      <circle r="10" fill="#1b2232" stroke="#c5a059" strokeWidth="1.5" />
+                      <circle r="10" fill="#24201B" stroke="#C5A059" strokeWidth="1.5" />
                       <text
                         textAnchor="middle"
                         dy="3.5"
-                        className="fill-[#e8c982] text-[10px] font-mono font-bold pointer-events-none"
+                        className="fill-[#E8C982] text-[10px] font-mono font-bold pointer-events-none"
                       >
                         {index + 1}
                       </text>
@@ -1041,14 +1041,14 @@ export default function TreeOfLifeCanvas({
                         <circle
                           r="36"
                           fill="none"
-                          stroke={isSelected ? '#b98c32' : isHovered ? '#161e2e' : '#575349'}
+                          stroke={isSelected ? '#B98C32' : isHovered ? '#1F242C' : '#575349'}
                           strokeWidth={isSelected ? 3 : isHovered ? 2.4 : 1.4}
                         />
                         {/* Pale inner medallion so Hebrew & English names stay crisp */}
                         <circle
                           r="28.5"
-                          fill="#f7f5ee"
-                          stroke={selectedScale === 'yetzirah' ? '#c9a23f' : '#6b6658'}
+                          fill="#FCF9F3"
+                          stroke={selectedScale === 'yetzirah' ? '#C9A23F' : '#6B6658'}
                           strokeWidth={selectedScale === 'yetzirah' ? '1.3' : '0.9'}
                         />
                       </g>
@@ -1056,16 +1056,16 @@ export default function TreeOfLifeCanvas({
                       <>
                         <circle
                           r={isDaath ? 29 : 36}
-                          fill={isDaath ? '#e6ebf3' : scaleAccentColor}
-                          fillOpacity={isDaath ? 0.86 : 1}
+                          fill={isDaath ? '#F4EFE4' : scaleAccentColor}
+                          fillOpacity={isDaath ? 0.92 : 1}
                           stroke={
                             isSelected
-                              ? '#b98c32'
+                              ? '#B98C32'
                               : isHovered
-                              ? '#161e2e'
+                              ? '#1F242C'
                               : isDaath
-                              ? '#66758e'
-                              : '#525c70'
+                              ? '#7D735E'
+                              : '#6B6352'
                           }
                           strokeWidth={isSelected ? 3.2 : isHovered ? 2.6 : isDaath ? 1.5 : 1.5}
                           strokeDasharray={isDaath ? '4 3' : undefined}
@@ -1077,7 +1077,7 @@ export default function TreeOfLifeCanvas({
                           <circle
                             r="33"
                             fill="none"
-                            stroke={lightSphere ? '#6b6658' : '#fdfbf2'}
+                            stroke={lightSphere ? '#6B6658' : '#FDFBF2'}
                             strokeWidth="0.65"
                             opacity={matchesFilter ? (lightSphere ? 0.3 : 0.42) : 0.12}
                           />
@@ -1090,10 +1090,10 @@ export default function TreeOfLifeCanvas({
                       textAnchor="middle"
                       className={`font-mono text-[10px] font-bold tracking-widest pointer-events-none ${
                         isDaath
-                          ? 'fill-[#7c5814]'
+                          ? 'fill-[#7C5814]'
                           : lightSphere
-                          ? 'fill-[#5e400b]'
-                          : 'fill-[#f3d488]'
+                          ? 'fill-[#5E400B]'
+                          : 'fill-[#F3D488]'
                       }`}
                     >
                       {isDaath ? 'DAATH' : `#${sephira.number}`}
@@ -1104,10 +1104,10 @@ export default function TreeOfLifeCanvas({
                       textAnchor="middle"
                       className={`font-serif text-[17px] font-bold pointer-events-none ${
                         isDaath
-                          ? 'fill-[#242e42]'
+                          ? 'fill-[#24201B]'
                           : lightSphere
-                          ? 'fill-[#161e2e]'
-                          : 'fill-[#fffefa]'
+                          ? 'fill-[#1F242C]'
+                          : 'fill-[#FFFEFA]'
                       }`}
                     >
                       {sephira.hebrewName}
@@ -1120,10 +1120,10 @@ export default function TreeOfLifeCanvas({
                         showQuartered ? 'text-[8.5px]' : 'text-[9.5px]'
                       } tracking-[0.11em] uppercase font-bold pointer-events-none ${
                         isDaath
-                          ? 'fill-[#4b576e]'
+                          ? 'fill-[#625D53]'
                           : lightSphere
-                          ? 'fill-[#242e42]'
-                          : 'fill-[#e8edf5]'
+                          ? 'fill-[#2E3239]'
+                          : 'fill-[#F5F0E4]'
                       }`}
                     >
                       {sephira.name}
@@ -1136,17 +1136,17 @@ export default function TreeOfLifeCanvas({
         </div>
 
         {/* MOBILE FLOATING COMPACT ZOOM CONTROLS (Bottom-right of full-bleed canvas) */}
-        <div className="md:hidden absolute bottom-2 right-2 z-20 flex items-center bg-[#dce2ec]/92 backdrop-blur-md border border-[#aeb9cc] rounded-xl p-0.5 shadow-md">
+        <div className="md:hidden absolute bottom-2 right-2 z-20 flex items-center bg-[#F8F4EC]/92 backdrop-blur-md border border-[#D1C6B3] rounded-xl p-0.5 shadow-md">
           <button
             type="button"
             onClick={() => zoomAtFocalPoint(zoom - 0.5)}
             disabled={zoom <= MIN_ZOOM}
             aria-label={t.zoomOut}
-            className="min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-[#2c364a] active:text-[#5e400b] disabled:opacity-35"
+            className="min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-[#2E3239] active:text-[#5E400B] disabled:opacity-35"
           >
             <ZoomOut className="w-4 h-4" />
           </button>
-          <span className="px-1 text-[11px] font-mono tabular-nums text-[#2c364a] min-w-[40px] text-center">
+          <span className="px-1 text-[11px] font-mono tabular-nums text-[#2E3239] min-w-[40px] text-center">
             {Math.round(zoom * 100)}%
           </span>
           <button
@@ -1154,7 +1154,7 @@ export default function TreeOfLifeCanvas({
             onClick={() => zoomAtFocalPoint(zoom + 0.5)}
             disabled={zoom >= MAX_ZOOM}
             aria-label={t.zoomIn}
-            className="min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-[#2c364a] active:text-[#5e400b] disabled:opacity-35"
+            className="min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-[#2E3239] active:text-[#5E400B] disabled:opacity-35"
           >
             <ZoomIn className="w-4 h-4" />
           </button>
@@ -1163,7 +1163,7 @@ export default function TreeOfLifeCanvas({
               type="button"
               onClick={handleResetView}
               aria-label={t.resetZoom}
-              className="min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-[#7c5814]"
+              className="min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-[#7C5814]"
             >
               <RotateCcw className="w-3.5 h-3.5" />
             </button>
@@ -1178,66 +1178,66 @@ export default function TreeOfLifeCanvas({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 4, scale: 0.98 }}
               transition={{ duration: 0.14 }}
-              className="absolute bottom-3 inset-x-3 md:max-w-2xl md:mx-auto bg-[#dce2ec]/96 border border-[#8c631a]/60 rounded-xl p-3 shadow-xl text-[#161e2e] z-30 pointer-events-none backdrop-blur-md"
+              className="absolute bottom-3 inset-x-3 md:max-w-2xl md:mx-auto bg-[#F8F4EC]/96 border border-[#8C631A]/60 rounded-xl p-3 shadow-xl text-[#1F242C] z-30 pointer-events-none backdrop-blur-md"
             >
               {hoveredItem.type === 'sephira' ? (
                 <div>
-                  <div className="flex items-center justify-between gap-2 border-b border-[#b3bdd0] pb-1.5 mb-1.5">
+                  <div className="flex items-center justify-between gap-2 border-b border-[#D1C6B3] pb-1.5 mb-1.5">
                     <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-[#7c5814] font-mono text-xs font-semibold shrink-0">
+                      <span className="text-[#7C5814] font-mono text-xs font-semibold shrink-0">
                         {t.tooltipSphere(hoveredItem.data.number)}
                       </span>
-                      <span className="text-[#8291a8]" aria-hidden="true">·</span>
-                      <h4 className="font-serif font-bold text-[#161e2e] text-sm truncate">
+                      <span className="text-[#A89C86]" aria-hidden="true">·</span>
+                      <h4 className="font-serif font-bold text-[#1F242C] text-sm truncate">
                         {hoveredItem.data.name} ({hoveredItem.data.hebrewName})
                       </h4>
                     </div>
-                    <span className="text-xs text-[#7c5814] italic shrink-0">
+                    <span className="text-xs text-[#7C5814] italic shrink-0">
                       &ldquo;{hoveredItem.data.translation}&rdquo;
                     </span>
                   </div>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-[#2c364a]">
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-[#2E3239]">
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">{t.tooltipPillar}</span>{' '}
+                      <span className="text-[#7C5814] font-semibold">{t.tooltipPillar}</span>{' '}
                       {getLocalizedPillarName(hoveredItem.data.pillar, language)}
                     </div>
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">{t.tooltipDivineName}</span>{' '}
+                      <span className="text-[#7C5814] font-semibold">{t.tooltipDivineName}</span>{' '}
                       {hoveredItem.data.divineName}
                     </div>
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">{t.tooltipArchangel}</span>{' '}
+                      <span className="text-[#7C5814] font-semibold">{t.tooltipArchangel}</span>{' '}
                       {hoveredItem.data.archangel}
                     </div>
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">{t.tooltipAstrological}</span>{' '}
+                      <span className="text-[#7C5814] font-semibold">{t.tooltipAstrological}</span>{' '}
                       {hoveredItem.data.astrological}
                     </div>
                   </div>
                 </div>
               ) : (
                 <div>
-                  <div className="flex items-center justify-between gap-2 border-b border-[#b3bdd0] pb-1.5 mb-1.5">
+                  <div className="flex items-center justify-between gap-2 border-b border-[#D1C6B3] pb-1.5 mb-1.5">
                     <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-[#7c5814] font-mono text-xs font-semibold shrink-0">
+                      <span className="text-[#7C5814] font-mono text-xs font-semibold shrink-0">
                         {t.tooltipPath(hoveredItem.data.number, hoveredItem.data.hebrewLetter)}
                       </span>
-                      <span className="text-[#8291a8]" aria-hidden="true">·</span>
-                      <h4 className="font-serif font-bold text-[#161e2e] text-sm truncate">
+                      <span className="text-[#A89C86]" aria-hidden="true">·</span>
+                      <h4 className="font-serif font-bold text-[#1F242C] text-sm truncate">
                         {hoveredItem.data.tarotCardName}
                       </h4>
                     </div>
-                    <span className="text-xs text-[#7c5814] shrink-0">
+                    <span className="text-xs text-[#7C5814] shrink-0">
                       {hoveredItem.data.attribution} {hoveredItem.data.symbolIcon}
                     </span>
                   </div>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-[#2c364a]">
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-[#2E3239]">
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">{t.tooltipTitle}</span>{' '}
+                      <span className="text-[#7C5814] font-semibold">{t.tooltipTitle}</span>{' '}
                       {hoveredItem.data.name}
                     </div>
                     <div className="truncate">
-                      <span className="text-[#7c5814] font-semibold">{t.tooltipLetterMeaning}</span>{' '}
+                      <span className="text-[#7C5814] font-semibold">{t.tooltipLetterMeaning}</span>{' '}
                       {hoveredItem.data.letterMeaning}
                     </div>
                   </div>
